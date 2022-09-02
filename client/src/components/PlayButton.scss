@@ -1,6 +1,28 @@
-.playButton {
-  width: 100px;
-  height: 100px;
-  border-radius: 50px;
-  border: 2px solid red;
+.play {
+
+  margin: 20px;
+
+  .playButton {
+    width: 75px;
+    height: 75px;
+    border-radius: 50px;
+    border: 2px solid red;
+    margin-left:  20px;
+    margin-right: 20px;
+  }
+  
+  .previous {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 2px solid red;
+  }
+  
+  .next {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 2px solid red;
+  }
+
 }

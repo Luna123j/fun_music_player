@@ -1,11 +1,13 @@
-const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
 
 const users = ['Bob', 'Alex', 'Will', 'Tristan'];
 
 
-router.get('/', (req, res) => {
+/* GET home page. */
+router.get('/', function(req, res, next) {
   res.json(users);
 });
 
-module.exports = router
+module.exports = router;
 

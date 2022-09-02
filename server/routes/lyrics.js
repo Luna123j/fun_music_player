@@ -3,25 +3,17 @@ const router = express.Router();
 const request = require("request")
 const cheerio = require('cheerio')
 
-const title = "MyheartWillGoOn"
-
-const options = {
-  apiKey: 'GbTQtWBvLTmpB-KBN-aWmydo3u4fY_wNJwS0Uuh515fs6UtoTCmJTJEX3lg_SzHW',
-  title: 'My Heart Will Go On',
-  artist: 'Celine Dion',
-  optimizeQuery: true
-};
-
 router.get('/', async (req, res, next) => {
+  const API_KEY = process.env.LYRICS_API_KEY
   const title = 'My Heart Will Go On';
   const artist = 'Celine Dion';
   const song = encodeURIComponent(`${title} ${artist}`)
 
   return new Promise((resolve, reject) => {
     request({
-      url: `https://api.genius.com/search?q=${song}&access_token=GbTQtWBvLTmpB-KBN-aWmydo3u4fY_wNJwS0Uuh515fs6UtoTCmJTJEX3lg_SzHW`,
+      url: `https://api.genius.com/search?q=${song}&access_token=${API_KEY}`,
       method: 'GET',
-      Authorization: "Bearer GbTQtWBvLTmpB-KBN-aWmydo3u4fY_wNJwS0Uuh515fs6UtoTCmJTJEX3lg_SzHW"
+      Authorization: `Bearer ${API_KEY}`
     },
       (error, response, body) => {
         if (error) {
@@ -30,14 +22,13 @@ router.get('/', async (req, res, next) => {
           return resolve(JSON.parse(body))
         }
       })
-
   })
   .then((data) => {
     const songsArr=[]
     data.response.hits.map((val) => {songsArr.push(val)})
     const lastsongsArr = songsArr[songsArr.length-1]
-    const { full_title, song_art_image_url, id, url } = lastsongsArr.result;
-
+    console.log(lastsongsArr)
+    const { full_title,artist_names, song_art_image_url, id, url } = lastsongsArr.result;
         request({
           url: `${url}`,
           method: 'GET',
@@ -57,8 +48,7 @@ router.get('/', async (req, res, next) => {
                 }
               });
             }
-            console.log(lyrics)
-            const songInfo= {song_id:id, title: full_title,song_img:song_art_image_url,lyrics:lyrics}
+            const songInfo= {song_id:id, title: full_title,artist:artist_names,song_img:song_art_image_url,lyrics:lyrics}
             res.send(songInfo)
         })
   })

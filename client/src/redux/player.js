@@ -8,7 +8,7 @@ export const playerSlice = createSlice({
   reducers: {
     onplay: (state) => {
       state.play = !state.play;
-    }
+    } 
   }
 });
 

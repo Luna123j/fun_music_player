@@ -10,11 +10,11 @@
     "mic-recorder-to-mp3": "^2.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
+
     "react-loader-spinner": "^5.3.3",
-=======
+
     "react-redux": "^8.0.2",
->>>>>>> master
+
     "react-scripts": "5.0.1",
     "sass": "^1.54.8",
     "web-vitals": "^2.1.4"

@@ -1,16 +1,20 @@
 import MicRecorder from "mic-recorder-to-mp3";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, React } from "react";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { onrecord } from "../redux/microphone";
 
-import PlayButton from "./components/PlayButton";
-import key from "./key";
+// import PlayButton from "./components/PlayButton";
+// import key from "./key";
 
 // Set AssemblyAPI Axios Header
+const SPEECH_API_KEY = process.env.SPEECH_API_KEY;
+
 const assembly = axios.create({
   baseURL: "https://api.assemblyai.com/v2",
   headers: {
-    authorization: key(),
-    "content-type": "application/json"
+    authorization: "a95cae33e75d4ed69ba5c2bbfa0de36e",
+    "content-type": "application/json",
     // "transfer-encoding": "chunked", // Refused to set unsafe header "transfer-encoding" <---error in browser console??
   },
 });
@@ -23,8 +27,7 @@ const assembly = axios.create({
 //     .then((res) => console.log(res.data))
 //     .catch((err) => console.error(err))
 
-
-export default function voiceInput() {
+export default function Speechinput() {
   // This code is for TEXT TO SPEECH*****************************
   // const [ourText, setOurText] = useState("")
   // const msg = new SpeechSynthesisUtterance()
@@ -136,34 +139,38 @@ export default function voiceInput() {
     return () => clearInterval(interval);
   });
 
+  const { record } = useSelector((state) => state.microphone);
+  const dispatch = useDispatch();
+
   return (
-    <div className="App">
-      <h1>React speech recognition music App</h1>
-      <audio ref={audioPlayer} src={blobURL} controls="controls" />
-      <div>
-        <button disabled={isRecording} onClick={startRecording}>
+    <div className="record">
+      <h1>Fun Music Player</h1>
+      {/* <audio ref={audioPlayer} src={blobURL} controls="controls" /> */}
+      <button className="recordButton" onClick={() => dispatch(onrecord())}>
+        {!record && (<i className="fa-solid fa-microphone" onClick={startRecording}></i>)}
+        {record && (<i className="fa-solid fa-microphone-slash" onClick={stopRecording}></i>)}
+      </button>
+      <button onClick={submitTranscriptionHandler}>SUBMIT</button>
+      {/* <button disabled={isRecording} onClick={startRecording}>
           🎙️
         </button>
         <button disabled={!isRecording} onClick={stopRecording}>
           ✋
-        </button>
-        <button onClick={submitTranscriptionHandler}>SUBMIT</button>
-        {/* <button onClick={checkStatusHandler}>CHECK STATUS</button> */}
-      </div>
+        </button> */}
+      {/* <button onClick={checkStatusHandler}>CHECK STATUS</button> */}
       <textarea
-          className="song__search-input text--semi-bold"
-          name="name"
-          type="text"
-          placeholder="Type here if you want"
-          value={transcript}
-          // onChange={(e) => setOurText(e.target.value)}
-
-        />
+        className="song__search-input text--semi-bold"
+        name="name"
+        type="text"
+        placeholder="Type here if you want"
+        value={transcript}
+        onChange={(e) => setTranscript(e.target.value)}
+      />
       {/* {transcriptData.status === "completed" ? (
         // <p>{transcript}</p>
-      ) : (
-        <p>{transcriptData.status}</p>
-      )} */}
+        ) : (
+          <p>{transcriptData.status}</p>
+        )} */}
       {/* this input was used for TEXT TO SPEECH *** we can change it */}
       {/* <input
         type='text'
@@ -173,7 +180,6 @@ export default function voiceInput() {
       /> */}
       {/* <button onClick={() => speechHandler(msg)}>SPEAK</button> */}
       {/* ************************************************************ */}
-     
-</div>
-)}
-
+    </div>
+  );
+}

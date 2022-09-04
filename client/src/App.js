@@ -1,7 +1,7 @@
 import './App.css';
 import './components/PlayButton';
 import PlayButton from './components/PlayButton';
-import Speechinput from './Speechinput';
+import Speechinput from './components/Speechinput';
 
 function App() {
 

@@ -2,7 +2,7 @@
 import MicRecorder from "mic-recorder-to-mp3";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import key from "./key";
+import key from "../key";
 
 // Set AssemblyAPI Axios Header
 const assembly = axios.create({
@@ -23,7 +23,7 @@ const assembly = axios.create({
 //     .catch((err) => console.error(err))
 
 
-export default function speechInput() {
+export default function Speechinput() {
   // This code is for TEXT TO SPEECH*****************************
   // const [ourText, setOurText] = useState("")
   // const msg = new SpeechSynthesisUtterance()

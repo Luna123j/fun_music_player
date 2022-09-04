@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import MicRecorder from "mic-recorder-to-mp3";
 import { useEffect, useState, useRef, React } from "react";
 import axios from "axios";

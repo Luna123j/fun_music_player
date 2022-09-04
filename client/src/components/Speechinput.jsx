@@ -1,10 +1,7 @@
-import "./App.css";
-import "./components/PlayButton";
+/* eslint-disable react-hooks/rules-of-hooks */
 import MicRecorder from "mic-recorder-to-mp3";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
-
-import PlayButton from "./components/PlayButton";
 import key from "./key";
 
 // Set AssemblyAPI Axios Header
@@ -26,7 +23,7 @@ const assembly = axios.create({
 //     .catch((err) => console.error(err))
 
 
-function App() {
+export default function speechInput() {
   // This code is for TEXT TO SPEECH*****************************
   // const [ourText, setOurText] = useState("")
   // const msg = new SpeechSynthesisUtterance()
@@ -175,8 +172,7 @@ function App() {
       /> */}
       {/* <button onClick={() => speechHandler(msg)}>SPEAK</button> */}
       {/* ************************************************************ */}
-      <PlayButton />
+     
 </div>
 )}
 
-export default App;

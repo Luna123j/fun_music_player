@@ -11,7 +11,6 @@ router.post('/', (req, res, next) => {
   const API_KEY = process.env.LYRICS_API_KEY
   const title = req.body.title;
   const song = encodeURIComponent(`${title}`)
-
   
   return new Promise((resolve, reject) => {
     request({

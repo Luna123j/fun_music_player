@@ -15,7 +15,7 @@ const SPEECH_API_KEY = process.env.SPEECH_API_KEY;
 const assembly = axios.create({
   baseURL: "https://api.assemblyai.com/v2",
   headers: {
-    authorization: "a95cae33e75d4ed69ba5c2bbfa0de36e",
+    authorization: "",
     "content-type": "application/json",
     // "transfer-encoding": "chunked", // Refused to set unsafe header "transfer-encoding" <---error in browser console??
   },

@@ -70,7 +70,7 @@ const updateCurrentIndex = results => {
 
   const listenOptions = {
     includeSpectrogram: true, // in case listen should return result.spectrogram
-    probabilityThreshold: 0.95,
+    probabilityThreshold: 0.65,
     invokeCallbackOnNoiseAndUnknown: true,
     overlapFactor: 0.5, // probably want between 0.5 and 0.75. More info in README
   };
@@ -99,8 +99,8 @@ const dispatch = useDispatch();
       </header>
       <h1 style={{ fontsize: "4em", textAlign: "center" }}>{coolLabels[currentIndex]}</h1>
       <button onClick={() => dispatch(onlisten())}>
-        {!listen && (<i class="fa-solid fa-ear-listen" onClick={() => listener(listenOptions, updateCurrentIndex)}></i>)}
-        {listen && (<i class="fa-solid fa-ear-deaf"></i>)}
+        {!listen && (<i className="fa-solid fa-ear-listen" onClick={() => listener(listenOptions, updateCurrentIndex)}></i>)}
+        {listen && (<i className="fa-solid fa-ear-deaf"></i>)}
       </button>
 
     </div>

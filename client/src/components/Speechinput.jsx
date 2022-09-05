@@ -8,11 +8,10 @@ import { onrecord } from "../redux/microphone";
 // import PlayButton from "./components/PlayButton";
 // import key from "./key";
 
-
 // Set AssemblyAPI Axios Header
 
 const SPEECH_API_KEY = process.env.REACT_APP_SPEECH_API_KEY;
-console.log(SPEECH_API_KEY)
+
 const assembly = axios.create({
   baseURL: "https://api.assemblyai.com/v2",
   headers: {

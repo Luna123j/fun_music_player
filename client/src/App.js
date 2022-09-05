@@ -5,6 +5,10 @@ import PlayButton from './components/PlayButton';
 import Speechinput from './components/Speechinput';
 import Speechlistener from './components/Speechlistener';
 import * as speechCommands from '@tensorflow-models/speech-commands';
+import io from 'socket.io-client';
+
+const socket = io();
+
 
 function App() {
 

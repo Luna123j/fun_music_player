@@ -4,7 +4,7 @@ const request = require("request");
 const getlyrics = require("./helpers/getLyrics")
 
 //this route is for search from lyrics
-router.post('/', (req, res, next) => {
+router.get('/', (req, res, next) => {
   res.send({response: "OK"})
 })
 router.post('/', (req, res, next) => {

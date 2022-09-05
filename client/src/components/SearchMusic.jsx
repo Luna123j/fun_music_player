@@ -13,8 +13,18 @@ export default function ConnectPlayButton() {
     axios.post("/music", userInput)
       .then(
         (res) => {
+          console.log(res.data)
           searchedMusicResult = res.data;
-          console.log(searchedMusicResult);
+        }
+      )
+  }, []);
+
+  useEffect(() => {
+    axios.post("/lyrics", userInput)
+      .then(
+        (res) => {
+          console.log(res.data)
+          searchedMusicResult = res.data;
         }
       )
   }, []);

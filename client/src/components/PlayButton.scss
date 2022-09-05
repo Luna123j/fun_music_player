@@ -25,4 +25,65 @@
     border: 2px solid red;
   }
 
+  .progressBar-layout {
+    margin-top: 10px;
+    display: flex;
+    direction: rows;
+    align-items: center;
+  }
+
+  .progressBar {
+    --bar-bg: #ffe3d4;
+    --seek-before-width: 100%;
+    --seek-before-color: #ffc2a1;
+    --knobby: #3452a5;
+    --selectedKnobby: #26c9c3;
+
+    
+    background: var --bar-bg;
+    border-radius: 10px;
+    position: relative;
+    width: 80%;
+    height: 11px;
+    margin: 0 20px;
+  }
+
+  .progressBar::-moz-focus-outer {
+    border: 0;
+  }
+
+  .progressBar::before {
+    content: "";
+    height: 11px;
+    width: var(--seek-before-width);
+    background-color: var(--seek-before-color);
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  /* knobby */
+  .progressBar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    // border: none;
+    background-color: var(--knobby);
+    cursor: pointer;
+    position: relative;
+    margin: -2px 0 0 0;
+    z-index: 3;
+    box-sizing: border-box;
+  }
+  
+  .progressBar:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+    background: var(--selectedKnobby);
+  }
+
 }

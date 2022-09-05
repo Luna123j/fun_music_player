@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "dev": "nodemon ./bin/www",
+    "db:reset": "node db/scripts/resetdb.js"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",

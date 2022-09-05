@@ -10,12 +10,11 @@ import { onrecord } from "../redux/microphone";
 
 
 // Set AssemblyAPI Axios Header
-const SPEECH_API_KEY = process.env.SPEECH_API_KEY;
-
+const SPEECH_API_KEY = process.env.REACT_APP_SPEECH_API_KEY;
 const assembly = axios.create({
   baseURL: "https://api.assemblyai.com/v2",
   headers: {
-    authorization: "",
+    authorization: SPEECH_API_KEY,
     "content-type": "application/json",
     // "transfer-encoding": "chunked", // Refused to set unsafe header "transfer-encoding" <---error in browser console??
   },

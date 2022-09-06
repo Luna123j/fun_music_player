@@ -13,7 +13,6 @@ import '../components/Speechinput.scss';
 
 
 
-
 export default function Speechinput(props) {
   const dispatch = useDispatch();
   const { recordValues, transcriptValues } = props

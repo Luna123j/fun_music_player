@@ -13,6 +13,7 @@ import Navbar from "./components/Navbar";
 import Userview from "./components";
 import * as speechCommands from "@tensorflow-models/speech-commands";
 import MusicList from "./components/MusicList";
+import Lyrics from "./components/Lyrics";
 
 // const socket = io();
 
@@ -261,6 +262,7 @@ function App() {
         <Navbar />
       </div>
       <Userview />
+
       <Speechlistener
         indexValues={indexValues}
         listenerValues={listenerValues}
@@ -270,8 +272,6 @@ function App() {
         transcriptValues={transcriptValues}
       />
       <PlayButton />
-      <MusicList />
-      
     </div>
   );
 }

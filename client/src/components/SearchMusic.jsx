@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { getList } from '../redux/musicData';
+import { musiclist } from "../redux/visualMode";
+
 
 export default function SearchMusic() {
   const dispatch = useDispatch();
@@ -32,19 +34,18 @@ export default function SearchMusic() {
 
   const searchHandler = (e) => {
     e.preventDefault();
-    
+    dispatch(musiclist());
     axios.post("/music", userInput)
-    .then(
-      (res) => {
-        dispatch({type:"musicData/getList",payload:[...res.data.data]});
-      }
+      .then(
+        (res) => {
+          dispatch({ type: "musicData/getList", payload: [...res.data.data] });
+        }
       )
-    };
+  };
 
   return (
     <div >
       <form class="d-flex" role="search" action="" onSubmit={searchHandler}>
-        <label htmlFor="search">Search</label>
         <input
           id="search"
           type="search"

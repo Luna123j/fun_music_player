@@ -1,42 +1,47 @@
 import React from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from 'react-redux';
+import {selectedSong} from "../redux/visualMode";
 
-
-const MusicList=()=>{
+const MusicList = () => {
   const dispatch = useDispatch();
   const { musicList } = useSelector(state => state.musicData);
-  const {currentSongContent} = useSelector(state=>state.currentSongData);
+  
 
-
-  function songHandler (currentSong){
+  function songHandler(currentSong) {
     console.log(currentSong)
-    dispatch({type:"currentSongData/getCurrentSong",payload:[currentSong]});
-    const message = {title: currentSong.title, artist:""}
+    const message = { title: currentSong.title, artist: "" }
     axios.post("/music/lyrics", message)
       .then(
         (res) => {
-          console.log(res.data)
-
+          const songDetails = {
+            id: currentSong.id,
+            title: currentSong.title,
+            artist: currentSong.artist.name,
+            image: currentSong.album.cover_small,
+            mp3Url: currentSong.preview,
+            lyrics: res.data.lyrics
+          }
+          dispatch({ type: "currentSongData/getCurrentSong", payload: {...songDetails} });
+          dispatch(selectedSong())
         }
       )
   }
 
-
-return(
-  <div>
-        {musicList.map((item) => {
-          return (
-            <div key={item.id} onClick={()=>songHandler(item)}  >
-              <p>
-                <img src={item.album.cover_small} alt={item.album.title} />
-                {item.title}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-)
+  return (
+    <div>
+      {musicList.slice(0,5).map((item) => {
+        return (
+          <div key={item.id} onClick={() => songHandler(item)}  >
+            <p>
+              <img src={item.album.cover_small} alt={item.album.title} />
+              {item.title}
+            </p>
+          </div>
+        );
+      })}
+    </div>
+  )
 }
 
 export default MusicList

@@ -1,8 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, signup, favourite, recent } from '../redux/visualMode'
-import SearchMusic
- from "./SearchMusic";
+import SearchMusic from "./SearchMusic";
 const Navbar = () => {
   const { mode } = useSelector(state => state.userMode)
   const dispatch = useDispatch()

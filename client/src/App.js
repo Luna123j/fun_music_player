@@ -9,13 +9,12 @@ import axios from "axios";
 import MicRecorder from "mic-recorder-to-mp3";
 import { useSelector, useDispatch } from "react-redux";
 import { onrecord } from "./redux/microphone";
-import SearchMusic from "./components/SearchMusic";
 import Navbar from "./components/Navbar";
 import Userview from "./components";
 import * as speechCommands from "@tensorflow-models/speech-commands";
+import MusicList from "./components/MusicList";
 
-
-const socket = io();
+// const socket = io();
 
 // Set AssemblyAPI Axios Header
 const SPEECH_API_KEY = process.env.REACT_APP_API_KEY;
@@ -254,7 +253,6 @@ function App() {
   // //////////////////////////////////////////
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
-  const { musicList } = useSelector(state => state.musicData);
 
 
   return (
@@ -272,19 +270,8 @@ function App() {
         transcriptValues={transcriptValues}
       />
       <PlayButton />
-
-      <div>
-        {musicList.map((item) => {
-          return (
-            <div key={item.id}>
-              <p>
-                <img src={item.album.cover} alt={item.album.title} />
-                {item.title}
-              </p>
-            </div>
-          );
-        })}
-      </div>
+      <MusicList />
+      
     </div>
   );
 }

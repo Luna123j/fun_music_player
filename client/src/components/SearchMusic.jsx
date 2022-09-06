@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getList } from '../redux/musicData';
 
 export default function SearchMusic() {
-  const {musicList} = useSelector(state=>state.musicData);
   const dispatch = useDispatch();
   // let searchedMusicResult = [];
   // let searchedMusicLyrics = {};
@@ -18,27 +17,7 @@ export default function SearchMusic() {
   // const lyricWantToSearch = { text: "every night in my dream" };
   // console.log(userInput)
 
-  //get songs details for a song
-  // useEffect(() => {
-  //   axios.post("/music", userInput)
-  //     .then(
-  //       (res) => {
-  //         console.log(res.data)
-  //         searchedMusicResult = res.data;
-  //       }
-  //     )
-  // }, []);
-
-  //get lyrics for a song
-  // useEffect(() => {
-  //   axios.post("/lyrics", userInput)
-  //     .then(
-  //       (res) => {
-  //         console.log(res.data)
-  //         searchedMusicLyrics = res.data;
-  //       }
-  //     )
-  // }, []);
+  // get lyrics for a song
 
   // //search by lyrics
   // useEffect(() => {
@@ -76,15 +55,6 @@ export default function SearchMusic() {
         />
         <button class="btn btn-outline-success" type='submit'>SEARCH</button>
       </form>
-      {/* <div>
-        {musicList.map((item) => {
-          return (
-            <div key={item.id}>
-              <p><img src={item.album.cover} alt={item.album.title}/>{item.title}</p>
-            </div>
-          );
-        })}
-      </div> */}
     </div>
   )
 }

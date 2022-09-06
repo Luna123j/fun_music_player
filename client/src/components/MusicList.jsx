@@ -22,7 +22,7 @@ const MusicList = () => {
             mp3Url: currentSong.preview,
             lyrics: res.data.lyrics
           }
-          dispatch({ type: "currentSongData/getCurrentSong", payload: {...songDetails} });
+          dispatch({ type: "currentSongData/getCurrentSong", payload: songDetails });
           dispatch(selectedSong())
         }
       )

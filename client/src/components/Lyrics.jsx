@@ -5,13 +5,14 @@ import { useSelector} from 'react-redux';
 
 const Lyrics = () => {
   const { currentSongContent } = useSelector(state => state.currentSongData);
+  const l = currentSongContent.length-1
   console.log(currentSongContent);
   return (
     <div>
       <article>
-        <p><img src={currentSongContent.image} alt={currentSongContent.title}/>{currentSongContent.title}</p>
-        <p>artist: {currentSongContent.artist}</p>
-        <p>{currentSongContent.lyrics}</p>
+        <p><img src={currentSongContent[l].image} alt={currentSongContent[l].title}/>{currentSongContent[l].title}</p>
+        <p>artist: {currentSongContent[l].artist}</p>
+        <p>{currentSongContent[l].lyrics}</p>
       </article>
     </div>
   )

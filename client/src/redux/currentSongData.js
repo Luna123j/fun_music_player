@@ -3,11 +3,11 @@ import { createSlice } from '@reduxjs/toolkit'
 export const currentSongDataSlice = createSlice({
   name: 'currentSongData',
   initialState: {
-    currentSongContent: {}
+    currentSongContent: []
   },
   reducers: {
     getCurrentSong: (state,action) => {
-      state.currentSongContent = action.payload;
+      state.currentSongContent = [...state.currentSongContent,action.payload];
     }
    
   }

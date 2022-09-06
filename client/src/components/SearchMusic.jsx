@@ -1,61 +1,90 @@
 // this component is test data get from server, can be delete later
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { getList } from '../redux/musicData';
 
-export default function ConnectPlayButton() {
-  let searchedMusicResult = [];
-  let searchedMusicLyrics = {};
-  let searchedByLyrics = {};
+export default function SearchMusic() {
+  const {musicList} = useSelector(state=>state.musicData);
+  const dispatch = useDispatch();
+  // let searchedMusicResult = [];
+  // let searchedMusicLyrics = {};
+  // let searchedByLyrics = {};
   const [searchText, setSearchText] = useState("");
+  // const [musicData, setMusicData] = useState([])
   //ask backend fetch api data depends on specific parameters, can be track's title or artist.
   // will depends on user search in the future
-  const userInput = { title: "My heart will go on", artist: "" };
-  const lyricWantToSearch= {text: "every night in my dream"};
+  const userInput = { title: searchText, artist: "" };
+  // const lyricWantToSearch = { text: "every night in my dream" };
+  // console.log(userInput)
 
   //get songs details for a song
-  useEffect(() => {
-    axios.post("/music", userInput)
-      .then(
-        (res) => {
-          console.log(res.data)
-          searchedMusicResult = res.data;
-        }
-      )
-  }, []);
+  // useEffect(() => {
+  //   axios.post("/music", userInput)
+  //     .then(
+  //       (res) => {
+  //         console.log(res.data)
+  //         searchedMusicResult = res.data;
+  //       }
+  //     )
+  // }, []);
 
   //get lyrics for a song
-  useEffect(() => {
-    axios.post("/lyrics", userInput)
-      .then(
-        (res) => {
-          console.log(res.data)
-          searchedMusicLyrics = res.data;
-        }
+  // useEffect(() => {
+  //   axios.post("/lyrics", userInput)
+  //     .then(
+  //       (res) => {
+  //         console.log(res.data)
+  //         searchedMusicLyrics = res.data;
+  //       }
+  //     )
+  // }, []);
+
+  // //search by lyrics
+  // useEffect(() => {
+  //   axios.post("/searchByLyrics", lyricWantToSearch)
+  //     .then(
+  //       (res) => {
+  //         console.log(res.data)
+  //         searchedByLyrics = res.data;
+  //       }
+  //     )
+  // }, []);
+
+  const searchHandler = (e) => {
+    e.preventDefault();
+    
+    axios.post("/music", userInput)
+    .then(
+      (res) => {
+        dispatch({type:"musicData/getList",payload:[...res.data.data]});
+      }
       )
-  }, []);
+    };
 
-  //search by lyrics
-  useEffect(() => {
-    axios.post("/searchByLyrics", lyricWantToSearch)
-      .then(
-        (res) => {
-          console.log(res.data)
-          searchedByLyrics = res.data;
-        }
-      )
-  }, []);
-
-  const validate = (e)=>{
-    e.preventDefaut(); 
-  }
-
-  return <div >
-    <input
-      name="search"
-      type="text"
-      placeholder="Enter a track title" 
-      onChange={(e) => setSearchText(e.target.value)}
-      />
-      <button class="searchButton" type="submit" onClick={validate}>Search</button>
-  </div>
+  return (
+    <div >
+      <form class="d-flex" role="search" action="" onSubmit={searchHandler}>
+        <label htmlFor="search">Search</label>
+        <input
+          id="search"
+          type="search"
+          class="form-control me-2"
+          aria-label="Search"
+          value={searchText}
+          onChange={(event) => setSearchText(event.target.value)}
+        />
+        <button class="btn btn-outline-success" type='submit'>SEARCH</button>
+      </form>
+      {/* <div>
+        {musicList.map((item) => {
+          return (
+            <div key={item.id}>
+              <p><img src={item.album.cover} alt={item.album.title}/>{item.title}</p>
+            </div>
+          );
+        })}
+      </div> */}
+    </div>
+  )
 }

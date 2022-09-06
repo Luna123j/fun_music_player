@@ -9,6 +9,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {  
   const title = req.body.title;
+  console.log(title)
   request({
     url: `https://api.deezer.com/search/track?q=${title}`,
     method: 'GET',

@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const users = require('../db/queries/users');
 
-const users = ['Bob', 'Alex', 'Will', 'Tristan'];
+
+// const users = ['Bob', 'Alex', 'Will', 'Tristan'];
 
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.json(users);
+/* GET users listing. */
+router.get('/', (req, res) => {
+  users.getAllUsers().then(data => {
+    console.log(data);
+    res.json({users: data});
+  })
 });
 
 module.exports = router;

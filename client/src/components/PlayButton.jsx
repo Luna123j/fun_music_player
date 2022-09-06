@@ -21,7 +21,7 @@ const [duration, setDuration] = useState(0)
 useEffect(()=> {
   audioRef.current.pause();
   audioRef.current = new Audio(mp3Url[list_id]);
-  // audioRef.current.play()
+  audioRef.current.play()
   // progressBar.current = audioRef.current.currentTime
 },[list_id]);
 

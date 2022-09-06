@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, signup, favourite, recent } from '../redux/visualMode'
-import SearchMusic
- from "./SearchMusic";
+import SearchMusic from "./SearchMusic";
+import { Link } from "react-router-dom";
 const Navbar = () => {
   const { mode } = useSelector(state => state.userMode)
   const dispatch = useDispatch()
@@ -17,19 +17,27 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <span className="nav-link active" aria-current="page" >Home</span>
+              <span className="nav-link active" aria-current="page" ></span>
             </li>
             <li className="nav-item">
-              <span className="nav-link" >Favourite</span>
+            <span className="nav-link">
+              <Link to="/favourite">Favourite</Link>
+              </span>
             </li>
             <li className="nav-item">
-              <span className="nav-link" >History</span>
+              <span className="nav-link">
+              <Link to="/history">History</Link>
+              </span>
             </li>
             <li className="nav-item">
-              <span className="nav-link" onClick={()=>dispatch(login())}>Login</span>
+            <span className="nav-link">
+              <Link to="/login">Login</Link>
+              </span>
             </li>
             <li className="nav-item">
-              <span className="nav-link" onClick={()=>dispatch(signup())}>Signup</span>
+            <span className="nav-link">
+              <Link to="/signup">Sign up</Link>
+              </span>
             </li>
           </ul>
           <SearchMusic/>

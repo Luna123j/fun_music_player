@@ -12,7 +12,6 @@ export default function PlayButton() {
                 3: 'https://cdns-preview-3.dzcdn.net/stream/c-381eb6e90e561759fea2b229e9b844eb-3.mp3'
 }
 
-
 const audioRef= useRef(new Audio(mp3Url[list_id]))
 const progressBar = useRef()
 const animationRef = useRef()

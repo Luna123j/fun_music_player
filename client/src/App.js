@@ -4,8 +4,9 @@ import './components/PlayButton';
 import PlayButton from './components/PlayButton';
 import Speechinput from './components/Speechinput';
 import Speechlistener from './components/Speechlistener';
-import * as speechCommands from '@tensorflow-models/speech-commands';
 import io from 'socket.io-client';
+import Navbar from './components/Navbar';
+import Userview from './components';
 
 const socket = io();
 
@@ -14,6 +15,8 @@ function App() {
 
   return (
     <div className="App">
+    <div><Navbar /></div> 
+    <Userview /> 
     <Speechlistener />
     <ConnectPlayButton />
     <Speechinput />

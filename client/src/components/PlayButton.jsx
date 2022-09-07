@@ -14,8 +14,7 @@ export default function PlayButton() {
       mp3Url[index+1]=song.mp3Url;
     })
   }
-  console.log(mp3Url)
-
+  
   const audioRef = useRef(new Audio(mp3Url[list_id]))
   const progressBar = useRef()
   const animationRef = useRef()

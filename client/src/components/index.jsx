@@ -11,16 +11,11 @@ const Userview = () => {
   const { mode } = useSelector(state => state.userMode);
 
   return (
-    <>
-      <div>
-        {mode === 'login' && <Login />}
-        {mode === 'signup' && <Signup />}
-      </div>
+
       <div>
         {mode === 'musiclist' && <MusicList />}
         {mode === 'selectedSong' && <Lyrics />}
       </div>
-    </>
   )
 }
 

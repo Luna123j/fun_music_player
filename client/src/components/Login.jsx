@@ -1,11 +1,34 @@
 import React from "react";
+import axios from "axios";
+import {  useDispatch } from "react-redux";
+import { userState } from "../redux/user";
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const submitHandler =(e) => {
+    e.preventDefault();
+    const data = {
+      username: e.target[0].value,
+      password: e.target[1].value
+    }
+    axios.post("/login", data).then((res)=> {
+      console.log(res)
+      if (res.data.error === "User not exist") {
+        navigate('/signup')
+      } else {
+        dispatch(userState({type: 'user/username', payload: res.data.username}))
+        navigate('/');
+
+      }
+    });
+  }
   
   return (
     <div>
-      <form type="submit">
+      <form onSubmit={submitHandler}>
         <div>
           <span>username</span>
           <input />

@@ -4,6 +4,7 @@ import microphoneReducer from "./microphone"
 import listenReducer from "./listener"
 import musicDataReducer from "./musicData";
 import visualModeReducer from "./visualMode"
+import userReducer from "./user"
 
 export default configureStore({
   reducer: { 
@@ -11,6 +12,7 @@ export default configureStore({
     microphone: microphoneReducer,
     listen: listenReducer,
     musicData: musicDataReducer,
-    userMode: visualModeReducer
+    userMode: visualModeReducer,
+    user: userReducer
   }
 })

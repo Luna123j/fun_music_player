@@ -1,17 +1,17 @@
 import "./App.css";
 import "./components/PlayButton";
-// import PlayButton from "./components/PlayButton";
-// import Speechinput from "./components/Speechinput";
-// import Speechlistener from "./components/Speechlistener";
+import PlayButton from "./components/PlayButton";
+import Speechinput from "./components/Speechinput";
+import Speechlistener from "./components/Speechlistener";
 import io from "socket.io-client";
 import { useEffect, useState, useRef, React } from "react";
 import axios from "axios";
 import MicRecorder from "mic-recorder-to-mp3";
 import { useSelector, useDispatch } from "react-redux";
 import { onrecord } from "./redux/microphone";
-// import SearchMusic from "./components/SearchMusic";
+import SearchMusic from "./components/SearchMusic";
 import Navbar from "./components/Navbar";
-// import Userview from "./components";
+import Userview from "./components";
 import * as speechCommands from "@tensorflow-models/speech-commands";
 import { BrowserRouter , Switch, Route, Link, Routes } from "react-router-dom";
 import Login from "./components/Login";
@@ -268,14 +268,16 @@ function App() {
           <Navbar />
         </div>
         <Routes>
+          <Route path="/" element={<Userview />} />
           <Route path="/favourite" element={<Favourite />} />
           <Route path="/history" element={<History />} />
           <Route path="/login" element={<Login/>} />
           <Route path="/signup" element={<Signup/>} />
         </Routes>
        
-        
-        {/* <Speechlistener
+       
+       
+        <Speechlistener
           indexValues={indexValues}
           listenerValues={listenerValues}
         />
@@ -283,7 +285,7 @@ function App() {
           recordValues={recordValues}
           transcriptValues={transcriptValues}
         />
-        <PlayButton /> */}
+        <PlayButton />
 
         <div>
           {musicList.map((item) => {

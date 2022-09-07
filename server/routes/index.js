@@ -3,7 +3,6 @@ const router = express.Router();
 const db = require("../configs/db.config");
 const bcrypt = require("bcryptjs");
 
-
 const getUsernameLookUp = (username) => {
   const queryText = `Select * from users where username = $1`;
   const params = [username];
@@ -11,7 +10,7 @@ const getUsernameLookUp = (username) => {
   return db
     .query(queryText, params)
     .then((data) => {
-      return data.rows.length;
+      return data.rows;
     })
     .catch((err) => console.error(err));
 };
@@ -25,7 +24,23 @@ router.get("/login", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  // console.log(req.body);
+  const {username, password} = req.body;
+  if (username === "" || password === "") {
+    res.status(400).end();
+  }
+  getUsernameLookUp(username)
+    .then((data) => {
+      console.log(data);
+      if (data.length === 0) {
+        res.json({ error: "User not exist" });
+      } else {
+        console.log("%%%%%%%%%", password, data);
+        if (bcrypt.compareSync(password, data[0].password)) {
+          res.send(data[0]);
+        }
+      }
+    })
+    .catch((err) => console.error(err));
 });
 
 router.get("/signup", (req, res) => {
@@ -42,7 +57,7 @@ router.post("/signup", (req, res) => {
   }
   getUsernameLookUp(username).then((data) => {
     console.log(data);
-    if (data !== 0) {
+    if (data.length !== 0) {
       res.json({ error: "User exist" });
     } else {
       console.log("%%%%%%%%%", req.body);

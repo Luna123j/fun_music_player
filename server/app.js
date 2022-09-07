@@ -8,7 +8,6 @@ const cookieSession = require('cookie-session');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const musicRouter = require('./routes/music');
-const lyricsRouter = require('./routes/lyrics');
 const searchByLyricsRouter = require('./routes/searchByLyrics');
 
 
@@ -27,7 +26,6 @@ app.use(cookieSession({
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/music', musicRouter);
-app.use('/lyrics', lyricsRouter);
 app.use('/searchByLyrics', searchByLyricsRouter);
 
 

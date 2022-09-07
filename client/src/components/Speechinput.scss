@@ -1,4 +1,9 @@
 .record{
     display: flex;
+    flex-direction: column;
     justify-content: center;
+
+    #luigitwerk{
+        width: 50vw
+    }
 }

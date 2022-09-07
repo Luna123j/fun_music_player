@@ -1,6 +1,7 @@
 import "./App.css";
 import "./components/PlayButton";
 import PlayButton from "./components/PlayButton";
+import { onplay, next, prev } from './redux/player';
 import Speechinput from "./components/Speechinput";
 import Speechlistener from "./components/Speechlistener";
 import io from "socket.io-client";
@@ -9,7 +10,6 @@ import axios from "axios";
 import MicRecorder from "mic-recorder-to-mp3";
 import { useSelector, useDispatch } from "react-redux";
 import { onrecord } from "./redux/microphone";
-
 import Navbar from "./components/Navbar";
 import * as speechCommands from "@tensorflow-models/speech-commands";
 import { BrowserRouter , Switch, Route, Link, Routes } from "react-router-dom";
@@ -21,15 +21,16 @@ import Userview from "./components";
 import MusicList from "./components/MusicList";
 import Lyrics from "./components/Lyrics";
 
-// const socket = io();
+const socket = io();
+
 
 // Set AssemblyAPI Axios Header
-const SPEECH_API_KEY = process.env.REACT_APP_API_KEY;
+// const SPEECH_API_KEY = process.env.REACT_APP_API_KEY;
 // console.log(SPEECH_API_KEY)
 const assembly = axios.create({
   baseURL: "https://api.assemblyai.com/v2",
   headers: {
-    authorization: SPEECH_API_KEY,
+    authorization: "a95cae33e75d4ed69ba5c2bbfa0de36e",
     "content-type": "application/json",
     "transfer-encoding": "chunked", // Refused to set unsafe header "transfer-encoding" <---error in browser console??
   },
@@ -64,9 +65,64 @@ function App() {
 
   useEffect(() => {
     console.log(currentIndex);
-    if (currentIndex === 3) {
+    if (currentIndex === 9) {
       dispatch(onrecord());
       startRecording();
+    }
+  }, [currentIndex]);
+
+  useEffect(() => {
+    console.log(currentIndex);
+    if (currentIndex === 2) {
+      dispatch(onrecord());
+      stopRecording();
+    }
+  }, [currentIndex]);
+
+  useEffect(() => {
+    console.log(currentIndex);
+    if (currentIndex === 12) {
+      submitTranscriptionHandler()
+    }
+  }, [currentIndex])
+  
+
+  useEffect(() => {
+    if (currentIndex === 1) {
+      clickPrev();
+      if (!play){
+          audioRef.current.play()
+          animationRef.current = requestAnimationFrame(whilePlaying)
+        } else {
+          audioRef.current.pause()
+          animationRef.current = cancelAnimationFrame(animationRef.current)
+        }
+    }
+  }, [currentIndex]);
+ 
+  useEffect(() => {
+    if (currentIndex === 7) {
+      clickNext();
+      if (!play){
+          audioRef.current.play()
+          animationRef.current = requestAnimationFrame(whilePlaying)
+        } else {
+          audioRef.current.pause()
+          animationRef.current = cancelAnimationFrame(animationRef.current)
+        }
+    }
+  }, [currentIndex]);
+
+  useEffect(() => {
+    if (currentIndex === 8 || currentIndex === 11) {
+      dispatch(onplay())
+      if (!play){
+          audioRef.current.play()
+          animationRef.current = requestAnimationFrame(whilePlaying)
+        } else {
+          audioRef.current.pause()
+          animationRef.current = cancelAnimationFrame(animationRef.current)
+        }
     }
   }, [currentIndex]);
 
@@ -84,7 +140,7 @@ function App() {
 
     const biggestValue = Math.max(...scores);
     const biggestValueIndex = scores.indexOf(biggestValue);
-    biggestValueIndex !== 0 && setCurrentindex(biggestValueIndex);
+    setCurrentindex(biggestValueIndex);
   };
 
   const cURL = "http://localhost:3000/model/";
@@ -256,11 +312,96 @@ function App() {
     transcript,
     setTranscript,
     submitTranscriptionHandler,
+    transcriptData
   };
   // //////////////////////////////////////////
+  // SearchMusic Globalized logic
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
+ 
+// //////////////////////////////////////////
+  // Playbutton Globalized Logic
+  // ///////////////////////////////////////
+  // ////////////////////////////////////////////
+  const { play, list_id } = useSelector(state => state.player);
+  const mp3Url={1: 'https://cdns-preview-d.dzcdn.net/stream/c-d8f5b81a6243ddfa4c97b9a4c86a82fa-6.mp3',
+                2: 'https://cdns-preview-e.dzcdn.net/stream/c-e4829488eb446f23487bbf60a6aa869d-3.mp3',
+                3: 'https://cdns-preview-3.dzcdn.net/stream/c-381eb6e90e561759fea2b229e9b844eb-3.mp3'
+}
 
+
+const audioRef= useRef(new Audio(mp3Url[list_id]))
+const progressBar = useRef()
+const animationRef = useRef()
+const [currentTime, setCurrentTime] = useState(0)
+const [duration, setDuration] = useState(0)
+
+useEffect(()=> {
+  audioRef.current.pause();
+  audioRef.current = new Audio(mp3Url[list_id]);
+  audioRef.current.play()
+  // progressBar.current = audioRef.current.currentTime
+},[list_id]);
+
+useEffect(() => {
+  const seconds = Math.floor(audioRef.current.duration);
+  setDuration(seconds);
+  progressBar.current.max = seconds;
+}, [audioRef?.current?.loadedmetadata, audioRef?.current?.readyState]);
+
+const calculateTime = (secs) => {
+  const minutes = Math.floor(secs / 60);
+  const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+  const seconds = Math.floor(secs % 60);
+  const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+  return `${returnedMinutes}:${returnedSeconds}`;
+}
+
+const clickPlayHandler = () => {
+  dispatch(onplay())
+  if (!play){
+      audioRef.current.play()
+      animationRef.current = requestAnimationFrame(whilePlaying)
+    } else {
+      audioRef.current.pause()
+      animationRef.current = cancelAnimationFrame(animationRef.current)
+    }
+  }
+
+  const whilePlaying = () => {
+    progressBar.current.value = audioRef.current.currentTime;
+    changePlayerCurrentTime();
+    animationRef.current = requestAnimationFrame(whilePlaying);
+    
+  }
+
+  const changePlayerCurrentTime = () => {
+    progressBar.current.style.setProperty('--seek-before-width', `${progressBar.current.value / duration * 100}%`)
+    setCurrentTime(progressBar.current.value);
+  }
+
+  const clickNext = () => {
+    dispatch(next())
+  }
+
+  const clickPrev =() => {
+    dispatch(prev())
+  }
+
+  const handleChange = (e) => {
+    audioRef.current.currentTime = progressBar.current.value;
+    changePlayerCurrentTime();
+   
+  }
+
+  const { musicList } = useSelector((state) => state.musicData);
+  const playValues = { audioRef, clickPrev, clickPlayHandler, play, clickNext }
+  const timeValues = { calculateTime, currentTime, progressBar, handleChange, duration }
+
+  // //////////////////////////////////////////
+  // 
+  // ///////////////////////////////////////
+  // ////////////////////////////////////////////
   return (
     <BrowserRouter>
       <div className="App">
@@ -285,7 +426,7 @@ function App() {
           recordValues={recordValues}
           transcriptValues={transcriptValues}
         />
-        <PlayButton />
+      <PlayButton playValues={playValues} timeValues={timeValues} />
       </div>
     </BrowserRouter>
 

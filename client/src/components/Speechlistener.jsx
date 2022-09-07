@@ -11,7 +11,12 @@ export default function Speechlistener(props) {
   const { indexValues, listenerValues } = props;
   const {currentIndex, updateCurrentIndex} = indexValues
   const {listen, listener, listenOptions, stopListening} = listenerValues
-  const coolLabels = ["🐸", "👋😁", "🟢", "🎙️", "🟥"];
+  const coolLabels = [
+    "🐸", 
+    "👈", 
+    "🔚", "😍", "👋😁", "📰", 
+    "🏠", "👉", "🟢", "🎙️", "🔭", 
+    "🟥", "✉️", "🎉🥳🎉Thanks for listening!🎉🥳🎉" ];
   const dispatch = useDispatch();
 
   return (

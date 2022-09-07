@@ -17,7 +17,7 @@ export default function Speechinput(props) {
   const dispatch = useDispatch();
   const { recordValues, transcriptValues } = props
   const { record, startRecording, stopRecording } = recordValues
-  const { transcript, setTranscript, submitTranscriptionHandler } = transcriptValues
+  const { transcript, setTranscript, submitTranscriptionHandler, transcriptData } = transcriptValues
 
 
   
@@ -45,11 +45,11 @@ export default function Speechinput(props) {
         value={transcript}
         onChange={(e) => setTranscript(e.target.value)}
       />
-      {/* {transcriptData.status === "completed" ? (
-        // <p>{transcript}</p>
+      {transcriptData.status === "processing" ? (
+        <img id="luigitwerk" src="https://www.icegif.com/wp-content/uploads/roblox-icegif-10.gif" alt="loading gif">{transcript}</img>
         ) : (
-          <p>{transcriptData.status}</p>
-        )} */}
+          <p></p>
+        )}
       {/* this input was used for TEXT TO SPEECH *** we can change it */}
       {/* <input
         type='text'

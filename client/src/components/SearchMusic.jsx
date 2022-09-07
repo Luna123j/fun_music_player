@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { getList } from '../redux/musicData';
 import { musiclist } from "../redux/visualMode";
+import { Link , useNavigate} from "react-router-dom";
+
 
 
 export default function SearchMusic() {
@@ -32,29 +34,31 @@ export default function SearchMusic() {
   //     )
   // }, []);
 
+  const navigate = useNavigate();
   const searchHandler = (e) => {
     e.preventDefault();
-    dispatch(musiclist());
+    // dispatch(musiclist());
     axios.post("/music", userInput)
       .then(
         (res) => {
           dispatch({ type: "musicData/getList", payload: [...res.data.data] });
+          navigate("/search")
         }
       )
   };
 
   return (
     <div >
-      <form class="d-flex" role="search" action="" onSubmit={searchHandler}>
+      <form className="d-flex" role="search" action="" onSubmit={searchHandler}>
         <input
           id="search"
           type="search"
-          class="form-control me-2"
+          className="form-control me-2"
           aria-label="Search"
           value={searchText}
           onChange={(event) => setSearchText(event.target.value)}
         />
-        <button class="btn btn-outline-success" type='submit'>SEARCH</button>
+        <button className="btn btn-outline-success" type='submit'>SEARCH</button>
       </form>
     </div>
   )

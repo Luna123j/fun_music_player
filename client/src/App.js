@@ -19,14 +19,14 @@ import Userview from "./components";
 
 
 import * as speechCommands from "@tensorflow-models/speech-commands";
-import MusicList from "./components/MusicList";
-import Lyrics from "./components/Lyrics";
 import { BrowserRouter , Switch, Route, Link, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Favourite from "./components/Favourite";
 import History from "./components/History";
 
+import MusicList from "./components/MusicList";
+import Lyrics from "./components/Lyrics";
 
 const socket = io();
 
@@ -330,11 +330,14 @@ function App() {
   // Playbutton Globalized Logic
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
+
   const { play, list_id } = useSelector(state => state.player);
   const mp3Url={1: 'https://cdns-preview-d.dzcdn.net/stream/c-d8f5b81a6243ddfa4c97b9a4c86a82fa-6.mp3',
                 2: 'https://cdns-preview-e.dzcdn.net/stream/c-e4829488eb446f23487bbf60a6aa869d-3.mp3',
                 3: 'https://cdns-preview-3.dzcdn.net/stream/c-381eb6e90e561759fea2b229e9b844eb-3.mp3'
 }
+
+
 
 const audioRef= useRef(new Audio(mp3Url[list_id]))
 const progressBar = useRef()
@@ -420,14 +423,11 @@ const clickPlayHandler = () => {
           <Route path="/history" element={<History />} />
           <Route path="/login" element={<Login/>} />
           <Route path="/signup" element={<Signup/>} />
+          <Route path="/search" element={<MusicList/>} />
+          <Route path="/current" element={<Lyrics/>} />
         </Routes>
        
-
-       
-       
-
-        <Userview />
-
+        {/* <Userview /> */}
         <Speechlistener
           indexValues={indexValues}
           listenerValues={listenerValues}
@@ -439,7 +439,7 @@ const clickPlayHandler = () => {
 
    
 
-      <PlayButton />
+      <PlayButton playValues={playValues} timeValues={timeValues}/>
 
       </div>
     </BrowserRouter>

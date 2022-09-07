@@ -12,14 +12,14 @@ import { onrecord } from "./redux/microphone";
 
 import Navbar from "./components/Navbar";
 import * as speechCommands from "@tensorflow-models/speech-commands";
-import MusicList from "./components/MusicList";
-import Lyrics from "./components/Lyrics";
 import { BrowserRouter , Switch, Route, Link, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Favourite from "./components/Favourite";
 import History from "./components/History";
 import Userview from "./components";
+import MusicList from "./components/MusicList";
+import Lyrics from "./components/Lyrics";
 
 // const socket = io();
 
@@ -261,9 +261,6 @@ function App() {
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
 
-
-  const { musicList } = useSelector((state) => state.musicData);
-
   return (
     <BrowserRouter>
       <div className="App">
@@ -275,9 +272,11 @@ function App() {
           <Route path="/history" element={<History />} />
           <Route path="/login" element={<Login/>} />
           <Route path="/signup" element={<Signup/>} />
+          <Route path="/search" element={<MusicList/>} />
+          <Route path="/current" element={<Lyrics/>} />
         </Routes>
        
-        <Userview />
+        {/* <Userview /> */}
         <Speechlistener
           indexValues={indexValues}
           listenerValues={listenerValues}

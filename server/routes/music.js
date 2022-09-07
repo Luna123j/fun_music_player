@@ -48,6 +48,7 @@ router.post("/lyrics", (req, res, next) => {
       } else {
 
         getlyrics(JSON.parse(body)).then((data) => {
+          
           res.send(data);
         });
       }

@@ -401,7 +401,13 @@ const clickPlayHandler = () => {
   }
 
   const { musicList } = useSelector((state) => state.musicData);
+  const playValues = { audioRef, clickPrev, clickPlayHandler, play, clickNext }
+  const timeValues = { calculateTime, currentTime, progressBar, handleChange, duration }
 
+  // //////////////////////////////////////////
+  // 
+  // ///////////////////////////////////////
+  // ////////////////////////////////////////////
   return (
     <BrowserRouter>
       <div className="App">

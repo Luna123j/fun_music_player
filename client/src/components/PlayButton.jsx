@@ -10,8 +10,8 @@ export default function PlayButton() {
   const dispatch = useDispatch();
   const mp3Url = {}
   if(currentSongContent.length>0){
-    currentSongContent.map((song,index)=>{
-      mp3Url[index+1]=song.mp3Url;
+    currentSongContent.map((song,index) => {
+      return mp3Url[index+1]=song.mp3Url;
     })
   }
   

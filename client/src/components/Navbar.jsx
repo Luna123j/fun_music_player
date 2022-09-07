@@ -2,13 +2,12 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, signup, favourite, recent } from "../redux/visualMode";
 import SearchMusic from "./SearchMusic";
-<<<<<<< HEAD
+
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { resetUserState } from "../redux/user";
-=======
-import { Link } from "react-router-dom";
->>>>>>> master
+
+
 
 const Navbar = () => {
   

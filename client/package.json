@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
     "@tensorflow-models/speech-commands": "^0.4.0",
@@ -28,6 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:8080",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -50,4 +50,5 @@
     "axios": "^0.27.2",
     "dotenv": "^16.0.2"
   }
+
 }

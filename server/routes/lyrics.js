@@ -7,33 +7,33 @@ const getlyrics = require("./helpers/getLyrics");
 router.get("/", (req, res, next) => {
   res.send({ response: "OK" });
 });
+
 router.post("/", (req, res, next) => {
   const API_KEY = process.env.LYRICS_API_KEY;
   const title = req.body.title;
+  const artist = req.body.artist;
 
-  const song = encodeURIComponent(`${title}`);
+  const song = encodeURIComponent(`${title}${artist}`);
 
+  request(
+    {
+      url: `https://api.genius.com/search?q=${song}&access_token=${API_KEY}`,
+      method: "GET",
+      Authorization: `Bearer ${API_KEY}`,
+    },
+    (error, response, body) => {
+      if (error) {
+        console.log(error);
+      } else {
 
-  return new Promise((resolve, reject) => {
-    request(
-      {
-        url: `https://api.genius.com/search?q=${song}&access_token=${API_KEY}`,
-        method: "GET",
-        Authorization: `Bearer ${API_KEY}`,
-      },
-      (error, response, body) => {
-        if (error) {
-          console.log(error);
-        } else {
-          return resolve(JSON.parse(body));
-        }
+        getlyrics(data).then((data) => {
+          res.send(data);
+        });
       }
-    );
-  }).then((data) => {
-    getlyrics(data).then((data) => {
-      res.send(data);
-    });
-  });
+    }
+  );
+
 });
+
 
 module.exports = router;

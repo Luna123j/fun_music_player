@@ -18,12 +18,17 @@ export const visualModeSlice = createSlice({
     },
     recent: (state) => {
       state.mode = "recent"
+    },
+    musiclist: (state) => {
+      state.mode = "musiclist"
+    },
+    selectedSong: (state) => {
+      state.mode = "selectedSong"
     }
-   
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { login, signup, favourite, recent } = visualModeSlice.actions
+export const { login, signup, favourite, recent, musiclist, selectedSong} = visualModeSlice.actions
 
 export default visualModeSlice.reducer

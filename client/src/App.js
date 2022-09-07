@@ -11,10 +11,18 @@ import MicRecorder from "mic-recorder-to-mp3";
 import { useSelector, useDispatch } from "react-redux";
 import { onrecord } from "./redux/microphone";
 import Navbar from "./components/Navbar";
-import Userview from "./components";
 import * as speechCommands from "@tensorflow-models/speech-commands";
+import MusicList from "./components/MusicList";
+import Lyrics from "./components/Lyrics";
+import { BrowserRouter , Switch, Route, Link, Routes } from "react-router-dom";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import Favourite from "./components/Favourite";
+import History from "./components/History";
+import Userview from "./components";
 
 const socket = io();
+
 
 // Set AssemblyAPI Axios Header
 // const SPEECH_API_KEY = process.env.REACT_APP_API_KEY;
@@ -385,41 +393,34 @@ const clickPlayHandler = () => {
    
   }
 
-  const playValues = { audioRef, clickPrev, clickPlayHandler, play, clickNext }
-  const timeValues = { calculateTime, currentTime, progressBar, handleChange, duration }
+  const { musicList } = useSelector((state) => state.musicData);
 
-  // //////////////////////////////////////////
-  // 
-  // ///////////////////////////////////////
-  // ////////////////////////////////////////////
   return (
-    <div className="App">
-      <div>
-        <Navbar />
-      </div>
-      <Userview />
-      <Speechlistener
-        indexValues={indexValues}
-        listenerValues={listenerValues}
-      />
-      <Speechinput
-        recordValues={recordValues}
-        transcriptValues={transcriptValues}
-      />
+    <BrowserRouter>
+      <div className="App">
+        <div>
+          <Navbar />
+        </div>
+        <Routes>
+          <Route path="/favourite" element={<Favourite />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/signup" element={<Signup/>} />
+        </Routes>
+       
+        <Userview />
+        <Speechlistener
+          indexValues={indexValues}
+          listenerValues={listenerValues}
+        />
+        <Speechinput
+          recordValues={recordValues}
+          transcriptValues={transcriptValues}
+        />
       <PlayButton playValues={playValues} timeValues={timeValues} />
-      <div>
-        {/* {musicList.map((item) => {
-          return (
-            <div key={item.id}>
-              <p>
-                <img src={item.album.cover} alt={item.album.title} />
-                {item.title}
-              </p>
-            </div>
-          );
-        })} */}
       </div>
-    </div>
+    </BrowserRouter>
+
   );
 }
 

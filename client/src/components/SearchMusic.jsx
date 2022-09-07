@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { getList } from '../redux/musicData';
+import { musiclist } from "../redux/visualMode";
+
 
 export default function SearchMusic() {
-  const {musicList} = useSelector(state=>state.musicData);
   const dispatch = useDispatch();
   // let searchedMusicResult = [];
   // let searchedMusicLyrics = {};
@@ -18,27 +19,7 @@ export default function SearchMusic() {
   // const lyricWantToSearch = { text: "every night in my dream" };
   // console.log(userInput)
 
-  //get songs details for a song
-  // useEffect(() => {
-  //   axios.post("/music", userInput)
-  //     .then(
-  //       (res) => {
-  //         console.log(res.data)
-  //         searchedMusicResult = res.data;
-  //       }
-  //     )
-  // }, []);
-
-  //get lyrics for a song
-  // useEffect(() => {
-  //   axios.post("/lyrics", userInput)
-  //     .then(
-  //       (res) => {
-  //         console.log(res.data)
-  //         searchedMusicLyrics = res.data;
-  //       }
-  //     )
-  // }, []);
+  // get lyrics for a song
 
   // //search by lyrics
   // useEffect(() => {
@@ -53,19 +34,18 @@ export default function SearchMusic() {
 
   const searchHandler = (e) => {
     e.preventDefault();
-    
+    dispatch(musiclist());
     axios.post("/music", userInput)
-    .then(
-      (res) => {
-        dispatch({type:"musicData/getList",payload:[...res.data.data]});
-      }
+      .then(
+        (res) => {
+          dispatch({ type: "musicData/getList", payload: [...res.data.data] });
+        }
       )
-    };
+  };
 
   return (
     <div >
       <form class="d-flex" role="search" action="" onSubmit={searchHandler}>
-        <label htmlFor="search">Search</label>
         <input
           id="search"
           type="search"
@@ -76,15 +56,6 @@ export default function SearchMusic() {
         />
         <button class="btn btn-outline-success" type='submit'>SEARCH</button>
       </form>
-      {/* <div>
-        {musicList.map((item) => {
-          return (
-            <div key={item.id}>
-              <p><img src={item.album.cover} alt={item.album.title}/>{item.title}</p>
-            </div>
-          );
-        })}
-      </div> */}
     </div>
   )
 }

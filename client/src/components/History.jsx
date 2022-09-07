@@ -1,19 +1,20 @@
 import axios from "axios";
 import React, {useEffect }from "react";
+import { useCookies } from "react-cookie";
 import { useSelector,useDispatch} from 'react-redux';
 
 
 const History = () => {
   const dispatch = useDispatch();
   const { currentSongContent } = useSelector(state => state.currentSongData)
-  const {username} = useSelector(state => state.user)
+  const [cookie] = useCookies()
   // const clickHandler=()=>{
   //   dispatch()
   // }
 
   useEffect(()=>{
     console.log(currentSongContent[currentSongContent.length-1]);
-    axios.post('/history',{currentSong: currentSongContent[currentSongContent.length-1],username: username.payload})
+    axios.post('/history',{currentSong: currentSongContent[currentSongContent.length-1],username: cookie.username})
     .then((res)=>{
       console.log(res);
     })

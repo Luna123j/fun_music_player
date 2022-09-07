@@ -3,10 +3,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {  useDispatch } from "react-redux";
 import { userState } from "../redux/user";
+import { useCookies } from "react-cookie";
 
 const Signup = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [cookie, setCookie] = useCookies('username')
 
   const submitHandler =(e) => {
     e.preventDefault();
@@ -21,6 +23,7 @@ const Signup = () => {
         return;
       } else {
         dispatch(userState({type: 'user/username', payload: res.data.username}))
+        setCookie('username', res.data.username)
         navigate('/');
       }
     });

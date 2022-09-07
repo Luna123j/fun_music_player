@@ -27,7 +27,7 @@ import History from "./components/History";
 
 import MusicList from "./components/MusicList";
 import Lyrics from "./components/Lyrics";
-
+import {cookieProvider, CookiesProvider} from "react-cookie";
 const socket = io();
 
 
@@ -412,6 +412,8 @@ const clickPlayHandler = () => {
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
   return (
+    <CookiesProvider>
+
     <BrowserRouter>
       <div className="App">
         <div>
@@ -443,6 +445,7 @@ const clickPlayHandler = () => {
 
       </div>
     </BrowserRouter>
+    </CookiesProvider>
 
   );
 }

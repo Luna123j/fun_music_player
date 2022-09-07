@@ -6,22 +6,24 @@ import SearchMusic from "./SearchMusic";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { resetUserState } from "../redux/user";
-
+import { useCookies } from "react-cookie";
 
 
 const Navbar = () => {
   
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { username } = useSelector((state) => state.user);
-
+  // const { username } = useSelector((state) => state.user);
+  const [cookie, removeCookie] = useCookies()
   const logouthandler = () => {
-    if (username !== "") {
+    if (cookie.username !== "") {
+      console.log("removeCookie")
       dispatch(resetUserState());
+      removeCookie('username')
       navigate("/login");
     }
   };
-
+  console.log("cookieUsername", cookie.username)
 
   return (
     <nav className="navbar navbar-expand-lg bg-light">
@@ -56,7 +58,7 @@ const Navbar = () => {
               </span>
             </li>
             
-              {(username === "" ? true : false) && (
+              {cookie.username === "undefined" ? (
                 <>
                   <li className="nav-item">
                     <span className="nav-link">
@@ -69,8 +71,8 @@ const Navbar = () => {
                     </span>
                   </li>
                 </>
-              )}
-              {(username === "" ? false : true) && (
+              ) :
+              (
                 <li onClick={logouthandler}>
                   <span className="nav-link">Log out</span>
                 </li>

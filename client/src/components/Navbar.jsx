@@ -14,12 +14,14 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { username } = useSelector((state) => state.user);
+
   const logouthandler = () => {
     if (username !== "") {
       dispatch(resetUserState());
       navigate("/login");
     }
   };
+
 
   return (
     <nav className="navbar navbar-expand-lg bg-light">

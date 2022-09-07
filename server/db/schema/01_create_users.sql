@@ -28,7 +28,7 @@ CREATE TABLE songs (
   artist VARCHAR(255),
   url VARCHAR(255),
   cover VARCHAR(255),
-  lyric VARCHAR(255),
+  lyric TEXT,
   favorite_id INTEGER REFERENCES favourites(id) ON DELETE CASCADE, 
   history_id INTEGER REFERENCES histories(id) on DELETE CASCADE
 );

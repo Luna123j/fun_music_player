@@ -20,10 +20,9 @@ const Login = () => {
       if (res.data.error === "User not exist") {
         navigate('/signup')
       } else {
-        setCookie("username", res.data.username)
-        dispatch(userState({type: 'user/username', payload: res.data.username}))
+        setCookie("username", data.username)
+        // dispatch(userState({type: 'user/username', payload: res.data.username}))
         navigate('/');
-
       }
     });
   }

@@ -12,14 +12,15 @@ import axios from "axios";
 import MicRecorder from "mic-recorder-to-mp3";
 import { useSelector, useDispatch } from "react-redux";
 import { onrecord } from "./redux/microphone";
-
 import SearchMusic from "./components/SearchMusic";
 import Navbar from "./components/Navbar";
 import Userview from "./components";
+// import { getList } from './redux/musicData';
+// import { musiclist } from "./redux/visualMode";
 
 
 import * as speechCommands from "@tensorflow-models/speech-commands";
-import { BrowserRouter , Switch, Route, Link, Routes } from "react-router-dom";
+import { BrowserRouter , Switch, Route, Link, Routes, useNavigate } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Favourite from "./components/Favourite";
@@ -28,7 +29,7 @@ import History from "./components/History";
 import MusicList from "./components/MusicList";
 import Lyrics from "./components/Lyrics";
 
-const socket = io();
+// const socket = io();
 
 
 // Set AssemblyAPI Axios Header
@@ -51,6 +52,9 @@ function App() {
   const dispatch = useDispatch();
   const [currentIndex, setCurrentindex] = useState(0);
   const [recognizer, setRecognizer] = useState();
+  const navigate = useNavigate();
+  const { musicList } = useSelector((state) => state.musicData);
+
   //   const audioRef= useRef(new Audio(mp3Url[list_id]))
   //   const animationRef = useRef()
   //   const mp3Url={1: 'https://cdns-preview-d.dzcdn.net/stream/c-d8f5b81a6243ddfa4c97b9a4c86a82fa-6.mp3',
@@ -70,8 +74,9 @@ function App() {
   //     }
   //   }, [currentIndex]);
 
+ 
+
   useEffect(() => {
-    console.log(currentIndex);
     if (currentIndex === 9) {
       dispatch(onrecord());
       startRecording();
@@ -79,7 +84,6 @@ function App() {
   }, [currentIndex]);
 
   useEffect(() => {
-    console.log(currentIndex);
     if (currentIndex === 2) {
       dispatch(onrecord());
       stopRecording();
@@ -87,7 +91,6 @@ function App() {
   }, [currentIndex]);
 
   useEffect(() => {
-    console.log(currentIndex);
     if (currentIndex === 12) {
       submitTranscriptionHandler()
     }
@@ -263,6 +266,7 @@ function App() {
   // Upload the Audio File and retrieve the Upload URL
   useEffect(() => {
     if (audioFile) {
+      console.log(audioFile)
       assembly
         .post("/upload", audioFile)
         .then((res) => setUploadURL(res.data.upload_url))
@@ -273,21 +277,26 @@ function App() {
 
   // Submit the Upload URL to AssemblyAI and retrieve the Transcript ID
   const submitTranscriptionHandler = () => {
-    console.log(transcript);
+    console.log("upload URL", uploadURL)
+    if (!uploadURL) {
+
+      return
+    }
     assembly
       .post("/transcript", {
+
         audio_url: uploadURL,
       })
       .then((res) => {
         setTranscriptID(res.data.id);
-        checkStatusHandler();
+        checkStatusHandler(res.data.id);
       })
       .catch((err) => console.error(err));
   };
   // console.log(transcriptID)
 
   // Check the status of the Transcript and retrieve the Transcript Data
-  const checkStatusHandler = async () => {
+  const checkStatusHandler = async (transcriptID) => {
     setIsLoading(true);
     try {
       await assembly.get(`/transcript/${transcriptID}`).then((res) => {
@@ -303,7 +312,7 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (transcriptData.status !== "completed" && isLoading) {
-        checkStatusHandler();
+        checkStatusHandler(transcriptID);
       } else {
         setIsLoading(false);
         setTranscript(transcriptData.text);
@@ -325,21 +334,76 @@ function App() {
   // SearchMusic Globalized logic
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
- 
+  const [searchText, setSearchText] = useState("");
+  // const [musicData, setMusicData] = useState([])
+  //ask backend fetch api data depends on specific parameters, can be track's title or artist.
+  // will depends on user search in the future
+  
+  const userInput = { title: transcript, artist: "" };
+  // const lyricWantToSearch = { text: "every night in my dream" };
+  // console.log(userInput)
+
+  // get lyrics for a song
+
+  // //search by lyrics
+  // useEffect(() => {
+  //   axios.post("/searchByLyrics", lyricWantToSearch)
+  //     .then(
+  //       (res) => {
+  //         console.log(res.data)
+  //         searchedByLyrics = res.data;
+  //       }
+  //     )
+  // }, []);
+
+  const voiceSearchHandler = () => {
+    // e.preventDefault();
+    console.log("COMES UP?????")
+    // dispatch(musiclist());
+    axios.post("/music", userInput)
+      .then(
+        (res) => {
+          dispatch({ type: "musicData/getList", payload: [...res.data.data] });
+          navigate("/search")
+        }
+        )
+        .catch(err => {console.log(err)})
+      };
+
+  const searchHandler = (e) => {
+    e.preventDefault();
+    console.log("COMES UP?????")
+    // dispatch(musiclist());
+    axios.post("/music", userInput)
+      .then(
+        (res) => {
+          dispatch({ type: "musicData/getList", payload: [...res.data.data] });
+          navigate("/search")
+        }
+        )
+        .catch(err => {console.log(err)})
+      };
+      
+      
+      useEffect(() => {
+    if (currentIndex === 10) {
+      voiceSearchHandler()
+    }
+  }, [currentIndex]);
 // //////////////////////////////////////////
   // Playbutton Globalized Logic
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
 
   const { play, list_id } = useSelector(state => state.player);
-  const mp3Url={1: 'https://cdns-preview-d.dzcdn.net/stream/c-d8f5b81a6243ddfa4c97b9a4c86a82fa-6.mp3',
-                2: 'https://cdns-preview-e.dzcdn.net/stream/c-e4829488eb446f23487bbf60a6aa869d-3.mp3',
-                3: 'https://cdns-preview-3.dzcdn.net/stream/c-381eb6e90e561759fea2b229e9b844eb-3.mp3'
-}
+//   const mp3Url={1: 'https://cdns-preview-d.dzcdn.net/stream/c-d8f5b81a6243ddfa4c97b9a4c86a82fa-6.mp3',
+//                 2: 'https://cdns-preview-e.dzcdn.net/stream/c-e4829488eb446f23487bbf60a6aa869d-3.mp3',
+//                 3: 'https://cdns-preview-3.dzcdn.net/stream/c-381eb6e90e561759fea2b229e9b844eb-3.mp3'
+// }
 
 
 
-const audioRef= useRef(new Audio(mp3Url[list_id]))
+const audioRef= useRef(new Audio(musicList[list_id]))
 const progressBar = useRef()
 const animationRef = useRef()
 const [currentTime, setCurrentTime] = useState(0)
@@ -347,7 +411,7 @@ const [duration, setDuration] = useState(0)
 
 useEffect(()=> {
   audioRef.current.pause();
-  audioRef.current = new Audio(mp3Url[list_id]);
+  audioRef.current = new Audio(musicList[list_id]);
   audioRef.current.play()
   // progressBar.current = audioRef.current.currentTime
 },[list_id]);
@@ -403,7 +467,6 @@ const clickPlayHandler = () => {
    
   }
 
-  const { musicList } = useSelector((state) => state.musicData);
   const playValues = { audioRef, clickPrev, clickPlayHandler, play, clickNext }
   const timeValues = { calculateTime, currentTime, progressBar, handleChange, duration }
 
@@ -412,10 +475,10 @@ const clickPlayHandler = () => {
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
   return (
-    <BrowserRouter>
+    
       <div className="App">
         <div>
-          <Navbar />
+          <Navbar transcriptValues={transcriptValues} searchHandler={searchHandler}/>
         </div>
         <Routes>
           <Route path="/" element={<Userview />} />
@@ -423,26 +486,26 @@ const clickPlayHandler = () => {
           <Route path="/history" element={<History />} />
           <Route path="/login" element={<Login/>} />
           <Route path="/signup" element={<Signup/>} />
-          <Route path="/search" element={<MusicList/>} />
+          <Route path="/search" element={<MusicList />} />
           <Route path="/current" element={<Lyrics/>} />
         </Routes>
        
         {/* <Userview /> */}
+        {}
         <Speechlistener
           indexValues={indexValues}
           listenerValues={listenerValues}
+          searchHandler={searchHandler}
         />
         <Speechinput
           recordValues={recordValues}
           transcriptValues={transcriptValues}
         />
 
-   
-
       <PlayButton playValues={playValues} timeValues={timeValues}/>
 
       </div>
-    </BrowserRouter>
+    
 
   );
 }

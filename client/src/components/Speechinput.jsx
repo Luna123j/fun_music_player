@@ -37,14 +37,14 @@ export default function Speechinput(props) {
           ✋
         </button> */}
       {/* <button onClick={checkStatusHandler}>CHECK STATUS</button> */}
-      <textarea
+      {/* <textarea
         className="song__search-input text--semi-bold"
         name="name"
         type="text"
         placeholder="Type here if you want"
         value={transcript}
         onChange={(e) => setTranscript(e.target.value)}
-      />
+      /> */}
       {transcriptData.status === "processing" ? (
         <img id="luigitwerk" src="https://www.icegif.com/wp-content/uploads/roblox-icegif-10.gif" alt="loading gif">{transcript}</img>
         ) : (

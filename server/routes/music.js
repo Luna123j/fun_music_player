@@ -10,6 +10,7 @@ router.get("/", (req, res, next) => {
 
 router.post("/", (req, res, next) => {
   const title = req.body.title;
+  console.log("CHECKING IF HIT")
   request(
     {
       url: `https://api.deezer.com/search/track?q=${title}`,
@@ -19,7 +20,13 @@ router.post("/", (req, res, next) => {
       if (error) {
         console.log(error);
       } else {
+        console.log("GOT HERE")
+        console.log("THIS IS THE RESPONSE", response)
         res.send(body);
+
+        //  send song URL to App component 
+        // make data available in GET request and then call it in App.js
+        // make a function that GETS 
       }
     }
   );

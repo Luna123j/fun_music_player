@@ -9,8 +9,9 @@ import { resetUserState } from "../redux/user";
 
 
 
-const Navbar = () => {
-  
+const Navbar = (props) => {
+  const { transcriptValues, searchHandler } = props
+  const { transcript} = transcriptValues
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { username } = useSelector((state) => state.user);
@@ -45,12 +46,12 @@ const Navbar = () => {
             </li>
             <li className="nav-item">
               <span className="nav-link">
-                <Link to="/favourite">Favourite</Link>
+                <Link to="/favourite" >Favourite</Link>
               </span>
             </li>
             <li className="nav-item">
               <span className="nav-link">
-                <Link to="/history">History</Link>
+                <Link to="/history" >History</Link>
               </span>
             </li>
             
@@ -75,7 +76,7 @@ const Navbar = () => {
               )}
             
           </ul>
-          <SearchMusic />
+          <SearchMusic transcriptValues={transcriptValues} searchHandler={searchHandler}/>
         </div>
       </div>
     </nav>

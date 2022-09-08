@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { onlisten } from "../redux/listener";
 import { onrecord } from "../redux/microphone";
+import { BrowserRouter , Switch, Route, Link, Routes, useNavigate } from "react-router-dom";
 
 import "../components/Speechlistener.scss";
 
@@ -11,6 +12,8 @@ export default function Speechlistener(props) {
   const { indexValues, listenerValues } = props;
   const {currentIndex, updateCurrentIndex} = indexValues
   const {listen, listener, listenOptions, stopListening} = listenerValues
+  let navigate = useNavigate();
+
   const coolLabels = [
     "🐸", 
     "👈", 
@@ -19,6 +22,19 @@ export default function Speechlistener(props) {
     "🟥", "✉️", "🎉🥳🎉Thanks for listening!🎉🥳🎉" ];
   const dispatch = useDispatch();
 
+
+  useEffect(() => {
+    if (currentIndex === 3) {
+      navigate("/favourite", { replace: true })
+   
+
+    } else if (currentIndex === 5)
+        {      navigate("/history", { replace: true })
+      }
+      else if (currentIndex === 6)
+      {      navigate("/", { replace: true })
+      }
+  }, [currentIndex]);
   return (
     <div className="listener">
       <header>

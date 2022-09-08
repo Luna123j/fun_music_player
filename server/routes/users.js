@@ -11,5 +11,16 @@ router.get('/', (req, res) => {
   })
 });
 
+router.get('/favourite',(req, res)=>{
+  return res.status(200).send("ok");
+})
+
+router.post('/favourite',(req,res)=>{
+  const songDetails = req.body.currentSong;
+  const username = req.body.username;
+
+
+})
+
 module.exports = router;
 

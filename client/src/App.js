@@ -19,8 +19,11 @@ import Userview from "./components";
 // import { musiclist } from "./redux/visualMode";
 
 
-import * as speechCommands from "@tensorflow-models/speech-commands";
 import { BrowserRouter , Switch, Route, Link, Routes, useNavigate } from "react-router-dom";
+import index from "./components";
+
+
+import * as speechCommands from "@tensorflow-models/speech-commands";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Favourite from "./components/Favourite";
@@ -28,6 +31,8 @@ import History from "./components/History";
 
 import MusicList from "./components/MusicList";
 import Lyrics from "./components/Lyrics";
+import { cookieProvider, CookiesProvider } from "react-cookie";
+import { updateIndex } from "./redux/currentIndex";
 
 // const socket = io();
 
@@ -50,11 +55,12 @@ function App() {
   // /////////////////////////////////////////
   const { listen } = useSelector((state) => state.listen);
   const dispatch = useDispatch();
-  const [currentIndex, setCurrentindex] = useState(0);
+  // const [currentIndex, setCurrentindex] = useState(0);
   const [recognizer, setRecognizer] = useState();
   const navigate = useNavigate();
   const { musicList } = useSelector((state) => state.musicData);
 
+  const { index } = useSelector(state => state.currentIndex )
   //   const audioRef= useRef(new Audio(mp3Url[list_id]))
   //   const animationRef = useRef()
   //   const mp3Url={1: 'https://cdns-preview-d.dzcdn.net/stream/c-d8f5b81a6243ddfa4c97b9a4c86a82fa-6.mp3',
@@ -77,64 +83,67 @@ function App() {
  
 
   useEffect(() => {
-    if (currentIndex === 9) {
+    console.log(index);
+    if (index === 9) {
       dispatch(onrecord());
       startRecording();
     }
-  }, [currentIndex]);
+  }, [index]);
 
   useEffect(() => {
-    if (currentIndex === 2) {
+    console.log(index);
+    if (index === 2) {
       dispatch(onrecord());
       stopRecording();
     }
-  }, [currentIndex]);
+  }, [index]);
 
   useEffect(() => {
-    if (currentIndex === 12) {
+    console.log(index);
+    if (index === 12) {
       submitTranscriptionHandler()
     }
-  }, [currentIndex])
-  
+  }, [index])
+
 
   useEffect(() => {
-    if (currentIndex === 1) {
+    if (index === 1) {
       clickPrev();
-      if (!play){
-          audioRef.current.play()
-          animationRef.current = requestAnimationFrame(whilePlaying)
-        } else {
-          audioRef.current.pause()
-          animationRef.current = cancelAnimationFrame(animationRef.current)
-        }
+      if (!play) {
+        audioRef.current.play()
+        animationRef.current = requestAnimationFrame(whilePlaying)
+      } else {
+        audioRef.current.pause()
+        animationRef.current = cancelAnimationFrame(animationRef.current)
+      }
     }
-  }, [currentIndex]);
- 
-  useEffect(() => {
-    if (currentIndex === 7) {
-      clickNext();
-      if (!play){
-          audioRef.current.play()
-          animationRef.current = requestAnimationFrame(whilePlaying)
-        } else {
-          audioRef.current.pause()
-          animationRef.current = cancelAnimationFrame(animationRef.current)
-        }
-    }
-  }, [currentIndex]);
+  }, [index]);
 
   useEffect(() => {
-    if (currentIndex === 8 || currentIndex === 11) {
-      dispatch(onplay())
-      if (!play){
-          audioRef.current.play()
-          animationRef.current = requestAnimationFrame(whilePlaying)
-        } else {
-          audioRef.current.pause()
-          animationRef.current = cancelAnimationFrame(animationRef.current)
-        }
+    if (index === 7) {
+      clickNext();
+      if (!play) {
+        audioRef.current.play()
+        animationRef.current = requestAnimationFrame(whilePlaying)
+      } else {
+        audioRef.current.pause()
+        animationRef.current = cancelAnimationFrame(animationRef.current)
+      }
     }
-  }, [currentIndex]);
+  }, [index]);
+
+  useEffect(() => {
+    if (index === 8 || index === 11) {
+      dispatch(onplay())
+      if (!play) {
+        audioRef.current.play()
+        animationRef.current = requestAnimationFrame(whilePlaying)
+      } else {
+        audioRef.current.pause()
+        animationRef.current = cancelAnimationFrame(animationRef.current)
+      }
+    }
+  }, [index]);
 
   const reportToConsole = (results) => {
     const scores = Array.from(results.scores);
@@ -150,7 +159,8 @@ function App() {
 
     const biggestValue = Math.max(...scores);
     const biggestValueIndex = scores.indexOf(biggestValue);
-    setCurrentindex(biggestValueIndex);
+    // setCurrentindex(biggestValueIndex);
+    dispatch({type: 'currentIndex/updateIndex', payload: biggestValueIndex});
   };
 
   const cURL = "http://localhost:3000/model/";
@@ -197,7 +207,7 @@ function App() {
     }
   }
 
-  const indexValues = { currentIndex, updateCurrentIndex };
+  const indexValues = { index, updateCurrentIndex };
   const listenerValues = { listen, listener, listenOptions, stopListening };
 
   // //////////////////////////////////////////
@@ -394,6 +404,13 @@ function App() {
   // Playbutton Globalized Logic
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
+  const { currentSongContent } = useSelector(state => state.currentSongData);
+  const musicUrl = [];
+  if (currentSongContent.length > 0) {
+    currentSongContent.map((song, index) => {
+      return musicUrl[index + 1] = song.mp3Url;
+    })
+  }
 
   const { play, list_id } = useSelector(state => state.player);
 //   const mp3Url={1: 'https://cdns-preview-d.dzcdn.net/stream/c-d8f5b81a6243ddfa4c97b9a4c86a82fa-6.mp3',
@@ -430,9 +447,9 @@ const calculateTime = (secs) => {
   return `${returnedMinutes}:${returnedSeconds}`;
 }
 
-const clickPlayHandler = () => {
-  dispatch(onplay())
-  if (!play){
+  const clickPlayHandler = () => {
+    dispatch(onplay())
+    if (!play) {
       audioRef.current.play()
       animationRef.current = requestAnimationFrame(whilePlaying)
     } else {
@@ -445,7 +462,7 @@ const clickPlayHandler = () => {
     progressBar.current.value = audioRef.current.currentTime;
     changePlayerCurrentTime();
     animationRef.current = requestAnimationFrame(whilePlaying);
-    
+
   }
 
   const changePlayerCurrentTime = () => {
@@ -457,14 +474,14 @@ const clickPlayHandler = () => {
     dispatch(next())
   }
 
-  const clickPrev =() => {
+  const clickPrev = () => {
     dispatch(prev())
   }
 
   const handleChange = (e) => {
     audioRef.current.currentTime = progressBar.current.value;
     changePlayerCurrentTime();
-   
+
   }
 
   const playValues = { audioRef, clickPrev, clickPlayHandler, play, clickNext }
@@ -475,37 +492,39 @@ const clickPlayHandler = () => {
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
   return (
-    
-      <div className="App">
-        <div>
-          <Navbar transcriptValues={transcriptValues} searchHandler={searchHandler}/>
+    <CookiesProvider>
+
+      <BrowserRouter>
+        <div className="App">
+          <div>
+            <Navbar />
+          </div>
+          <Routes>
+            <Route path="/" element={<Lyrics />} />
+            <Route path="/favourite" element={<Favourite />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/search" element={<MusicList />} />
+          </Routes>
+
+          {/* <index /> */}
+          <Speechlistener
+            indexValues={indexValues}
+            listenerValues={listenerValues}
+          />
+          <Speechinput
+            recordValues={recordValues}
+            transcriptValues={transcriptValues}
+          />
+
+
+
+          <PlayButton playValues={playValues} timeValues={timeValues} />
+
         </div>
-        <Routes>
-          <Route path="/" element={<Userview />} />
-          <Route path="/favourite" element={<Favourite />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/login" element={<Login/>} />
-          <Route path="/signup" element={<Signup/>} />
-          <Route path="/search" element={<MusicList />} />
-          <Route path="/current" element={<Lyrics/>} />
-        </Routes>
-       
-        {/* <Userview /> */}
-        {}
-        <Speechlistener
-          indexValues={indexValues}
-          listenerValues={listenerValues}
-          searchHandler={searchHandler}
-        />
-        <Speechinput
-          recordValues={recordValues}
-          transcriptValues={transcriptValues}
-        />
-
-      <PlayButton playValues={playValues} timeValues={timeValues}/>
-
-      </div>
-    
+      </BrowserRouter>
+    </CookiesProvider>
 
   );
 }

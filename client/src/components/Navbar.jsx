@@ -6,7 +6,7 @@ import SearchMusic from "./SearchMusic";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { resetUserState } from "../redux/user";
-
+import { useCookies } from "react-cookie";
 
 
 const Navbar = (props) => {
@@ -14,13 +14,16 @@ const Navbar = (props) => {
   const { transcript} = transcriptValues
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { username } = useSelector((state) => state.user);
+  // const { username } = useSelector((state) => state.user);
+  const [cookie, removeCookie] = useCookies()
   const logouthandler = () => {
-    if (username !== "") {
+    if (cookie.username !== "") {
       dispatch(resetUserState());
+      removeCookie('username')
       navigate("/login");
     }
   };
+ 
 
   return (
     <nav className="navbar navbar-expand-lg bg-light">
@@ -37,7 +40,7 @@ const Navbar = (props) => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <span className="navbar-brand">
-          <Link to="/history">FunPlayer</Link>
+          <Link to="/">FunPlayer</Link>
         </span>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -55,7 +58,7 @@ const Navbar = (props) => {
               </span>
             </li>
             
-              {(username === "" ? true : false) && (
+              {cookie.username === "undefined" ? (
                 <>
                   <li className="nav-item">
                     <span className="nav-link">
@@ -68,8 +71,8 @@ const Navbar = (props) => {
                     </span>
                   </li>
                 </>
-              )}
-              {(username === "" ? false : true) && (
+              ) :
+              (
                 <li onClick={logouthandler}>
                   <span className="nav-link">Log out</span>
                 </li>

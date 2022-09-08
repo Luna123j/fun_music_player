@@ -90,7 +90,6 @@ router.post("/history", (req, res) => {
   if (username !== "") {
     return db.query(`Select * from users where username = $1`, [username])
       .then((data) => {
-        userID = data.rows[0].id;
         return db.query(`INSERT INTO histories (user_id) VALUES ($1) RETURNING id`, [data.rows[0].id])
           .then((data) => {
             console.log("^^^^^^^^^^^^^^after insert histories",data.rows)

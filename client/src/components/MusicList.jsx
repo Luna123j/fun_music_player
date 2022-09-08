@@ -14,7 +14,7 @@ const MusicList = () => {
 
   function songHandler(currentSong) {
     console.log(currentSong)
-    const message = { title: currentSong.title, artist: "" }
+    const message = { title: currentSong.title, artist: currentSong.artist.name }
     axios.post("/music/lyrics", message)
       .then(
         (res) => {
@@ -38,13 +38,11 @@ const MusicList = () => {
       {musicList.slice(0, 5).map((item) => {
         return (
           <div key={item.id} onClick={() => songHandler(item)}  >
-            {/* <Link to="/current"> */}
             <p>
               <img src={item.album.cover_small} alt={item.album.title} />
                 title:{item.title}
                 artist:{item.artist.name}
             </p>
-            {/* </Link> */}
           </div>
 
         );

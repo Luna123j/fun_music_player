@@ -6,17 +6,16 @@ import Signup from './Signup';
 import MusicList from './MusicList';
 import Lyrics from './Lyrics';
 
-const Userview = () => {
+const index = () => {
 
-  const { mode } = useSelector(state => state.userMode);
+  
 
   return (
 
       <div>
-        {mode === 'musiclist' && <MusicList />}
-        {mode === 'selectedSong' && <Lyrics />}
+        <h1>Home Page</h1>
       </div>
   )
 }
 
-export default Userview;
+export default index;

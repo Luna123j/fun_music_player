@@ -3,11 +3,12 @@ import axios from "axios";
 import {  useDispatch } from "react-redux";
 import { userState } from "../redux/user";
 import { useNavigate } from "react-router-dom";
-
+import { useCookies } from "react-cookie";
 
 const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch();
+  const [cookie, setCookie] = useCookies('username')
   const submitHandler =(e) => {
     e.preventDefault();
     const data = {
@@ -17,17 +18,19 @@ const Login = () => {
     axios.post("/login", data).then((res)=> {
       console.log(res)
       if (res.data.error === "User not exist") {
+        alert("User not exist!!!")
         navigate('/signup')
       } else {
-        dispatch(userState({type: 'user/username', payload: res.data.username}))
+        setCookie("username", data.username)
+        // dispatch(userState({type: 'user/username', payload: res.data.username}))
         navigate('/');
-
       }
-    });
+    }).catch(err=>console.log(err));
   }
   
   return (
     <div>
+     
       <form onSubmit={submitHandler}>
         <div>
           <span>username</span>

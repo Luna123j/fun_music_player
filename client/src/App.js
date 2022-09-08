@@ -15,7 +15,7 @@ import { onrecord } from "./redux/microphone";
 
 import SearchMusic from "./components/SearchMusic";
 import Navbar from "./components/Navbar";
-import Userview from "./components";
+import index from "./components";
 
 
 import * as speechCommands from "@tensorflow-models/speech-commands";
@@ -27,7 +27,7 @@ import History from "./components/History";
 
 import MusicList from "./components/MusicList";
 import Lyrics from "./components/Lyrics";
-
+import {cookieProvider, CookiesProvider} from "react-cookie";
 const socket = io();
 
 
@@ -412,13 +412,15 @@ const clickPlayHandler = () => {
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
   return (
+    <CookiesProvider>
+
     <BrowserRouter>
       <div className="App">
         <div>
           <Navbar />
         </div>
         <Routes>
-          <Route path="/" element={<Userview />} />
+          <Route path="/" element={<index />} />
           <Route path="/favourite" element={<Favourite />} />
           <Route path="/history" element={<History />} />
           <Route path="/login" element={<Login/>} />
@@ -427,7 +429,7 @@ const clickPlayHandler = () => {
           <Route path="/current" element={<Lyrics/>} />
         </Routes>
        
-        {/* <Userview /> */}
+        {/* <index /> */}
         <Speechlistener
           indexValues={indexValues}
           listenerValues={listenerValues}
@@ -443,6 +445,7 @@ const clickPlayHandler = () => {
 
       </div>
     </BrowserRouter>
+    </CookiesProvider>
 
   );
 }

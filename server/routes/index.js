@@ -76,45 +76,107 @@ router.post("/signup", (req, res) => {
   });
 });
 
-
 router.get("/history", (req, res) => {
   res.status(200).send("ok");
 });
 
 router.post("/history", (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const songDetails = req.body.currentSong;
   const username = req.body.username;
-  let userID = 0;
   // const username = "mario@mushroomkindom.jp";
-
-  if (username !== "undefined" && !songDetails.title) {
-    return db.query(`Select * from users where username = $1`, [username])
+  
+  if (username !== "undefined") {
+    return db
+      .query(
+        `Select * from users 
+        join histories on users.id = histories.user_id
+        join songs on songs.history_id = histories.id
+        where username = $1 and title = $2`,
+        [username, songDetails.title]
+      )
       .then((data) => {
-        return db.query(`INSERT INTO histories (user_id) VALUES ($1) RETURNING id`, [data.rows[0].id])
-          .then((data) => {
-            //         console.log("^^^^^^^^^^^^^^after insert histories",data.rows)
-            const songDetailsArr = [songDetails.title, songDetails.artist, songDetails.image, songDetails.mp3Url, songDetails.lyrics, data.rows[0].id]
-            console.log("songdetails", songDetailsArr);
-            return db.query(`INSERT INTO songs (title,artist,cover,url,lyric,history_id) VALUES ($1,$2,$3,$4,$5,$6)`, songDetailsArr)
-              .then((data) => {
-                return db.query(`Select * from songs 
-                join histories on histories.id = songs.history_id
-                join users on histories.user_id = users.id
-                where username = $1`, [username])
-                  .then((data) => {
-                    console.log(data.rows);
-                    //                 const historyId = data.rows
-                    // //                 res.send("ok")
-                  })
+        console.log("***********this*********", data.rows);
+        if (data.rows.length === 0) {
+          return db
+            .query(`select * from users where username = $1`, [username])
+            .then((data) => {
+              console.log(data.rows);
+              return db
+                .query(
+                  `INSERT INTO histories (user_id) VALUES ($1) RETURNING id`,
+                  [data.rows[0].id]
+                )
+                .then((data) => {
+                  // console.log("^^^^^^^^^^^^^^after insert histories",someDetails)
+                  const songDetailsArr = [
+                    songDetails.title,
+                    songDetails.artist,
+                    songDetails.image,
+                    songDetails.mp3Url,
+                    songDetails.lyrics,
+                    data.rows[0].id,
+                  ];
+                  console.log("songdetails", songDetailsArr);
+                  return db
+                    .query(
+                      `INSERT INTO songs (title,artist,cover,url,lyric,history_id) VALUES ($1,$2,$3,$4,$5,$6)`,
+                      songDetailsArr
+                    )
+                    .then((data) => {
+                      return db
+                        .query(
+                          `Select * from songs 
+                          join histories on histories.id = songs.history_id
+                          join users on histories.user_id = users.id
+                          where username = $1`,
+                          [username]
+                        )
+                        .then((data) => {
+                          console.log(data.rows);
+                          res.send(data.rows);
+                          //                 const historyId = data.rows
+                          // //                 res.send("ok")
+                        });
+                    });
+                });
+            });
+        } else {
+          return db
+            .query(
+              `Select * from songs 
+              join histories on histories.id = songs.history_id
+              join users on histories.user_id = users.id
+              where username = $1`,
+              [username]
+            )
+            .then((data) => {
+              console.log(data.rows);
+              res.send(data.rows);
+            });
 
-              })
-
-          })
+        }
       })
+
   }
+})
+
+
+router.get("/favourite", (req, res) => {
+  return res.status(200).send("ok");
 });
 
-
+router.post('/favourite', (req, res) => {
+  db.query(`Select * from songs 
+  join favourites on favourites.id = songs.favourite_id
+  join users on favourites.user_id = users.id
+  where username = $1 and title = $2`, [username, songDetails.title])
+    .then(data => {
+      if (data.rows.length === 0) {
+        res.send({ favorStatus: false })
+      }
+      res.send({ favorStatus: true })
+    })
+})
 
 module.exports = router;

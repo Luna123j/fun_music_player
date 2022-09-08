@@ -9,13 +9,7 @@ export default function PlayButton(props) {
   const { playValues, timeValues } = props
   const { audioRef, clickPrev, clickPlayHandler, play, clickNext } = playValues
   const { calculateTime, currentTime, progressBar, handleChange, duration } = timeValues
-  // const dispatch = useDispatch();
-  // const musicUrl = {}
-  // if(currentSongContent.length>0){
-  //   currentSongContent.map((song,index) => {
-  //     return musicUrl[index+1]=song.mp3Url;
-  //   })
-  // }
+
 //   const mp3Url={1: 'https://cdns-preview-d.dzcdn.net/stream/c-d8f5b81a6243ddfa4c97b9a4c86a82fa-6.mp3',
 //                 2: 'https://cdns-preview-e.dzcdn.net/stream/c-e4829488eb446f23487bbf60a6aa869d-3.mp3',
 //                 3: 'https://cdns-preview-3.dzcdn.net/stream/c-381eb6e90e561759fea2b229e9b844eb-3.mp3'

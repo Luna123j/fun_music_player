@@ -17,13 +17,12 @@ const Navbar = () => {
   const [cookie, removeCookie] = useCookies()
   const logouthandler = () => {
     if (cookie.username !== "") {
-      console.log("removeCookie")
       dispatch(resetUserState());
       removeCookie('username')
       navigate("/login");
     }
   };
-  console.log("cookieUsername", cookie.username)
+ 
 
   return (
     <nav className="navbar navbar-expand-lg bg-light">

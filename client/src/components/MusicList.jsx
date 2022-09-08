@@ -28,7 +28,7 @@ const MusicList = () => {
           }
           dispatch({ type: "currentSongData/getCurrentSong", payload: songDetails });
           // dispatch(selectedSong())
-          navigate("/current")
+          navigate("/")
         }
       )
   }

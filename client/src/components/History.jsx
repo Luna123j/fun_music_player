@@ -15,7 +15,12 @@ const History = () => {
     console.log(currentSongContent)
   useEffect(()=>{
     // console.log(currentSongContent[currentSongContent.length-1]);
-    if (currentSongContent.length !== 0) {
+    if (currentSongContent.length === 0) {
+      axios.post('/history', {username: cookie.username})
+      .then(res => {
+        setHistoryList(res.data.reverse())
+      })
+    } else if (currentSongContent.length !== 0) {
         const senddata = setTimeout(()=>{
           axios.post('/history',{currentSong: currentSongContent[currentSongContent.length-1],username: cookie.username})
           .then((res)=>{

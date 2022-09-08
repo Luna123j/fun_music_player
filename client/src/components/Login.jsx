@@ -18,17 +18,19 @@ const Login = () => {
     axios.post("/login", data).then((res)=> {
       console.log(res)
       if (res.data.error === "User not exist") {
+        alert("User not exist!!!")
         navigate('/signup')
       } else {
         setCookie("username", data.username)
         // dispatch(userState({type: 'user/username', payload: res.data.username}))
         navigate('/');
       }
-    });
+    }).catch(err=>console.log(err));
   }
   
   return (
     <div>
+     
       <form onSubmit={submitHandler}>
         <div>
           <span>username</span>

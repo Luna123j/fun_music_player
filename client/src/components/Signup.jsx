@@ -19,6 +19,7 @@ const Signup = () => {
     axios.post("/signup", data).then((res)=> {
       console.log(res)
       if (res.data.error === "User exist" ) {
+        alert("User exist!!!")
         navigate('/login')
         return;
       } else {

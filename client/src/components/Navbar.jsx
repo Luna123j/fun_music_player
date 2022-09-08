@@ -40,7 +40,7 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <span className="navbar-brand">
-          <Link to="/history">FunPlayer</Link>
+          <Link to="/">FunPlayer</Link>
         </span>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">

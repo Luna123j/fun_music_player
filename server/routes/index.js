@@ -87,15 +87,15 @@ router.post("/history", (req, res) => {
   const username = req.body.username;
   let userID = 0;
   // const username = "mario@mushroomkindom.jp";
-  
-  if (username !== "undefined") {
+
+  if (username !== "undefined" && !songDetails.title) {
     return db.query(`Select * from users where username = $1`, [username])
       .then((data) => {
         return db.query(`INSERT INTO histories (user_id) VALUES ($1) RETURNING id`, [data.rows[0].id])
           .then((data) => {
-    //         console.log("^^^^^^^^^^^^^^after insert histories",data.rows)
-            console.log("songdetails",songDetailsArr);
+            //         console.log("^^^^^^^^^^^^^^after insert histories",data.rows)
             const songDetailsArr = [songDetails.title, songDetails.artist, songDetails.image, songDetails.mp3Url, songDetails.lyrics, data.rows[0].id]
+            console.log("songdetails", songDetailsArr);
             return db.query(`INSERT INTO songs (title,artist,cover,url,lyric,history_id) VALUES ($1,$2,$3,$4,$5,$6)`, songDetailsArr)
               .then((data) => {
                 return db.query(`Select * from songs 
@@ -104,15 +104,15 @@ router.post("/history", (req, res) => {
                 where username = $1`, [username])
                   .then((data) => {
                     console.log(data.rows);
-    //                 const historyId = data.rows
-    // //                 res.send("ok")
+                    //                 const historyId = data.rows
+                    // //                 res.send("ok")
                   })
 
               })
 
           })
       })
-  } 
+  }
 });
 
 

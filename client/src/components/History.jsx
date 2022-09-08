@@ -16,10 +16,15 @@ const History = () => {
   useEffect(()=>{
     // console.log(currentSongContent[currentSongContent.length-1]);
     if (currentSongContent.length === 0) {
-      axios.post('/history', {username: cookie.username})
+      const senddata = setTimeout(()=> {
+        axios.post('/history', {username: cookie.username})
       .then(res => {
         setHistoryList(res.data.reverse())
       })
+    }, 1000)
+    return () => {
+      clearTimeout(senddata)
+    }
     } else if (currentSongContent.length !== 0) {
         const senddata = setTimeout(()=>{
           axios.post('/history',{currentSong: currentSongContent[currentSongContent.length-1],username: cookie.username})
@@ -41,7 +46,7 @@ const History = () => {
       <h1>History</h1>
       { (historyList.length !== 0) &&
         historyList.map((item)=>{
-          return (<div><button> <i className="fa-solid fa-play"></i></button><img src={item.cover} alt={item.title} />{item.title}{item.artist}</div>)
+          return (<div><button> <i key={item.id} className="fa-solid fa-play"></i></button><img src={item.cover} alt={item.title} />{item.title}{item.artist}</div>)
         })
       }
     

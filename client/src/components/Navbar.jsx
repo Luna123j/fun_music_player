@@ -48,7 +48,7 @@ const Navbar = () => {
             </li>
             <li className="nav-item">
               <span className="nav-link">
-                <Link to="/favourite">Favourite</Link>
+                <Link to="/users/favourite">Favourite</Link>
               </span>
             </li>
             <li className="nav-item">

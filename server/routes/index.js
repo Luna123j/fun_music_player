@@ -165,21 +165,6 @@ router.post("/history", (req, res) => {
 })
 
 
-router.get("/favourite", (req, res) => {
-  return res.status(200).send("ok");
-});
 
-router.post('/favourite', (req, res) => {
-  db.query(`Select * from songs 
-  join favourites on favourites.id = songs.favourite_id
-  join users on favourites.user_id = users.id
-  where username = $1 and title = $2`, [username, songDetails.title])
-    .then(data => {
-      if (data.rows.length === 0) {
-        res.send({ favorStatus: false })
-      }
-      res.send({ favorStatus: true })
-    })
-})
 
 module.exports = router;

@@ -11,32 +11,35 @@ const Favourite =() => {
   console.log(currentSongContent)
   useEffect(()=>{
     // console.log(currentSongContent[currentSongContent.length-1]);
-    if (currentSongContent.length === 0) {
-      axios.post('/history', {username: cookie.username})
+   
+    const senddata = setTimeout(() => {
+      axios.post('/users/favourite', {username: cookie.username})
       .then(res => {
-        setFavourite(res.data.reverse())
-      })
-    } else if (currentSongContent.length !== 0) {
-        const senddata = setTimeout(()=>{
-          axios.post('/history',{currentSong: currentSongContent[currentSongContent.length-1],username: cookie.username})
-          .then((res)=>{
-            console.info("from backend", res);
-            setFavourite(res.data.reverse())
-          })     
+        console.log(res)
+        if (res.data.error === "No favourite record") {
+          setFavourite(res.data.error)
+        } else {
+          setFavourite(res.data.reverse())
 
-        }, 1000)
-        return ()=> {
-          clearTimeout(senddata);
         }
-    }
+      })
+    }, 1000)
+      return ()=> {
+        clearTimeout(senddata);
+        }
+    
   },[currentSongContent])
 
   return (
-    <h1>Favourite list</h1>
+    <div>
+      <h1>Favourite list</h1>
+      { favourite === "No favourite record" && "There is no favourite record "}
+    </div>
+    
     //select where username and favourite 
     //click search play, after select , insert into database
-
   )
+  
 }
 
 export default Favourite;

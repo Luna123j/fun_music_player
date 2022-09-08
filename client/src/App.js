@@ -429,7 +429,7 @@ function App() {
           </div>
           <Routes>
             <Route path="/" element={<Lyrics />} />
-            <Route path="/favourite" element={<Favourite />} />
+            <Route path="/users/favourite" element={<Favourite />} />
             <Route path="/history" element={<History />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

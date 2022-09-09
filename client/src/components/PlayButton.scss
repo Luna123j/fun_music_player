@@ -1,7 +1,15 @@
 .play {
-
+  width: 100vw;
+  background: #3452a5;
   margin: 20px;
-
+  // display: flex;
+ 
+  .playerButton {
+    display: flex;
+    direction: rows;
+    justify-content: center;
+    align-items: center;
+  }
   .playButton {
     width: 75px;
     height: 75px;
@@ -26,7 +34,7 @@
   }
 
   .progressBar-layout {
-    margin-top: 10px;
+    margin-top: 20px;
     display: flex;
     direction: rows;
     align-items: center;

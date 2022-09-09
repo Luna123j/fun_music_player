@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import "./components/PlayButton";
 import PlayButton from "./components/PlayButton";
 
@@ -338,7 +338,7 @@ function App() {
   const musicUrl = [];
   if (currentSongContent.length > 0) {
     currentSongContent.map((song, index) => {
-      return musicUrl[index + 1] = song.mp3Url;
+      return musicUrl[index] = song.mp3Url;
     })
   }
 
@@ -346,17 +346,22 @@ function App() {
   const mp3Url = { ...musicUrl }
 
 
-
+  console.log("^^^^^^^^^^mp3 arr^^^^",mp3Url)
   const audioRef = useRef(new Audio(mp3Url[list_id]))
   const progressBar = useRef()
   const animationRef = useRef()
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
-
+  const isReady = useRef(false)
   useEffect(() => {
     audioRef.current.pause();
     audioRef.current = new Audio(mp3Url[list_id]);
-    audioRef.current.play()
+    console.log("list id app.js",list_id)
+    if (isReady.current) {
+      audioRef.current.play()
+    } else {
+      isReady.current = true;
+    }
     // progressBar.current = audioRef.current.currentTime
   }, [list_id]);
 
@@ -447,8 +452,9 @@ function App() {
           />
 
 
-
+          <footer>
           <PlayButton playValues={playValues} timeValues={timeValues} />
+          </footer>
 
         </div>
       </BrowserRouter>

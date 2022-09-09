@@ -34,10 +34,13 @@ const Favourite =() => {
     <div>
       <h1>Favourite list</h1>
       { favourite === "No favourite record" && "There is no favourite record "}
+      { (favourite.length !== 0) &&
+        favourite.map((item)=>{
+          return (<div><button> <i key={item.id} className="fa-solid fa-play"></i></button><img src={item.cover} alt={item.title} />{item.title}{item.artist}</div>)
+        })
+      }
     </div>
-    
-    //select where username and favourite 
-    //click search play, after select , insert into database
+   
   )
   
 }

@@ -11,10 +11,12 @@ import { favor, unfavor } from "../redux/favouriteSong";
 const Lyrics = () => {
   const { currentSongContent } = useSelector(state => state.currentSongData);
   const [cookie] = useCookies()
-  const l = currentSongContent.length - 1
   const navigate = useNavigate();
   const { isFavourite } = useSelector(state => state.favouriteSong)
   const dispatch = useDispatch()
+  const {list_id} = useSelector(state => state.player)
+  const l = list_id;
+  console.log("this is list_id ahhhhh", l)
   const clickFavouriteHandler = () => {
     if (currentSongContent.length !== 0) {
       axios.post('/favourite', {
@@ -55,6 +57,8 @@ const Lyrics = () => {
         })
     }
   }, [currentSongContent])
+
+ 
 
   return (
     <div className="Lyrics">

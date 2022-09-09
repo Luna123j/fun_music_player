@@ -7,6 +7,7 @@ import visualModeReducer from "./visualMode"
 import currentIndexReducer from "./currentIndex";
 import userReducer from "./user"
 import favouriteSongReducer from "./favouriteSong";
+import transcriptReducer from "./transcript";
 import currentSongDataReducer from "./currentSongData";
 
 
@@ -20,6 +21,7 @@ export default configureStore({
     currentIndex: currentIndexReducer,
     user: userReducer,
     favouriteSong: favouriteSongReducer,
+    transcript: transcriptReducer,
     currentSongData: currentSongDataReducer
 
   }

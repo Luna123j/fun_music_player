@@ -2,7 +2,7 @@ import "./App.scss";
 import "./components/PlayButton";
 import PlayButton from "./components/PlayButton";
 
-import { onplay, next, prev } from './redux/player';
+import { onplay, next, prev } from "./redux/player";
 
 import Speechinput from "./components/Speechinput";
 import Speechlistener from "./components/Speechlistener";
@@ -12,14 +12,23 @@ import axios from "axios";
 import MicRecorder from "mic-recorder-to-mp3";
 import { useSelector, useDispatch } from "react-redux";
 import { onrecord } from "./redux/microphone";
-
 import SearchMusic from "./components/SearchMusic";
 import Navbar from "./components/Navbar";
+import Userview from "./components";
+// import { getList } from './redux/musicData';
+// import { musiclist } from "./redux/visualMode";
+
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Link,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import index from "./components";
 
-
 import * as speechCommands from "@tensorflow-models/speech-commands";
-import { BrowserRouter, Switch, Route, Link, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Favourite from "./components/Favourite";
@@ -30,8 +39,7 @@ import Lyrics from "./components/Lyrics";
 import { cookieProvider, CookiesProvider } from "react-cookie";
 import { updateIndex } from "./redux/currentIndex";
 
-const socket = io();
-
+// const socket = io();
 
 // Set AssemblyAPI Axios Header
 // const SPEECH_API_KEY = process.env.REACT_APP_API_KEY;
@@ -53,7 +61,11 @@ function App() {
   const dispatch = useDispatch();
   // const [currentIndex, setCurrentindex] = useState(0);
   const [recognizer, setRecognizer] = useState();
-  const { index } = useSelector(state => state.currentIndex )
+  const navigate = useNavigate();
+  const { musicList } = useSelector((state) => state.musicData);
+
+  const { index } = useSelector((state) => state.currentIndex);
+  const { script } = useSelector((state) => state.transcript);
   //   const audioRef= useRef(new Audio(mp3Url[list_id]))
   //   const animationRef = useRef()
   //   const mp3Url={1: 'https://cdns-preview-d.dzcdn.net/stream/c-d8f5b81a6243ddfa4c97b9a4c86a82fa-6.mp3',
@@ -92,20 +104,19 @@ function App() {
   useEffect(() => {
     console.log(index);
     if (index === 12) {
-      submitTranscriptionHandler()
+      submitTranscriptionHandler();
     }
-  }, [index])
-
+  }, [index]);
 
   useEffect(() => {
     if (index === 1) {
       clickPrev();
       if (!play) {
-        audioRef.current.play()
-        animationRef.current = requestAnimationFrame(whilePlaying)
+        audioRef.current.play();
+        animationRef.current = requestAnimationFrame(whilePlaying);
       } else {
-        audioRef.current.pause()
-        animationRef.current = cancelAnimationFrame(animationRef.current)
+        audioRef.current.pause();
+        animationRef.current = cancelAnimationFrame(animationRef.current);
       }
     }
   }, [index]);
@@ -114,24 +125,24 @@ function App() {
     if (index === 7) {
       clickNext();
       if (!play) {
-        audioRef.current.play()
-        animationRef.current = requestAnimationFrame(whilePlaying)
+        audioRef.current.play();
+        animationRef.current = requestAnimationFrame(whilePlaying);
       } else {
-        audioRef.current.pause()
-        animationRef.current = cancelAnimationFrame(animationRef.current)
+        audioRef.current.pause();
+        animationRef.current = cancelAnimationFrame(animationRef.current);
       }
     }
   }, [index]);
 
   useEffect(() => {
     if (index === 8 || index === 11) {
-      dispatch(onplay())
+      dispatch(onplay());
       if (!play) {
-        audioRef.current.play()
-        animationRef.current = requestAnimationFrame(whilePlaying)
+        audioRef.current.play();
+        animationRef.current = requestAnimationFrame(whilePlaying);
       } else {
-        audioRef.current.pause()
-        animationRef.current = cancelAnimationFrame(animationRef.current)
+        audioRef.current.pause();
+        animationRef.current = cancelAnimationFrame(animationRef.current);
       }
     }
   }, [index]);
@@ -151,7 +162,7 @@ function App() {
     const biggestValue = Math.max(...scores);
     const biggestValueIndex = scores.indexOf(biggestValue);
     // setCurrentindex(biggestValueIndex);
-    dispatch({type: 'currentIndex/updateIndex', payload: biggestValueIndex});
+    dispatch({ type: "currentIndex/updateIndex", payload: biggestValueIndex });
   };
 
   const cURL = "http://localhost:3000/model/";
@@ -261,12 +272,13 @@ function App() {
   const [uploadURL, setUploadURL] = useState("");
   const [transcriptID, setTranscriptID] = useState("");
   const [transcriptData, setTranscriptData] = useState("");
-  const [transcript, setTranscript] = useState("");
+  // const [transcript, setTranscript] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   // Upload the Audio File and retrieve the Upload URL
   useEffect(() => {
     if (audioFile) {
+      console.log(audioFile);
       assembly
         .post("/upload", audioFile)
         .then((res) => setUploadURL(res.data.upload_url))
@@ -277,64 +289,130 @@ function App() {
 
   // Submit the Upload URL to AssemblyAI and retrieve the Transcript ID
   const submitTranscriptionHandler = () => {
-    console.log(transcript);
+    console.log("upload URL", uploadURL);
+    if (!uploadURL) {
+      return;
+    }
     assembly
       .post("/transcript", {
         audio_url: uploadURL,
       })
       .then((res) => {
         setTranscriptID(res.data.id);
-        checkStatusHandler();
+        checkStatusHandler(res.data.id);
       })
       .catch((err) => console.error(err));
   };
   // console.log(transcriptID)
 
   // Check the status of the Transcript and retrieve the Transcript Data
-  const checkStatusHandler = async () => {
+  const checkStatusHandler = async (transcriptID) => {
     setIsLoading(true);
     try {
       await assembly.get(`/transcript/${transcriptID}`).then((res) => {
         setTranscriptData(res.data);
-        // setTranscript(transcriptData.text)
+        console.log("!!!!!!this is from app check status script!!!!", script)
+        console.log("!!!!!!this is from app check status data!!!!", transcriptData.text)
+
+        dispatch({
+          type: "transcript/updateScript",
+          payload: transcriptData.text,
+        });
       });
     } catch (err) {
       console.error(err);
     }
   };
-  // console.log(transcriptData)
+  console.log("statusHandler transcript", script);
+  console.log("this is transcript data", transcriptData);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (transcriptData.status !== "completed" && isLoading) {
+  //       checkStatusHandler(transcriptID);
+  //     } else {
+  //       setIsLoading(false);
+
+  //       dispatch({
+  //         type: "transcript/updateScript",
+  //         payload: transcriptData.text,
+  //       });
+
+  //       clearInterval(interval);
+  //     }
+  //   }, 3000);
+  //   return () => clearInterval(interval);
+  // });
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (transcriptData.status !== "completed" && isLoading) {
-        checkStatusHandler();
-      } else {
-        setIsLoading(false);
-        setTranscript(transcriptData.text);
+    if (transcriptData.status !== "completed" && isLoading) {
+      checkStatusHandler(transcriptID)
+    } else {
+      setIsLoading(false)
+      console.log("!!!!!!this is from app script!!!!", script)
+      console.log("!!!!!!this is from app check status data!!!!", transcriptData.text)
+      dispatch({ type: "transcript/updateScript", payload: transcriptData.text })
+    }
+  })
 
-        clearInterval(interval);
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  });
-
+  // console.log(transcript)
   const recordValues = { record, startRecording, stopRecording };
   const transcriptValues = {
-    transcript,
-    setTranscript,
+    // script,
+    // setTranscript,
     submitTranscriptionHandler,
-    transcriptData
+    transcriptData,
   };
   // //////////////////////////////////////////
   // SearchMusic Globalized logic
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
+  let userInput = { title: script, artist: "" };
+
+  const voiceSearchHandler = () => {
+    // e.preventDefault();
+    console.log("COMES UP?????");
+    // dispatch(musiclist());
+    axios
+      .post("/music", userInput)
+      .then((res) => {
+        dispatch({ type: "musicData/getList", payload: [...res.data.data] });
+        navigate("/search");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // const searchHandler = (e) => {
+  //   e.preventDefault();
+  //   console.log("COMES UP?????");
+  //   console.log(userInput, e.target[0].value)
+  //   userInput.title = e.target[0].value
+  //   axios
+  //     .post("/music", userInput)
+  //     .then((res) => {
+  //       dispatch({ type: "musicData/getList", payload: [...res.data.data] });
+  //       navigate("/search");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  // dispatch({ type: "transcript/updateScript", payload: "" });
+
+  useEffect(() => {
+    if (index === 10) {
+      voiceSearchHandler();
+    }
+  }, [index]);
 
   // //////////////////////////////////////////
   // Playbutton Globalized Logic
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
-  const { currentSongContent } = useSelector(state => state.currentSongData);
+  const { currentSongContent } = useSelector((state) => state.currentSongData);
   const musicUrl = [];
   if (currentSongContent.length > 0) {
     currentSongContent.map((song, index) => {
@@ -346,7 +424,7 @@ function App() {
   const mp3Url = { ...musicUrl }
 
 
-  console.log("^^^^^^^^^^mp3 arr^^^^",mp3Url)
+  console.log("^^^^^^^^^^mp3 arr^^^^", mp3Url)
   const audioRef = useRef(new Audio(mp3Url[list_id]))
   const progressBar = useRef()
   const animationRef = useRef()
@@ -356,7 +434,7 @@ function App() {
   useEffect(() => {
     audioRef.current.pause();
     audioRef.current = new Audio(mp3Url[list_id]);
-    console.log("list id app.js",list_id)
+    console.log("list id app.js", list_id)
     if (isReady.current) {
       audioRef.current.play()
     } else {
@@ -377,89 +455,94 @@ function App() {
     const seconds = Math.floor(secs % 60);
     const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
     return `${returnedMinutes}:${returnedSeconds}`;
-  }
+  };
 
   const clickPlayHandler = () => {
-    dispatch(onplay())
+    dispatch(onplay());
     if (!play) {
-      audioRef.current.play()
-      animationRef.current = requestAnimationFrame(whilePlaying)
+      audioRef.current.play();
+      animationRef.current = requestAnimationFrame(whilePlaying);
     } else {
-      audioRef.current.pause()
-      animationRef.current = cancelAnimationFrame(animationRef.current)
+      audioRef.current.pause();
+      animationRef.current = cancelAnimationFrame(animationRef.current);
     }
-  }
+  };
 
   const whilePlaying = () => {
     progressBar.current.value = audioRef.current.currentTime;
     changePlayerCurrentTime();
     animationRef.current = requestAnimationFrame(whilePlaying);
-
-  }
+  };
 
   const changePlayerCurrentTime = () => {
-    progressBar.current.style.setProperty('--seek-before-width', `${progressBar.current.value / duration * 100}%`)
+    progressBar.current.style.setProperty(
+      "--seek-before-width",
+      `${(progressBar.current.value / duration) * 100}%`
+    );
     setCurrentTime(progressBar.current.value);
-  }
+  };
 
   const clickNext = () => {
-    dispatch(next())
-  }
+    if (list_id < mp3Url.length-2) {
+      dispatch(next());
+    }
+
+  };
 
   const clickPrev = () => {
-    dispatch(prev())
-  }
+    if (list_id > 0 ) {
+      dispatch(prev());
+    }
+
+  };
 
   const handleChange = (e) => {
     audioRef.current.currentTime = progressBar.current.value;
     changePlayerCurrentTime();
+  };
 
-  }
-
-  const { musicList } = useSelector((state) => state.musicData);
-  const playValues = { audioRef, clickPrev, clickPlayHandler, play, clickNext }
-  const timeValues = { calculateTime, currentTime, progressBar, handleChange, duration }
+  const playValues = { audioRef, clickPrev, clickPlayHandler, play, clickNext };
+  const timeValues = {
+    calculateTime,
+    currentTime,
+    progressBar,
+    handleChange,
+    duration,
+  };
 
   // //////////////////////////////////////////
-  // 
+  //
   // ///////////////////////////////////////
   // ////////////////////////////////////////////
   return (
     <CookiesProvider>
-
-      <BrowserRouter>
-        <div className="App">
-          <div>
-            <Navbar />
-          </div>
-          <Routes>
-            <Route path="/" element={<Lyrics />} />
-            <Route path="/users/favourite" element={<Favourite />} />
-            <Route path="/history" element={<History />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/search" element={<MusicList />} />
-          </Routes>
-
-          {/* <index /> */}
-          <Speechlistener
-            indexValues={indexValues}
-            listenerValues={listenerValues}
-          />
-          <Speechinput
-            recordValues={recordValues}
-            transcriptValues={transcriptValues}
-          />
-
-
-          <footer>
-          <PlayButton playValues={playValues} timeValues={timeValues} />
-          </footer>
-
+      <div className="App">
+        <div>
+          <Navbar />
         </div>
-      </BrowserRouter>
-    </CookiesProvider>
+        <Routes>
+          <Route path="/" element={<Lyrics />} />
+          <Route path="/users/favourite" element={<Favourite />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/search" element={<MusicList />} />
+        </Routes>
 
+        <Speechlistener
+          indexValues={indexValues}
+          listenerValues={listenerValues}
+        />
+        <Speechinput
+          recordValues={recordValues}
+          transcriptValues={transcriptValues}
+        />
+
+        <footer>
+          <PlayButton playValues={playValues} timeValues={timeValues} />
+        </footer>
+      </div>
+    </CookiesProvider>
   );
 }
 

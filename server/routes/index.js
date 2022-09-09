@@ -30,15 +30,15 @@ router.post("/login", (req, res) => {
   }
   getUsernameLookUp(username)
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data.length === 0) {
         res.json({ error: "User not exist" });
       } else {
-        console.log("%%%%%%%%%", password, data);
+        // console.log("%%%%%%%%%", password, data);
         if (bcrypt.compareSync(password, data[0].password)) {
           res.send(data[0]);
         } else {
-          res.send({error: "password is wrong"})
+          res.send({ error: "password is wrong" })
         }
       }
     })
@@ -58,16 +58,16 @@ router.post("/signup", (req, res) => {
     res.status(400).end();
   }
   getUsernameLookUp(username).then((data) => {
-    console.log(data);
+    // console.log(data);
     if (data.length !== 0) {
       res.json({ error: "User exist" });
     } else {
-      console.log("%%%%%%%%%", req.body);
+      // console.log("%%%%%%%%%", req.body);
       usernameInfo = username;
       const queryText = `INSERT INTO users (username, password) VALUES ( $1, $2) RETURNING id;`;
       const params = [username, `${bcrypt.hashSync(password, 10)}`];
       db.query(queryText, params).then((data) => {
-        db.query(`insert into favourites (user_id) values ($1)`, [data.rows[0].id]).then(()=> {
+        db.query(`insert into favourites (user_id) values ($1)`, [data.rows[0].id]).then(() => {
           db.query(`Select * from users where username = $1`, [username])
             .then((data) => {
               // eslint-disable-next-line camelcase
@@ -87,54 +87,54 @@ router.get('/favourite', (req, res) => {
 
 router.post('/favourite', async (req, res) => {
   const { username, currentSong, favorStatus, message } = req.body;
-  
-  if(message == "get initial status"){
-        db.query(`Select * from songs 
+
+  if (message == "get initial status") {
+    db.query(`Select * from songs 
                   join favourites on favourites.id = songs.favourite_id 
                   join users on favourites.user_id = users.id 
-                  where username = $1 and title = $2`, [username,currentSong.title])
-          .then(data => {
-            if(data.rows.length !== 0){
-              res.send({favored: true})
-            }else{
-              res.send({favored: false})
-            }
-          })
+                  where username = $1 and title = $2`, [username, currentSong.title])
+      .then(data => {
+        if (data.rows.length !== 0) {
+          res.send({ favored: true })
+        } else {
+          res.send({ favored: false })
+        }
+      })
   }
 
-  if(message == "clickevent"){
+  if (message == "clickevent") {
     if (!favorStatus) {
       db.query(`Select favourites.id from favourites join users on favourites.user_id = users.id where username = $1`, [username])
-      .then(data => {
-              const songDetailsArr = [
-                currentSong.title,
-                currentSong.artist,
-                currentSong.image,
-                currentSong.mp3Url,
-                currentSong.lyrics,
-                data.rows[0].id
-              ];
-        db.query(
+        .then(data => {
+          const songDetailsArr = [
+            currentSong.title,
+            currentSong.artist,
+            currentSong.image,
+            currentSong.mp3Url,
+            currentSong.lyrics,
+            data.rows[0].id
+          ];
+          db.query(
             `INSERT INTO songs (title,artist,cover,url,lyric,favourite_id) 
-            VALUES ($1,$2,$3,$4,$5,$6)`, songDetailsArr).then(()=> {
-            res.send({favored: true})
+            VALUES ($1,$2,$3,$4,$5,$6)`, songDetailsArr).then(() => {
+              res.send({ favored: true })
             })
-      
-      })
-          
+
+        })
+
     } else {
       db.query(`Select favourites.id from favourites join users on favourites.user_id = users.id where username = $1`, [username])
-      .then(data=> {
-        console.log('%%%%%%%delete query',data.rows)
-        db.query(`delete from songs where title = $1 and artist = $2 and favourite_id = $3`,[currentSong.title, currentSong.artist,data.rows[0].id])
-              .then(()=>{
-                res.send({favored: false})
-              })
-      })
+        .then(data => {
+          // console.log('%%%%%%%delete query', data.rows)
+          db.query(`delete from songs where title = $1 and artist = $2 and favourite_id = $3`, [currentSong.title, currentSong.artist, data.rows[0].id])
+            .then(() => {
+              res.send({ favored: false })
+            })
+        })
     }
   }
 })
-    
+
 
 
 router.get("/history", (req, res) => {
@@ -147,21 +147,21 @@ router.post("/history", (req, res) => {
   const username = req.body.username;
   // const username = "mario@mushroomkindom.jp";
 
-  if (username !== "undefined" ) {
-    if(songDetails.length=== 0){
+  if (username !== "undefined") {
+    if (songDetails.length === 0) {
       return db
-            .query(
-              `Select * from songs 
+        .query(
+          `Select * from songs 
               join histories on histories.id = songs.history_id
               join users on histories.user_id = users.id
               where username = $1`,
-              [username]
-            )
-            .then((data) => {
-              console.log(data.rows);
-              res.send(data.rows);
-            });
-    }else{
+          [username]
+        )
+        .then((data) => {
+          // console.log(data.rows);
+          res.send(data.rows);
+        });
+    } else {
 
       return db
         .query(
@@ -172,12 +172,12 @@ router.post("/history", (req, res) => {
           [username, songDetails.title]
         )
         .then((data) => {
-          console.log("***********this*********", data.rows);
+          // console.log("***********this*********", data.rows);
           if (data.rows.length === 0) {
             return db
               .query(`select * from users where username = $1`, [username])
               .then((data) => {
-                console.log(data.rows);
+                // console.log(data.rows);
                 return db
                   .query(
                     `INSERT INTO histories (user_id) VALUES ($1) RETURNING id`,
@@ -193,7 +193,7 @@ router.post("/history", (req, res) => {
                       songDetails.lyrics,
                       data.rows[0].id,
                     ];
-                    console.log("songdetails", songDetailsArr);
+                    // console.log("songdetails", songDetailsArr);
                     return db
                       .query(
                         `INSERT INTO songs (title,artist,cover,url,lyric,history_id) VALUES ($1,$2,$3,$4,$5,$6)`,
@@ -211,12 +211,25 @@ router.post("/history", (req, res) => {
                           .then((data) => {
                             console.log(data.rows);
                             res.send(data.rows);
-                          
+
                           });
                       });
                   });
               });
-          } 
+          } else {
+            return db
+              .query(
+                `Select * from songs 
+              join histories on histories.id = songs.history_id
+              join users on histories.user_id = users.id
+              where username = $1`,
+                [username]
+              )
+              .then((data) => {
+                // console.log(data.rows);
+                res.send(data.rows);
+              });
+          }
         })
     }
   }

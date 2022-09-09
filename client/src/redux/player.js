@@ -23,9 +23,9 @@ export const playerSlice = createSlice({
       state.play = true 
     },
     resetList_id: (state) => {
-      state.list_id = state.list_id-1 
+      state.list_id = 0
+      state.play = true
     }
-   
   }
 });
 

@@ -5,7 +5,7 @@ import '../components/PlayButton.scss';
 
 
 export default function PlayButton(props) {
-
+  const { currentSongContent } = useSelector(state => state.currentSongData)
   const { playValues, timeValues } = props
   const { audioRef, clickPrev, clickPlayHandler, play, clickNext } = playValues
   const { calculateTime, currentTime, progressBar, handleChange, duration } = timeValues
@@ -87,9 +87,10 @@ export default function PlayButton(props) {
   //   changePlayerCurrentTime();
 
   // }
-
+   
   return <div className='play'>
-    <audio ref={audioRef}></audio>
+
+    <div className='PlayerButton'>
     <button
       className="previous"
       onClick={clickPrev}>
@@ -106,6 +107,7 @@ export default function PlayButton(props) {
       onClick={clickNext}>
       <i className="fa-solid fa-forward"></i>
     </button>
+    </div>
     <div className='progressBar-layout'>
       <div>{calculateTime(currentTime)}</div>
       <input

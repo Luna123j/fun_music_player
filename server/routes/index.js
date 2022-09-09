@@ -64,18 +64,18 @@ router.post("/signup", (req, res) => {
     } else {
       console.log("%%%%%%%%%", req.body);
       usernameInfo = username;
-      const queryText = `
-      INSERT INTO users (username, password) VALUES ( $1, $2) RETURNING id;
-      `;
+      const queryText = `INSERT INTO users (username, password) VALUES ( $1, $2) RETURNING id;`;
       const params = [username, `${bcrypt.hashSync(password, 10)}`];
       db.query(queryText, params).then((data) => {
-        db.query(`insert into favourites (user_id) values ($1)`, [data.rows[0].id])
-        db.query(`Select * from users where username = $1`, [username])
-          .then((data) => {
-            // eslint-disable-next-line camelcase
-            res.send(data.rows[0]);
-          })
-          .catch((err) => console.error(err));
+        db.query(`insert into favourites (user_id) values ($1)`, [data.rows[0].id]).then(()=> {
+          db.query(`Select * from users where username = $1`, [username])
+            .then((data) => {
+              // eslint-disable-next-line camelcase
+              res.send(data.rows[0]);
+            })
+            .catch((err) => console.error(err));
+
+        })
       });
     }
   });
@@ -94,23 +94,25 @@ router.post('/favourite', async (req, res) => {
                   join users on favourites.user_id = users.id 
                   where username = $1 and title = $2`, [username,currentSong.title])
           .then(data => {
-            if(data.rows.length !== 0){res.send({favored: true})}
-            res.send({favored: false})
+            if(data.rows.length !== 0){
+              res.send({favored: true})
+            }else{
+              res.send({favored: false})
+            }
           })
   }
 
   if(message == "clickevent"){
     if (!favorStatus) {
-      db.query(`Select * from favourites join users on favourites.user_id = users.id where username = $1`, [username])
+      db.query(`Select favourites.id from favourites join users on favourites.user_id = users.id where username = $1`, [username])
       .then(data => {
-        console.log('%%%%%%%favor query',data.rows)
               const songDetailsArr = [
                 currentSong.title,
                 currentSong.artist,
                 currentSong.image,
                 currentSong.mp3Url,
                 currentSong.lyrics,
-                data.rows[0].id,
+                data.rows[0].id
               ];
         db.query(
             `INSERT INTO songs (title,artist,cover,url,lyric,favourite_id) 
@@ -121,7 +123,7 @@ router.post('/favourite', async (req, res) => {
       })
           
     } else {
-      db.query(`Select * from favourites outter join users on favourites.user_id = users.id where username = $1`, [username])
+      db.query(`Select favourites.id from favourites join users on favourites.user_id = users.id where username = $1`, [username])
       .then(data=> {
         console.log('%%%%%%%delete query',data.rows)
         db.query(`delete from songs where title = $1 and artist = $2 and favourite_id = $3`,[currentSong.title, currentSong.artist,data.rows[0].id])

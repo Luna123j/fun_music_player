@@ -8,8 +8,9 @@ import { onrecord } from "../redux/microphone";
 import "../components/Speechlistener.scss";
 
 export default function Speechlistener(props) {
+  const { index } = useSelector(state => state.currentIndex)
   const { indexValues, listenerValues } = props;
-  const {currentIndex, updateCurrentIndex} = indexValues
+  const { updateCurrentIndex } = indexValues
   const {listen, listener, listenOptions, stopListening} = listenerValues
   const coolLabels = [
     "🐸", 
@@ -25,7 +26,7 @@ export default function Speechlistener(props) {
         <h1>Speech listener</h1>
       </header>
       <h1 style={{ fontsize: "4em", textAlign: "center" }}>
-        {coolLabels[currentIndex]}
+        {coolLabels[index]}
       </h1>
       <button onClick={() => dispatch(onlisten())}>
         {!listen && (

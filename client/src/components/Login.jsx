@@ -20,6 +20,8 @@ const Login = () => {
       if (res.data.error === "User not exist") {
         alert("User not exist!!!")
         navigate('/signup')
+      } else if(res.data.error ==="password is wrong") {
+        alert("Password is wrong")
       } else {
         setCookie("username", data.username)
         // dispatch(userState({type: 'user/username', payload: res.data.username}))

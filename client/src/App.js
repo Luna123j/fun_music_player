@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import "./components/PlayButton";
 import PlayButton from "./components/PlayButton";
 
@@ -28,6 +28,8 @@ import History from "./components/History";
 import MusicList from "./components/MusicList";
 import Lyrics from "./components/Lyrics";
 import { cookieProvider, CookiesProvider } from "react-cookie";
+import { updateIndex } from "./redux/currentIndex";
+
 const socket = io();
 
 
@@ -49,8 +51,9 @@ function App() {
   // /////////////////////////////////////////
   const { listen } = useSelector((state) => state.listen);
   const dispatch = useDispatch();
-  const [currentIndex, setCurrentindex] = useState(0);
+  // const [currentIndex, setCurrentindex] = useState(0);
   const [recognizer, setRecognizer] = useState();
+  const { index } = useSelector(state => state.currentIndex )
   //   const audioRef= useRef(new Audio(mp3Url[list_id]))
   //   const animationRef = useRef()
   //   const mp3Url={1: 'https://cdns-preview-d.dzcdn.net/stream/c-d8f5b81a6243ddfa4c97b9a4c86a82fa-6.mp3',
@@ -71,31 +74,31 @@ function App() {
   //   }, [currentIndex]);
 
   useEffect(() => {
-    console.log(currentIndex);
-    if (currentIndex === 9) {
+    console.log(index);
+    if (index === 9) {
       dispatch(onrecord());
       startRecording();
     }
-  }, [currentIndex]);
+  }, [index]);
 
   useEffect(() => {
-    console.log(currentIndex);
-    if (currentIndex === 2) {
+    console.log(index);
+    if (index === 2) {
       dispatch(onrecord());
       stopRecording();
     }
-  }, [currentIndex]);
+  }, [index]);
 
   useEffect(() => {
-    console.log(currentIndex);
-    if (currentIndex === 12) {
+    console.log(index);
+    if (index === 12) {
       submitTranscriptionHandler()
     }
-  }, [currentIndex])
+  }, [index])
 
 
   useEffect(() => {
-    if (currentIndex === 1) {
+    if (index === 1) {
       clickPrev();
       if (!play) {
         audioRef.current.play()
@@ -105,10 +108,10 @@ function App() {
         animationRef.current = cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [currentIndex]);
+  }, [index]);
 
   useEffect(() => {
-    if (currentIndex === 7) {
+    if (index === 7) {
       clickNext();
       if (!play) {
         audioRef.current.play()
@@ -118,10 +121,10 @@ function App() {
         animationRef.current = cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [currentIndex]);
+  }, [index]);
 
   useEffect(() => {
-    if (currentIndex === 8 || currentIndex === 11) {
+    if (index === 8 || index === 11) {
       dispatch(onplay())
       if (!play) {
         audioRef.current.play()
@@ -131,7 +134,7 @@ function App() {
         animationRef.current = cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [currentIndex]);
+  }, [index]);
 
   const reportToConsole = (results) => {
     const scores = Array.from(results.scores);
@@ -147,7 +150,8 @@ function App() {
 
     const biggestValue = Math.max(...scores);
     const biggestValueIndex = scores.indexOf(biggestValue);
-    setCurrentindex(biggestValueIndex);
+    // setCurrentindex(biggestValueIndex);
+    dispatch({type: 'currentIndex/updateIndex', payload: biggestValueIndex});
   };
 
   const cURL = "http://localhost:3000/model/";
@@ -194,7 +198,7 @@ function App() {
     }
   }
 
-  const indexValues = { currentIndex, updateCurrentIndex };
+  const indexValues = { index, updateCurrentIndex };
   const listenerValues = { listen, listener, listenOptions, stopListening };
 
   // //////////////////////////////////////////
@@ -334,7 +338,7 @@ function App() {
   const musicUrl = [];
   if (currentSongContent.length > 0) {
     currentSongContent.map((song, index) => {
-      return musicUrl[index + 1] = song.mp3Url;
+      return musicUrl[index] = song.mp3Url;
     })
   }
 
@@ -342,17 +346,22 @@ function App() {
   const mp3Url = { ...musicUrl }
 
 
-
+  console.log("^^^^^^^^^^mp3 arr^^^^",mp3Url)
   const audioRef = useRef(new Audio(mp3Url[list_id]))
   const progressBar = useRef()
   const animationRef = useRef()
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
-
+  const isReady = useRef(false)
   useEffect(() => {
     audioRef.current.pause();
     audioRef.current = new Audio(mp3Url[list_id]);
-    audioRef.current.play()
+    console.log("list id app.js",list_id)
+    if (isReady.current) {
+      audioRef.current.play()
+    } else {
+      isReady.current = true;
+    }
     // progressBar.current = audioRef.current.currentTime
   }, [list_id]);
 
@@ -425,7 +434,7 @@ function App() {
           </div>
           <Routes>
             <Route path="/" element={<Lyrics />} />
-            <Route path="/favourite" element={<Favourite />} />
+            <Route path="/users/favourite" element={<Favourite />} />
             <Route path="/history" element={<History />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -443,8 +452,9 @@ function App() {
           />
 
 
-
+          <footer>
           <PlayButton playValues={playValues} timeValues={timeValues} />
+          </footer>
 
         </div>
       </BrowserRouter>

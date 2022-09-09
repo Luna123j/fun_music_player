@@ -25,17 +25,17 @@ export default function Speechlistener(props) {
 
 
   useEffect(() => {
-    if (currentIndex === 3) {
+    if (index === 3) {
       navigate("/favourite", { replace: true })
    
 
-    } else if (currentIndex === 5)
+    } else if (index === 5)
         {      navigate("/history", { replace: true })
       }
-      else if (currentIndex === 6)
+      else if (index === 6)
       {      navigate("/", { replace: true })
       }
-  }, [currentIndex]);
+  }, [index]);
   return (
     <div className="listener">
       <header>

@@ -6,7 +6,7 @@ import musicDataReducer from "./musicData";
 import visualModeReducer from "./visualMode"
 import currentIndexReducer from "./currentIndex";
 import userReducer from "./user"
-
+import transcriptReducer from "./transcript";
 import currentSongDataReducer from "./currentSongData";
 
 
@@ -19,6 +19,7 @@ export default configureStore({
     userMode: visualModeReducer,
     currentIndex: currentIndexReducer,
     user: userReducer,
+    transcript: transcriptReducer,
 
     currentSongData: currentSongDataReducer
 

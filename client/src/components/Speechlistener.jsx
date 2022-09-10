@@ -20,7 +20,7 @@ export default function Speechlistener(props) {
     "👈", 
     "🔚", "😍", "👋😁", "📰", 
     "🏠", "👉", "🟢", "🎙️", "🔭", 
-    "🟥", "✉️", "🎉🥳🎉Thanks for listening!🎉🥳🎉" ];
+    "🟥", "✉️", "🎉" ];
   const dispatch = useDispatch();
 
 
@@ -38,13 +38,15 @@ export default function Speechlistener(props) {
   }, [index]);
   return (
     <div className="listener">
-      <header>
-        <h1>Speech listener</h1>
-      </header>
-      <h1 style={{ fontsize: "4em", textAlign: "center" }}>
+     
+      <div id="coolLabel">
         {coolLabels[index]}
-      </h1>
-      <button onClick={() => dispatch(onlisten())}>
+      </div>
+      <div>
+      Listen🔊
+        </div>
+      <button id="listenbutton" onClick={() => dispatch(onlisten())}>
+        
         {!listen && (
           <i
             className="fa-solid fa-ear-listen"

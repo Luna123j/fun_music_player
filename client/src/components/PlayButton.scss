@@ -1,12 +1,16 @@
 .play {
   width: 100vw;
-  background: #3452a5;
-  margin: 20px;
-  // display: flex;
- 
+  background-color: white;
+background-image: url("https://www.transparenttextures.com/patterns/bright-squares.png");
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+ border-style:groove;
+ border-width: 20px;
+ border-radius: 3%;
+ border-color: cornsilk;
+display: flex;
+justify-content: center;
   .playerButton {
     display: flex;
-    direction: rows;
     justify-content: center;
     align-items: center;
   }
@@ -33,6 +37,7 @@
     border: 2px solid red;
   }
 
+  
   .progressBar-layout {
     margin-top: 20px;
     display: flex;
@@ -79,7 +84,7 @@
     -webkit-appearance: none;
     height: 15px;
     width: 15px;
-    border-radius: 50%;
+    // border-radius: 50%;
     // border: none;
     background-color: var(--knobby);
     cursor: pointer;
@@ -93,5 +98,4 @@
     transform: scale(1.2);
     background: var(--selectedKnobby);
   }
-
 }

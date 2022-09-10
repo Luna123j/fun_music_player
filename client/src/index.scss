@@ -1,7 +1,20 @@
 body {
-
-  margin: 0;
-  padding: 0;
-  background:white;
+  // padding: none;
+  // margin: none;
+  // width: 100vw;
+  // height: 100vh;
+  // border: none;
+  background: linear-gradient(
+    180deg,
+    white,
+    tan,
+    rgb(213, 174, 123),
+    rgb(205, 154, 88),
+    rgb(202, 142, 64),
+    rgb(196, 112, 1)
+    
+    );
+    background-color:     rgb(213, 174, 123),
+    ;
+    background-image: url("https://www.transparenttextures.com/patterns/food.png");
 }
-

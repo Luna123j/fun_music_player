@@ -311,20 +311,31 @@ function App() {
     try {
       await assembly.get(`/transcript/${transcriptID}`).then((res) => {
         setTranscriptData(res.data);
-        console.log("!!!!!!this is from app check status script!!!!", script)
-        console.log("!!!!!!this is from app check status data!!!!", transcriptData.text)
+        // console.log("!!!!!!this is from app check status script!!!!", script)
+        // console.log("!!!!!!this is from app check status data!!!!", transcriptData.text)
 
         dispatch({
           type: "transcript/updateScript",
           payload: transcriptData.text,
         });
+
+        // if (script) {
+        //   for (let s of script)  {
+        //     if (s == "and." || s == "end") {
+        //       console.log("THIS IS THE CONDITIONAL SCRIPT")
+        //      return script.replace('and.','')
+        //     }
+        //   }
+      
+        // }
+
       });
     } catch (err) {
       console.error(err);
     }
   };
   console.log("statusHandler transcript", script);
-  console.log("this is transcript data", transcriptData);
+  // console.log("this is transcript data", transcriptData);
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -354,6 +365,10 @@ function App() {
       dispatch({ type: "transcript/updateScript", payload: transcriptData.text })
     }
   })
+  // if (script !== undefined){
+    
+  //  return script = script.slice(0, script.length - 4)
+  // }
 
   // console.log(transcript)
   const recordValues = { record, startRecording, stopRecording };
@@ -376,6 +391,7 @@ function App() {
     axios
       .post("/music", userInput)
       .then((res) => {
+        
         dispatch({ type: "musicData/getList", payload: [...res.data.data] });
         navigate("/search");
       })
@@ -520,14 +536,9 @@ function App() {
         <div>
           <Navbar />
         </div>
-        <Routes>
-          <Route path="/" element={<Lyrics />} />
-          <Route path="/users/favourite" element={<Favourite />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/search" element={<MusicList />} />
-        </Routes>
+        <div id="appContainer"> 
+
+        <div id="sider">
 
         <Speechlistener
           indexValues={indexValues}
@@ -537,10 +548,21 @@ function App() {
           recordValues={recordValues}
           transcriptValues={transcriptValues}
         />
+        </div>
+        <Routes>
+          <Route path="/" element={<Lyrics />} />
+          <Route path="/users/favourite" element={<Favourite />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/search" element={<MusicList />} />
+        </Routes>
+        </div>
 
-        <footer>
+
+        <div id="footerEsque">
           <PlayButton playValues={playValues} timeValues={timeValues} />
-        </footer>
+        </div>
       </div>
     </CookiesProvider>
   );

@@ -55,6 +55,8 @@ export default function SearchMusic(props) {
     }
   }, [click])
 
+ 
+
   return (
     <div>
       <form className="d-flex" role="search" action="" onSubmit={searchHandler}>

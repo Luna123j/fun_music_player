@@ -24,7 +24,7 @@ export default function Speechinput(props) {
   
   return (
     <div className="record">
-      <h1>Fun Music Player</h1>
+    
       {/* <audio ref={audioPlayer} src={blobURL} controls="controls" /> */}
       <button className="recordButton" onClick={() => dispatch(onrecord())}>
         {!record && (<i className="fa-solid fa-microphone" onClick={() => startRecording()}></i>)}

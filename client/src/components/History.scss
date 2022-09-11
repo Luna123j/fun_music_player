@@ -1,0 +1,17 @@
+.item {
+  display: flex;
+  direction: row;
+  border: 2px solid black;
+  
+  width: 60vw;
+  // position: absolute;
+  margin-left: 30vw;
+  img {
+    width: 150px;
+    margin: 5px 20px 5px 5px;
+  }
+}
+
+h1 {
+  margin-left: 30vw;
+}

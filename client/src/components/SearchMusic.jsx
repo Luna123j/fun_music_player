@@ -12,7 +12,7 @@ export default function SearchMusic(props) {
   const { index } = useSelector((state) => state.currentIndex);
   const { listen } = useSelector((state) => state.listen);
   // const { musicList } = useSelector((state) => state.getList);
-  console.log("PROPS IN SEARCHMUSIC",props)
+  // console.log("PROPS IN SEARCHMUSIC",props)
   const { transcriptValues } = props
   const { setTranscriptData} = transcriptValues
   const dispatch = useDispatch();

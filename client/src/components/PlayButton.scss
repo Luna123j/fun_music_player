@@ -1,14 +1,15 @@
 .play {
   width: 100vw;
   background-color: white;
-background-image: url("https://www.transparenttextures.com/patterns/skulls.png");
+  background-image: url("https://www.transparenttextures.com/patterns/skulls.png");
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
  border-style:groove;
  border-width: 20px;
  border-radius: 3%;
  border-color: cornsilk;
 display: flex;
-justify-content: center;
+direction: row;
+// justify-content: center;
   .playerButton {
     display: flex;
     justify-content: center;
@@ -21,8 +22,22 @@ justify-content: center;
     border: 2px solid tan;
     margin-left:  20px;
     margin-right: 20px;
+    background: red;
+    
+  }
+
+  .playButton-play {
+    width: 75px;
+    height: 75px;
+    border-radius: 50px;
+    border: 2px solid tan;
+    margin-left:  20px;
+    margin-right: 20px;
+    background: green;
+    
   }
   
+
   .previous {
     width: 50px;
     height: 50px;
@@ -39,10 +54,12 @@ justify-content: center;
 
   
   .progressBar-layout {
-    margin-top: 20px;
+    width: 40vw;
+    left: 50px;
     display: flex;
     direction: rows;
     align-items: center;
+    margin: 0 30px;
   }
 
   .progressBar {
@@ -97,5 +114,11 @@ justify-content: center;
   .progressBar:active::-webkit-slider-thumb {
     transform: scale(1.2);
     background: var(--selectedKnobby);
+  }
+
+  .playList {
+    position: absolute;
+    right: 30px;
+    margin-top: 20px;
   }
 }

@@ -16,7 +16,7 @@ const Lyrics = () => {
   const dispatch = useDispatch()
   const {list_id} = useSelector(state => state.player)
   const l = list_id;
-  console.log("this is list_id ahhhhh", l)
+  // console.log("this is list_id ahhhhh", l)
   const clickFavouriteHandler = () => {
     if (currentSongContent.length !== 0) {
       axios.post('/favourite', {
@@ -37,7 +37,7 @@ const Lyrics = () => {
     }
   }
 
-  console.log("check", currentSongContent)
+  // console.log("check", currentSongContent)
   useEffect(() => {
     if (currentSongContent.length !== 0) {
       axios.post('/favourite',

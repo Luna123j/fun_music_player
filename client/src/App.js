@@ -2,7 +2,7 @@ import "./App.scss";
 import "./components/PlayButton";
 import PlayButton from "./components/PlayButton";
 
-import { onplay, next, prev } from "./redux/player";
+import { onplay, next, prev, loop, playSelect } from "./redux/player";
 
 import Speechinput from "./components/Speechinput";
 import Speechlistener from "./components/Speechlistener";
@@ -38,7 +38,7 @@ import MusicList from "./components/MusicList";
 import Lyrics from "./components/Lyrics";
 import { cookieProvider, CookiesProvider } from "react-cookie";
 import { updateIndex } from "./redux/currentIndex";
-
+import Modal from "./components/Modal";
 // const socket = io();
 
 // Set AssemblyAPI Axios Header
@@ -334,7 +334,7 @@ function App() {
       console.error(err);
     }
   };
-  console.log("statusHandler transcript", script);
+  // console.log("statusHandler transcript", script);
   // console.log("this is transcript data", transcriptData);
 
   // useEffect(() => {
@@ -360,8 +360,8 @@ function App() {
     checkStatusHandler(transcriptID)
   } else {
     setIsLoading(false)
-    console.log("!!!!!!this is from app script!!!!", script)
-    console.log("!!!!!!this is from app check status data!!!!", transcriptData.text)
+    // console.log("!!!!!!this is from app script!!!!", script)
+    // console.log("!!!!!!this is from app check status data!!!!", transcriptData.text)
    let dataText = transcriptData.text
    if (dataText){
 
@@ -456,16 +456,19 @@ function App() {
   // ////////////////////////////////////////////
   const { currentSongContent } = useSelector((state) => state.currentSongData);
   const musicUrl = [];
+  useEffect(()=> {
+    
+  })
   if (currentSongContent.length > 0) {
     currentSongContent.map((song, index) => {
       return (musicUrl[index] = song.mp3Url);
     });
   }
-
-  const { play, list_id } = useSelector((state) => state.player);
   const mp3Url = { ...musicUrl };
 
-  console.log("^^^^^^^^^^mp3 arr^^^^", mp3Url);
+  const { play, list_id } = useSelector((state) => state.player);
+
+  // console.log("^^^^^^^^^^mp3 arr^^^^", currentSongContent);
   const audioRef = useRef(new Audio(mp3Url[list_id]));
   const progressBar = useRef();
   const animationRef = useRef();
@@ -499,15 +502,19 @@ function App() {
   };
 
   const clickPlayHandler = () => {
-    dispatch(onplay());
-    if (!play) {
+    dispatch(onplay())
+  }
+
+  useEffect(()=> {
+    if (play) {
       audioRef.current.play();
       animationRef.current = requestAnimationFrame(whilePlaying);
     } else {
       audioRef.current.pause();
       animationRef.current = cancelAnimationFrame(animationRef.current);
     }
-  };
+    
+  }, [play])
 
   const whilePlaying = () => {
     progressBar.current.value = audioRef.current.currentTime;
@@ -527,6 +534,7 @@ function App() {
     if (list_id < mp3Url.length - 2) {
       dispatch(next());
     }
+   
   };
 
   const clickPrev = () => {
@@ -550,9 +558,7 @@ function App() {
   };
 
   // //////////////////////////////////////////
-  //
-  // ///////////////////////////////////////
-  // ////////////////////////////////////////////
+  console.log(currentSongContent, list_id)
   return (
     <CookiesProvider>
       <div className="App">
@@ -583,6 +589,7 @@ function App() {
 
         <div id="footerEsque">
           <PlayButton playValues={playValues} timeValues={timeValues} />
+       
         </div>
       </div>
     </CookiesProvider>

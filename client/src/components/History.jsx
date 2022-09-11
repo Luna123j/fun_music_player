@@ -15,7 +15,7 @@ const History = () => {
   // const clickHandler=()=>{
   //   dispatch()
   // }
-  console.log(currentSongContent);
+  console.log(historyList);
   useEffect(() => {
     // console.log(currentSongContent[currentSongContent.length-1]);
     if (currentSongContent.length === 0) {

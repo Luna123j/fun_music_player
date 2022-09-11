@@ -12,7 +12,7 @@ const Favourite = () => {
   const { currentSongContent } = useSelector((state) => state.currentSongData);
   const [cookie] = useCookies();
   const navigate = useNavigate();
-  console.log(currentSongContent);
+  console.log(favourite);
   useEffect(() => {
     // console.log(currentSongContent[currentSongContent.length-1]);
 

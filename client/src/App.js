@@ -456,9 +456,6 @@ function App() {
   // ////////////////////////////////////////////
   const { currentSongContent } = useSelector((state) => state.currentSongData);
   const musicUrl = [];
-  useEffect(()=> {
-    
-  })
   if (currentSongContent.length > 0) {
     currentSongContent.map((song, index) => {
       return (musicUrl[index] = song.mp3Url);

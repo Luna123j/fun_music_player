@@ -4,10 +4,11 @@ export const playerSlice = createSlice({
   name: 'player',
   initialState: {
     play: false,
-    list_id: -1
+    list_id: -1,
+    mp3Url:""
   },
   reducers: {
-    onplay: (state) => {
+    onplay: (state, action) => {
       state.play = !state.play;
     },
     next: (state) => {

@@ -5,6 +5,8 @@ import { selectedSong } from "../redux/visualMode";
 import { useNavigate } from "react-router-dom";
 import { next, playSelect, resetList_id } from "../redux/player"; 
 import { useEffect } from "react";
+import '../components/MusicList.scss';
+
 
 const MusicList = () => {
   const dispatch = useDispatch();
@@ -56,7 +58,7 @@ const MusicList = () => {
   
     
   return (
-    <div>
+    <div className="musicList">
       {musicList.slice(0, 5).map((item) => {
         return (
           <div key={item.id} onClick={() => songHandler(item)}  >

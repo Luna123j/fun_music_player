@@ -26,7 +26,7 @@ export default function Speechlistener(props) {
 
   useEffect(() => {
     if (index === 3) {
-      navigate("/favourite", { replace: true })
+      navigate("/users/favourite", { replace: true })
    
 
     } else if (index === 5)

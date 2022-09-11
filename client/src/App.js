@@ -114,7 +114,8 @@ function App() {
       if (!play) {
         audioRef.current.play();
         animationRef.current = requestAnimationFrame(whilePlaying);
-      } else {
+      } 
+      else {
         audioRef.current.pause();
         animationRef.current = cancelAnimationFrame(animationRef.current);
       }
@@ -127,7 +128,8 @@ function App() {
       if (!play) {
         audioRef.current.play();
         animationRef.current = requestAnimationFrame(whilePlaying);
-      } else {
+      } 
+      else {
         audioRef.current.pause();
         animationRef.current = cancelAnimationFrame(animationRef.current);
       }
@@ -587,6 +589,7 @@ function App() {
         <div id="footerEsque">
           <PlayButton playValues={playValues} timeValues={timeValues} />
        
+
         </div>
       </div>
     </CookiesProvider>

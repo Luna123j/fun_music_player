@@ -26,7 +26,7 @@ const Navbar = (props) => {
  
 
   return (
-    <nav className="navbar navbar-expand-lg bg-light">
+    <nav style={{position: "fixed"}}className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
         <button
           className="navbar-toggler"
@@ -58,30 +58,35 @@ const Navbar = (props) => {
                 <Link id="history"style={{ textDecoration: 'none' }}to="/history" >History |</Link>
               </span>
             </li>
+            <li className="nav-item">
+              <span className="nav-link">
+
+            <SearchMusic transcriptValues={transcriptValues} searchHandler={searchHandler}/>
+              </span>
+
+            </li>
             
+          </ul>
               {cookie.username === "undefined" ? (
                 <>
-                  <li className="nav-item">
+                  <li className="nav-item list-style" >
                     <span className="nav-link">
-                      <Link id="login"to="/login">Login |</Link>
+                      <Link id="login"to="/login">| Login |</Link>
                     </span>
                   </li>
-                  <li className="nav-item">
+                  <li className="nav-item list-style">
                     <span className="nav-link">
-                      <Link id="signup"style={{ textDecoration: 'none' }}to="/signup">Sign up |</Link>
+                      <Link id="signup"style={{ textDecoration: 'none' }}to="/signup"> Sign up |</Link>
                     </span>
                   </li>
                 </>
               ) :
               (
-                <li onClick={logouthandler}>
-                  <span id="unlogin"className="nav-link">Log out |</span>
+                <li onClick={logouthandler} className="nav-item list-style">
+                  <span className="nav-link"id="unlogin">| Log out |</span>
                 </li>
               )}
-            
-          </ul>
           {/* <SearchMusic /> */}
-          <SearchMusic transcriptValues={transcriptValues} searchHandler={searchHandler}/>
         </div>
       </div>
     </nav>

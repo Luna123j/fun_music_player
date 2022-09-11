@@ -15,16 +15,17 @@ body  {
   display: flex;
   flex-direction: column;
   background-color: white;
-  background-image: url("https://www.transparenttextures.com/patterns/bright-squares.png");
+  background-image: url("https://www.transparenttextures.com/patterns/skulls.png");
   width: 30%;
-  height:100%;
+  height:80%;
   left: 0px;
   position: fixed;
   border-style:groove;
   border-width: 20px;
   border-radius: 3%;
   border-color: cornsilk; 
-
+  border-top: none;
+  
 }
 // .listener{
 //   height:100%;
@@ -36,4 +37,5 @@ body  {
   justify-content: space-around;
   width:100%;
   height:100%;
+  
 }

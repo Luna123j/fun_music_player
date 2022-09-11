@@ -10,8 +10,48 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-
+    align-items: center;
     #luigitwerk{
-        width: 50vw
+        width: 50vw;
+        float: right;
     }
+
+}
+
+.recordButton{
+    border-radius: 100%;
+    background-color:#008CBA;;
+    border-width: none;
+    height: 155px;
+    width: 155px;
+    border-color: #008CBA;
+
+}
+
+#mIcon{
+    font-size: 107px;
+    color: white;
+
+}
+
+#notmIcon{
+    font-size: 107px;
+    color: white;
+
+}
+
+#envelope{
+    font-size: 107px;
+    color: white;
+
+}
+
+.recordButton1{
+    border-radius: 100%;
+    background-color:#008CBA;;
+    border-width: none;
+    height: 155px;
+    width: 155px;
+    border-color: #008CBA;
+
 }

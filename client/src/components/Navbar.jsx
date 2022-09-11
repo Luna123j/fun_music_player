@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, signup, favourite, recent } from "../redux/visualMode";
 import SearchMusic from "./SearchMusic";
-
+import '../components/Navbar.scss';
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { resetUserState } from "../redux/user";
@@ -40,7 +40,7 @@ const Navbar = (props) => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <span className="navbar-brand">
-          <Link to="/">FunPlayer</Link>
+          <Link id="funplayer"style={{ textDecoration: 'none' }}to="/">FunPlayer</Link>
         </span>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -49,13 +49,13 @@ const Navbar = (props) => {
             </li>
             <li className="nav-item">
               <span className="nav-link">
-                <Link to="/users/favourite">Favourite</Link>
+                <Link id="favourite"style={{ textDecoration: 'none' }}to="/users/favourite">| Favourite |</Link>
 
               </span>
             </li>
             <li className="nav-item">
               <span className="nav-link">
-                <Link to="/history" >History</Link>
+                <Link id="history"style={{ textDecoration: 'none' }}to="/history" >History |</Link>
               </span>
             </li>
             
@@ -63,19 +63,19 @@ const Navbar = (props) => {
                 <>
                   <li className="nav-item">
                     <span className="nav-link">
-                      <Link to="/login">Login</Link>
+                      <Link id="login"to="/login">Login |</Link>
                     </span>
                   </li>
                   <li className="nav-item">
                     <span className="nav-link">
-                      <Link to="/signup">Sign up</Link>
+                      <Link id="signup"style={{ textDecoration: 'none' }}to="/signup">Sign up |</Link>
                     </span>
                   </li>
                 </>
               ) :
               (
                 <li onClick={logouthandler}>
-                  <span className="nav-link">Log out</span>
+                  <span id="unlogin"className="nav-link">Log out |</span>
                 </li>
               )}
             

@@ -1,5 +1,54 @@
 nav {
-    
-   
-    background-image: url("https://www.transparenttextures.com/patterns/bright-squares.png");
+  height: 10vh;
+  padding: none;
+  margin: none;
+  border-style: groove;
+  border-width: 20px;
+  border-radius: 3%;
+  border-color: cornsilk;
+  background-image: url("https://www.transparenttextures.com/patterns/skulls.png");
+}
+
+#history {
+  border-color: tan;
+  color: tan;
+  font-size: 24px;
+  border-radius: 40%;
+}
+
+#funplayer {
+  border-color: tan;
+  color: tan;
+  text-decoration: none;
+  font-size: 50px;
+}
+
+#login {
+      border-radius: 40%;
+    border-color: tan;
+  color: tan;
+  text-decoration: none;
+  font-size: 24px;
+
+}
+
+#logout {
+      border-radius: 40%;  border-color: tan;
+  color: tan;
+  font-size: 24px;
+
+}
+
+#signup {
+      border-radius: 40%;  border-color: tan;
+  color: tan;
+  font-size: 24px;
+
+}
+
+#favourite {
+      border-radius: 40%;  border-color: tan;
+      color: tan;
+      font-size: 24px;
+
 }

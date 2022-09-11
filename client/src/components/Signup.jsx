@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {  useDispatch } from "react-redux";
 import { userState } from "../redux/user";
 import { useCookies } from "react-cookie";
+import '../components/Signup.scss';
 
 const Signup = () => {
   const navigate = useNavigate()
@@ -31,21 +32,24 @@ const Signup = () => {
   }
 
   return (
-    <div>
       <form onSubmit={submitHandler}>
+    <div id="signupcontainer">
         <div>
-          <span>username</span>
+          <span id="username">username</span>
+          <div></div>
           <input type="text" name="username" placeholder="Username" />
         </div>
         <div>
-          <span>password</span>
+          <span id="password">password</span>
+          <div></div>
           <input type="password" name="password" placeholder="Password" />
         </div>
         <div>
-          <button type="submit" >Sign up</button>
+        <div></div>
         </div>
-      </form>
+          <button id="signup1"type="submit" >Sign up</button>
     </div>
+      </form>
   );
 };
 

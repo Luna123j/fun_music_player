@@ -27,10 +27,10 @@ export default function Speechinput(props) {
     
       {/* <audio ref={audioPlayer} src={blobURL} controls="controls" /> */}
       <button className="recordButton" onClick={() => dispatch(onrecord())}>
-        {!record && (<i className="fa-solid fa-microphone" onClick={() => startRecording()}></i>)}
-        {record && (<i className="fa-solid fa-microphone-slash" onClick={() => stopRecording()}></i>)}
+        {!record && (<i id="mIcon"className="fa-solid fa-microphone" onClick={() => startRecording()}></i>)}
+        {record && (<i id="notmIcon"className="fa-solid fa-microphone-slash" onClick={() => stopRecording()}></i>)}
       </button>
-      <button onClick={submitTranscriptionHandler}>SUBMIT</button>
+      <button className="recordButton1" onClick={submitTranscriptionHandler}><i id="envelope"class="fa-solid fa-envelope"></i></button>
       {/* <button disabled={isRecording} onClick={startRecording}>
           🎙️
         </button>

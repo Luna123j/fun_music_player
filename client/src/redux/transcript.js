@@ -8,7 +8,10 @@ export const transcriptSlice = createSlice({
   reducers: {
    updateScript : (state, action) => {
     state.script = action.payload
-   }  
+   },  
+  //  onscript: (state) => {
+  //   state.script = !state.script;
+  // }
   }
 });
 

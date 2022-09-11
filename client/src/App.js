@@ -300,6 +300,7 @@ function App() {
       .then((res) => {
         setTranscriptID(res.data.id);
         checkStatusHandler(res.data.id);
+        // scriptMaker()
       })
       .catch((err) => console.error(err));
   };
@@ -314,11 +315,11 @@ function App() {
         // console.log("!!!!!!this is from app check status script!!!!", script)
         // console.log("!!!!!!this is from app check status data!!!!", transcriptData.text)
 
-        dispatch({
-          type: "transcript/updateScript",
-          payload: transcriptData.text,
-        });
-
+        // dispatch({
+        //   type: "transcript/updateScript",
+        //   payload: transcriptData.text,
+        // });
+        // setSearchText(transcriData.text)
         // if (script) {
         //   for (let s of script)  {
         //     if (s == "and." || s == "end") {
@@ -326,9 +327,8 @@ function App() {
         //      return script.replace('and.','')
         //     }
         //   }
-      
-        // }
 
+        // }
       });
     } catch (err) {
       console.error(err);
@@ -356,19 +356,45 @@ function App() {
   // });
 
   useEffect(() => {
-    if (transcriptData.status !== "completed" && isLoading) {
-      checkStatusHandler(transcriptID)
-    } else {
-      setIsLoading(false)
-      console.log("!!!!!!this is from app script!!!!", script)
-      console.log("!!!!!!this is from app check status data!!!!", transcriptData.text)
-      dispatch({ type: "transcript/updateScript", payload: transcriptData.text })
-    }
+  if (transcriptData.status !== "completed" && isLoading) {
+    checkStatusHandler(transcriptID)
+  } else {
+    setIsLoading(false)
+    console.log("!!!!!!this is from app script!!!!", script)
+    console.log("!!!!!!this is from app check status data!!!!", transcriptData.text)
+   let dataText = transcriptData.text
+   if (dataText){
+
+   dataText = dataText.replace('end.' || 'and.', '')
+
+   }
+
+     dispatch({ type: "transcript/updateScript", payload: dataText })
+
+  }
+
   })
-  // if (script !== undefined){
-    
-  //  return script = script.slice(0, script.length - 4)
-  // }
+
+  // const scriptMaker = function () {
+  //   if (transcriptData.status !== "completed" && isLoading) {
+  //     checkStatusHandler(transcriptID);
+  //   } else {
+  //     setIsLoading(false);
+  //     console.log("!!!!!!this is from app script!!!!", script);
+  //     console.log(
+  //       "!!!!!!this is from app check status data!!!!",
+  //       transcriptData.text
+  //     );
+  //     let dataText = transcriptData.text;
+  //     if (dataText) {
+  //       dataText = dataText.replace("end.", "");
+  //     }
+
+  //     dispatch({ type: "transcript/updateScript", payload: dataText });
+  //   }
+  // };
+
+  // scriptMaker()
 
   // console.log(transcript)
   const recordValues = { record, startRecording, stopRecording };
@@ -377,6 +403,7 @@ function App() {
     // setTranscript,
     submitTranscriptionHandler,
     transcriptData,
+    setTranscriptData
   };
   // //////////////////////////////////////////
   // SearchMusic Globalized logic
@@ -391,7 +418,6 @@ function App() {
     axios
       .post("/music", userInput)
       .then((res) => {
-        
         dispatch({ type: "musicData/getList", payload: [...res.data.data] });
         navigate("/search");
       })
@@ -432,27 +458,26 @@ function App() {
   const musicUrl = [];
   if (currentSongContent.length > 0) {
     currentSongContent.map((song, index) => {
-      return musicUrl[index] = song.mp3Url;
-    })
+      return (musicUrl[index] = song.mp3Url);
+    });
   }
 
-  const { play, list_id } = useSelector(state => state.player);
-  const mp3Url = { ...musicUrl }
+  const { play, list_id } = useSelector((state) => state.player);
+  const mp3Url = { ...musicUrl };
 
-
-  console.log("^^^^^^^^^^mp3 arr^^^^", mp3Url)
-  const audioRef = useRef(new Audio(mp3Url[list_id]))
-  const progressBar = useRef()
-  const animationRef = useRef()
-  const [currentTime, setCurrentTime] = useState(0)
-  const [duration, setDuration] = useState(0)
-  const isReady = useRef(false)
+  console.log("^^^^^^^^^^mp3 arr^^^^", mp3Url);
+  const audioRef = useRef(new Audio(mp3Url[list_id]));
+  const progressBar = useRef();
+  const animationRef = useRef();
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const isReady = useRef(false);
   useEffect(() => {
     audioRef.current.pause();
     audioRef.current = new Audio(mp3Url[list_id]);
-    console.log("list id app.js", list_id)
+    console.log("list id app.js", list_id);
     if (isReady.current) {
-      audioRef.current.play()
+      audioRef.current.play();
     } else {
       isReady.current = true;
     }
@@ -499,17 +524,15 @@ function App() {
   };
 
   const clickNext = () => {
-    if (list_id < mp3Url.length-2) {
+    if (list_id < mp3Url.length - 2) {
       dispatch(next());
     }
-
   };
 
   const clickPrev = () => {
-    if (list_id > 0 ) {
+    if (list_id > 0) {
       dispatch(prev());
     }
-
   };
 
   const handleChange = (e) => {
@@ -534,31 +557,29 @@ function App() {
     <CookiesProvider>
       <div className="App">
         <div>
-          <Navbar />
+          <Navbar transcriptValues={transcriptValues}
+/>
         </div>
-        <div id="appContainer"> 
-
-        <div id="sider">
-
-        <Speechlistener
-          indexValues={indexValues}
-          listenerValues={listenerValues}
-        />
-        <Speechinput
-          recordValues={recordValues}
-          transcriptValues={transcriptValues}
-        />
+        <div id="appContainer">
+          <div id="sider">
+            <Speechlistener
+              indexValues={indexValues}
+              listenerValues={listenerValues}
+            />
+            <Speechinput
+              recordValues={recordValues}
+              transcriptValues={transcriptValues}
+            />
+          </div>
+          <Routes>
+            <Route path="/" element={<Lyrics />} />
+            <Route path="/users/favourite" element={<Favourite />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/search" element={<MusicList />} />
+          </Routes>
         </div>
-        <Routes>
-          <Route path="/" element={<Lyrics />} />
-          <Route path="/users/favourite" element={<Favourite />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/search" element={<MusicList />} />
-        </Routes>
-        </div>
-
 
         <div id="footerEsque">
           <PlayButton playValues={playValues} timeValues={timeValues} />

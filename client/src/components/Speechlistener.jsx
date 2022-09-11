@@ -43,19 +43,19 @@ export default function Speechlistener(props) {
         {coolLabels[index]}
       </div>
       <div>
-      Listen🔊
+
         </div>
       <button id="listenbutton" onClick={() => dispatch(onlisten())}>
         
         {!listen && (
           <i
-            className="fa-solid fa-ear-listen"
+            id="ear"className="fa-solid fa-ear-listen"
             onClick={() => listener(listenOptions, updateCurrentIndex)}
           ></i>
         )}
         {listen && (
           <i
-            className="fa-solid fa-ear-deaf"
+          id="notear"  className="fa-solid fa-ear-deaf"
             onClick={() => stopListening()}
           ></i>
         )}

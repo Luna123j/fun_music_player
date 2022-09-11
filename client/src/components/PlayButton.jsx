@@ -12,9 +12,7 @@ export default function PlayButton(props) {
   const { calculateTime, currentTime, progressBar, handleChange, duration } = timeValues
   const playButtonClass= play ? "playButton-play" : "playButton";
   const [isOpen, setIsOpen] = useState(false)
-  const playListHandler = () => {
-
-  }
+ 
 
   
   return <div className='play'>

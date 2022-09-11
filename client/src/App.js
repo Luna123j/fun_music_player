@@ -519,7 +519,18 @@ function App() {
     progressBar.current.value = audioRef.current.currentTime;
     changePlayerCurrentTime();
     animationRef.current = requestAnimationFrame(whilePlaying);
+    if (audioRef.current.ended) {
+      if (list_id < musicUrl.length - 1) {
+        dispatch(next());
+      }
+    if (list_id === musicUrl.length - 1) {
+      dispatch(loop())
+      dispatch(next())
+     
+    }
+    }
   };
+  console.log("*************", audioRef.current.ended)
 
   const changePlayerCurrentTime = () => {
     progressBar.current.style.setProperty(
@@ -530,15 +541,26 @@ function App() {
   };
 
   const clickNext = () => {
-    if (list_id < mp3Url.length - 2) {
-      dispatch(next());
+    console.log("list length", musicUrl.length)
+    if (list_id < musicUrl.length - 1) {
+        dispatch(next());
+      }
+    if (list_id === musicUrl.length - 1) {
+      dispatch(loop())
+      dispatch(next())
+     
     }
-   
-  };
+    console.log(list_id)
+      
+    };
+    console.log("click next after", list_id)
 
   const clickPrev = () => {
     if (list_id > 0) {
       dispatch(prev());
+    }
+    if (list_id === 0) {
+
     }
   };
 

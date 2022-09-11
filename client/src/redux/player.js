@@ -29,8 +29,8 @@ export const playerSlice = createSlice({
     },
     loop: (state) => {
       state.list_id = -1
-      state.play = true
     }
+   
   }
 });
 

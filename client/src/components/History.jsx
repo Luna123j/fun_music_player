@@ -12,23 +12,15 @@ const History = () => {
   const { currentSongContent } = useSelector((state) => state.currentSongData);
   const [cookie] = useCookies();
   const navigate = useNavigate()
-  // const clickHandler=()=>{
-  //   dispatch()
-  // }
+  
   console.log(historyList);
   useEffect(() => {
     // console.log(currentSongContent[currentSongContent.length-1]);
     if (currentSongContent.length === 0) {
-      const senddata = setTimeout(() => {
         axios.post("/history", { username: cookie.username }).then((res) => {
           setHistoryList(res.data.reverse());
-        });
-      }, 2000);
-      return () => {
-        clearTimeout(senddata);
-      };
+        });  
     } else if (currentSongContent.length !== 0) {
-      const senddata = setTimeout(() => {
         axios
           .post("/history", {
             currentSong: currentSongContent[currentSongContent.length - 1],
@@ -38,11 +30,11 @@ const History = () => {
             console.info("from backend", res);
             setHistoryList(res.data.reverse());
           });
-      }, 2000);
-      return () => {
-        clearTimeout(senddata);
-      };
-    }
+      }
+      // return () => {
+      //   clearTimeout(senddata);
+      // };
+    
   }, [currentSongContent]);
 
   const historyPlayHandler = (item) => {
@@ -56,6 +48,8 @@ const History = () => {
     };
     dispatch({ type: "currentSongData/getCurrentSong", payload: songDetails });
     dispatch(playSelect());
+    
+    
     // navigate('/')
   };
 
@@ -63,7 +57,7 @@ const History = () => {
     <div id="history1">
       <h1>History</h1>
       {historyList.length === 0 && <div>There is no history record</div>}
-      {historyList.length !== 0 &&
+      {historyList.length !== 0 && 
         historyList.map((item, index) => {
           return (
             <div className="item" key={index} onClick={() => historyPlayHandler(item)}>

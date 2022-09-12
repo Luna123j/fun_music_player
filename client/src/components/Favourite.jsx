@@ -15,8 +15,6 @@ const Favourite = () => {
   console.log(favourite);
   useEffect(() => {
     // console.log(currentSongContent[currentSongContent.length-1]);
-
-    const senddata = setTimeout(() => {
       axios
         .post("/users/favourite", { username: cookie.username })
         .then((res) => {
@@ -25,10 +23,7 @@ const Favourite = () => {
             setFavourite(res.data);
           }
         });
-    }, 1000);
-    return () => {
-      clearTimeout(senddata);
-    };
+  
   }, [currentSongContent]);
 
   const favorPlayHandler = (item) => {
@@ -42,7 +37,7 @@ const Favourite = () => {
     };
     dispatch({ type: "currentSongData/getCurrentSong", payload: songDetails });
     dispatch(playSelect());
-    // navigate("/");
+    navigate("/");
   };
 
   return (

@@ -470,6 +470,7 @@ function App() {
   // console.log("^^^^^^^^^^mp3 arr^^^^", currentSongContent);
   const audioRef = useRef(new Audio(mp3Url[list_id]));
   const progressBar = useRef();
+  const volumeBar = useRef();
   const animationRef = useRef();
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -485,6 +486,10 @@ function App() {
     }
     // progressBar.current = audioRef.current.currentTime
   }, [list_id]);
+
+  useEffect(()=> {
+    volumeBar.current = audioRef.current.volume
+  })
 
   useEffect(() => {
     const seconds = Math.floor(audioRef.current.duration);
@@ -517,9 +522,20 @@ function App() {
 
   const whilePlaying = () => {
     progressBar.current.value = audioRef.current.currentTime;
+    
     changePlayerCurrentTime();
     animationRef.current = requestAnimationFrame(whilePlaying);
+    if (audioRef.current.ended) {
+      if (list_id < musicUrl.length - 1) {
+        dispatch(next());
+      }
+    if (list_id === musicUrl.length - 1) {
+      dispatch(loop())
+      dispatch(next())
+    }
+    }
   };
+  console.log("*************", audioRef.current.ended)
 
   const changePlayerCurrentTime = () => {
     progressBar.current.style.setProperty(
@@ -530,15 +546,26 @@ function App() {
   };
 
   const clickNext = () => {
-    if (list_id < mp3Url.length - 2) {
-      dispatch(next());
+    console.log("list length", musicUrl.length)
+    if (list_id < musicUrl.length - 1) {
+        dispatch(next());
+      }
+    if (list_id === musicUrl.length - 1) {
+      dispatch(loop())
+      dispatch(next())
+     
     }
-   
-  };
-
+    console.log(list_id)
+      
+    };
+    console.log("click next after", list_id)
+    console.log("**************", audioRef.current.volume)
   const clickPrev = () => {
     if (list_id > 0) {
       dispatch(prev());
+    }
+    if (list_id === 0) {
+
     }
   };
 
@@ -547,13 +574,14 @@ function App() {
     changePlayerCurrentTime();
   };
 
-  const playValues = { audioRef, clickPrev, clickPlayHandler, play, clickNext };
+  const playValues = { audioRef, clickPrev, clickPlayHandler, play, clickNext, volumeBar };
   const timeValues = {
     calculateTime,
     currentTime,
     progressBar,
     handleChange,
     duration,
+    volumeBar
   };
 
   // //////////////////////////////////////////

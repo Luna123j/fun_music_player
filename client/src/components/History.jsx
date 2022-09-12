@@ -74,6 +74,7 @@ const History = () => {
             </div>
           );
         })}
+        <div id="margin-bottom">{""}</div>
     </div>
   );
 };

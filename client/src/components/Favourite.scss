@@ -1,18 +1,19 @@
 #favourite1{
   padding-top: 10vh;
-  padding-left: 40vw;
+  padding-left: 25vw;
   font-family: "Montserrat";
   color: white;
   display: flex;
   flex-direction: column;
   // align-items: center;
+  font-size: 25px;
 }
 
 
   .item {
     display: flex;
     direction: row;
-    border-style: dotted;
+    border-style: 2px solid black;
     align-items: center;
     img {
       width: 150px;

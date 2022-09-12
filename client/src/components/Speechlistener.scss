@@ -13,17 +13,20 @@
 
 #listenbutton{
     border-radius: 100%;
-    background-color:#008CBA;;
-    border-width: none;
+    background-color:#619b8a;;
+    border: none;
     height: 155px;
     width: 155px;
-    border-color: #008CBA;
+    border-color: #619b8a;
 
 }
 
 #ear{
     font-size: 107px;
     color: white;
+}
+#listenbutton:hover {
+    background-color:rgb(98, 207, 109);
 }
 
 #notear{

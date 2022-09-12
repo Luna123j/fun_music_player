@@ -6,6 +6,7 @@ import { getList } from "../redux/musicData";
 // import { musiclist } from "../redux/visualMode";
 import { Link, useNavigate } from "react-router-dom";
 import { updateScript } from "../redux/transcript";
+import '../components/SearchMusic.scss';
 
 export default function SearchMusic(props) {
   const { script } = useSelector((state) => state.transcript);
@@ -90,8 +91,8 @@ setTranscriptData('')
           // onChange={(event) => script === undefined ? setSearchText(event.target.value) : dispatch({ type: "transcript/updateScript", payload: event.target.value })}
           onChange={(event) => setSearchText(event.target.value)}
         />
-        <button className="btn btn-outline-success" type="submit">
-          SEARCH
+        <button id="searchButton"className="btn" type="submit">
+        <i id="searchIcon"class="fa-solid fa-magnifying-glass"></i>
         </button>
       </form>
     </div>

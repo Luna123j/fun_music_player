@@ -1,28 +1,40 @@
 .list-container{
+ 
+    padding-top: 10vh;
+    padding-left: 25vw;
+    font-family: "Montserrat";
+    color: white;
     display: flex;
     flex-direction: column;
     // align-items: center;
-    justify-content: start;
-    position: absolute;
-    right:20px;
-    height: 90vh;
-    top: 15vh;
-    width: 60vw;
-    color: white;
-    font-family: "Montserrat";
-    bottom: 15vh;
-
-}
-
-#songList{
-  border-style: dotted;
-  display: flex;
-  direction: row;
-  align-items: center;
-  width: 20vw;
-  img {
-    width: 100px;
-    margin: 5px 20px 5px 5px;
-    border-radius: 100%;
+    height: 60vh;
   }
-}
+  #songList{
+
+    font-size: 25px;
+  }
+  .item {
+    
+  
+    display: flex;
+    direction: row;
+    border-style: 2px solid black;
+  
+    
+    align-items: center;
+    img {
+      width: 150px;
+      margin: 5px 20px 5px 5px;
+      border-radius: 100%;
+    }
+  }
+
+  .eachItem:hover {
+    background-color: rgb(215, 200, 162);
+  }
+
+  #listPic{
+    
+    border-radius: 100%;
+    margin: 5px 0;
+  }

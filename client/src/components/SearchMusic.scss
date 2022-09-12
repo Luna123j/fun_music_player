@@ -1,0 +1,22 @@
+#searchIcon {
+  font-size: 36px;
+  color: #a2d6f9;
+
+  .item {
+    display: flex;
+    direction: row;
+    
+    align-items: center;
+    img {
+      width: 150px;
+      margin: 5px 20px 5px 5px;
+      border-radius: 100%;
+    }
+  }
+
+ 
+}
+
+#searchIcon:hover {
+  color: rgb(87, 122, 238);
+}

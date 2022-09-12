@@ -1,7 +1,8 @@
 .play {
   width: 100vw;
-  background-color: white;
+  // background-color: white;
   background-image: url("https://www.transparenttextures.com/patterns/skulls.png");
+  background-color: #6c584c;
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 //  border-style:groove;
 //  border-width: 20px;
@@ -23,46 +24,65 @@ padding:10px 0;
     border-radius: 50px;
     margin-left:  20px;
     margin-right: 20px;
-    // background-image: "../doc/music-player.png";
-    img{
-      width: 55px;
-      height: 55px;
-    }
-    
+    font-size: 40px;
+    background-color: transparent;
+    background: none;
+    border: none;
+    color:#99c1b9;
+  }
+  .playButton:hover {
+    color:#26c9c3;
   }
 
-  .playButton-play {
+     .playButton-play {
     width: 75px;
     height: 75px;
     border-radius: 50px;
     margin-left:  20px;
     margin-right: 20px;
-    // background-image: "../doc/stop-sign.png";
-    img{
-      width: 55px;
-      height: 55px;
-    }
+    font-size: 40px;
+    background-color: transparent;
+    background: none;
+    border: none;
+    color:#d88c9a;
   }
+
+  .playButton-play:hover {
+    color: rgb(238, 69, 69);
+  }
+
+
   
 
   .previous {
     width: 50px;
     height: 50px;
     border-radius: 50px;
-    img{
-      width: 55px;
-      height: 55px;
-    }
+    font-size: 40px;
+    background-color: transparent;
+    background: none;
+    border: none;
+    color: #f2d0a9;
+
+  }
+
+  .previous:hover {
+    color:#e7a559;
   }
   
   .next {
     width: 50px;
     height: 50px;
     border-radius: 50px;
-    img{
-      width: 55px;
-      height: 55px;
-    }
+    font-size: 40px;
+    background-color: transparent;
+    background: none;
+    border: none;
+    color: #f2d0a9;
+
+  }
+  .next:hover {
+    color:#e7a559;
   }
 
   
@@ -78,7 +98,7 @@ padding:10px 0;
   .progressBar {
     --bar-bg: #ffe3d4;
     --seek-before-width: 100%;
-    --seek-before-color: #ffc2a1;
+    --seek-before-color: #aedec1;
     --knobby: #3452a5;
     --selectedKnobby: #26c9c3;
 
@@ -139,50 +159,19 @@ padding:10px 0;
     height: 40px;
     border-radius: 50px;
     margin-left: 25px;
-    img{
-      width: 55px;
-      height: 55px;
-    }
+    font-size: 30px;
+    background-color: transparent;
+    background: none;
+    border: none;
+    color: #8e7dbe;
+
+  }
+
+  .volume:hover {
+    color:rgb(229, 67, 234)
   }
   .volumeBar {
     margin-left: 25px;
-  }
-
-  .stopImg {
-    width: 55px;
-    height: 55px;
-  }
-  
-  .playImg {
-    margin-left: -8px;
-    margin-bottom: 8px;
-    width: 75px;
-    height: 75px;
-  }
-  
-  .stopImg {
-    width: 55px;
-    height: 55px;
-  }
-
-  .nextImg {
-    width: 55px;
-    height: 55px;
-  }
-
-  .prevImg{
-    width: 55px;
-    height: 55px;
-  }
-
-  .muteImg{
-    width: 55px;
-    height: 55px;
-  }
-
-  .volImg {
-    width: 55px;
-    height: 55px;
   }
 
 

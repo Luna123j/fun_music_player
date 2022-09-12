@@ -74,7 +74,7 @@ const Lyrics = () => {
               >
                 <i
                   id={isFavourite ? "favIcon" : "unfavIcon"}
-                  className="fa-regular fa-heart"
+                  className="fa-solid fa-heart"
                 ></i>
               </button>
               <img

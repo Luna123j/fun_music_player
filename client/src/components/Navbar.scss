@@ -8,25 +8,51 @@ nav {
     // border-radius: 3%;
     // border-color: cornsilk;
     background-image: url("https://www.transparenttextures.com/patterns/skulls.png");
+    background-color: #9d8189;
     position: absolute;
     top: 0%;
     z-index: 1000;
     // border-bottom: 2px solid #008CBA;
- 
+
   }
-  
+
+
+
   #history {
     border-color: tan;
     color: tan;
     font-size: 24px;
     border-radius: 40%;
+    text-decoration: 'none';
+  }
+
+  #history:hover {
+    color:#99c1b9;
+  }
+
+  #favourite {
+    border-radius: 40%;  border-color: tan;
+    color: tan;
+    font-size: 24px;
+    text-decoration: 'none';
+    
+}
+
+  #favourite:hover {
+    color:#99c1b9;
   }
   
   #funplayer {
-    border-color: tan;
-    color: tan;
+    border-color: #f2d0a9;
+    color: #f2d0a9;
     text-decoration: none;
-    font-size: 50px;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: 'none';
+
+  }
+  #funplayer:hover {
+    color:#99c1b9;
   }
   
   #login {
@@ -37,13 +63,18 @@ nav {
     font-size: 24px;
   
   }
+
+  #login:hover {
+    color:#99c1b9;
+  }
   
   #logout {
-        border-radius: 40%;  border-color: tan;
+    border-radius: 40%;  border-color: tan;
     color: tan;
     font-size: 24px;
   
   }
+
   
   #signup {
         border-radius: 40%;  border-color: tan;
@@ -51,21 +82,41 @@ nav {
     font-size: 24px;
   
   }
+
+  #signup:hover {
+    color:#99c1b9;
+  }
   
   #unlogin{
-      border-radius: 40%;  border-color: tan;
+    border-radius: 40%;  border-color: tan;
     color: tan;
     font-size: 24px;
   }
-  
-  #favourite {
-        border-radius: 40%;  border-color: tan;
-        color: tan;
-        font-size: 24px;
-  
+  #unlogin:hover {
+    color:#99c1b9;
   }
+
   
   .list-style{
       list-style: none;
   }
+
+  .logout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
   
+  .partial {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .partial2{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+  }

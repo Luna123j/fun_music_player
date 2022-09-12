@@ -14,16 +14,24 @@
     
 }
 
+// .record:hover {
+//     background-color:rgb(98, 207, 109);
+// }
+
 
 
 .recordButton{
     border-radius: 100%;
-    background-color:#008CBA;;
-    border-width: none;
+    background-color:#619b8a;
+    border: none;
     height: 155px;
     width: 155px;
-    border-color: #008CBA;
+    border-color: #619b8a;
 
+}
+
+.recordButton:hover {
+    background-color:rgb(98, 207, 109);
 }
 
 #mIcon{
@@ -46,10 +54,14 @@
 
 .recordButton1{
     border-radius: 100%;
-    background-color:#008CBA;;
-    border-width: none;
+    background-color:#619b8a;;
+    border: none;
     height: 155px;
     width: 155px;
-    border-color: #008CBA;
+    border-color: #619b8a;
 
+}
+
+.recordButton1:hover {
+    background-color:rgb(98, 207, 109);
 }

@@ -3,10 +3,6 @@ const router = express.Router();
 const users = require('../db/queries/users');
 const db = require("../configs/db.config");
 
-
-
-
-
 /* GET users listing. */
 router.get('/', (req, res) => {
   users.getAllUsers().then(data => {

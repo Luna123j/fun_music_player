@@ -59,13 +59,13 @@ const MusicList = () => {
     
   return (
     <div className="list-container">
+      <h1>Search List</h1>
       {musicList.slice(0, 5).map((item) => {
         return (
-          <div key={item.id} onClick={() => songHandler(item)}  >
+          <div className="eachItem" key={item.id} onClick={() => songHandler(item)}  >
             <div id="songList">
-              <img src={item.album.cover_small} alt={item.album.title} />
-                title:{item.title}
-                artist:{item.artist.name}
+              <img id="listPic"src={item.album.cover} alt={item.album.title} />
+                - {item.artist.name}: {item.title} 
             </div>
           </div>
 

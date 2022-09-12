@@ -3,12 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { onplay, next, prev } from '../redux/player';
 import '../components/PlayButton.scss';
 import classNames from "classnames";
-import playIcon from '../doc/music-player.png';
-import stopIcon from '../doc/stop-sign.png'
-import nextIcon from '../doc/skip.png'
-import prevIcon from '../doc/previous.png'
-import volIcon from '../doc/high-volume.png'
-import muteIcon from '../doc/no-sound.png'
+
 
 
 export default function PlayButton(props) {
@@ -16,7 +11,7 @@ export default function PlayButton(props) {
   const { playValues, timeValues } = props
   const { audioRef, clickPrev, clickPlayHandler, play, clickNext, volumeBar } = playValues
   const { calculateTime, currentTime, progressBar, handleChange, duration } = timeValues
-  const playButtonClass= play ? "playButton-play Img " : "playButton Img";
+  const playButtonClass= play ? "playButton-play " : "playButton ";
   const [volume, setVolume] = useState(0.2)
   const muteRef = useRef()
   
@@ -58,41 +53,36 @@ export default function PlayButton(props) {
     <button
       className="previous"
       onClick={clickPrev}>
-      <img src = {prevIcon} alt='prev'/>
-      {/* <i className="fa-solid fa-backward"></i> */}
+      <i class="fa-solid fa-backward"></i>
     </button>
     <button
       className={playButtonClass}
       onClick={clickPlayHandler}>
       
       {!play && 
-      <img src = {playIcon} alt='play'/>
-     
-      // <i className="fa-solid fa-play"  ></i>
+      <i class="fa-solid fa-play "></i>
       }
       {play && 
-      <img src = {stopIcon} alt='stop'/>
-
-      // <i className="fa-solid fa-stop" ></i>
+    
+      <i class="fa-solid fa-stop"></i>
+  
       }
     </button>
     <button
       className="next"
       onClick={clickNext}>
-      <img src = {nextIcon} alt='next'/>
-
-      {/* <i className="fa-solid fa-forward"></i> */}
+     
+      <i class="fa-solid fa-forward"></i>
+      
     </button>
     <button className="volume" onClick={ muteHandle }>
       {volume === 0 && 
-      <img src = {muteIcon} alt='mute'/>
-
-      // <i className="fa-solid fa-volume-xmark"></i>
+        <i class="fa-solid fa-volume-xmark"></i>
       }
       {volume > 0 && 
-      <img src = {volIcon} alt='vol'/>
 
-      // <i className="fa-solid fa-volume-high " ></i>
+        <i class="fa-solid fa-volume-high"></i>
+
       }
     </button>
     <input type="range" className='volumeBar' min="0" max="100" onChange={volumeHandler}></input>

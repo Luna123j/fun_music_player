@@ -30,6 +30,8 @@
 .Lyrics{
     top:15vh;
     display: flex;
+    position: absolute;
+    right:20px;
 }
 
 #songpic{
@@ -40,6 +42,8 @@
 
 #Lyrics1{
     display: flex;
+    direction: row;
+    width: 50%;
     
 
 }
@@ -53,11 +57,9 @@
 
 .song-title{
     position: fixed;
+    right: 75px;
 }
 
-.format-lyrics{
-    padding-left: 20vw;
-}
 
 #WELCOME{
     font-size: 60px;
@@ -68,4 +70,5 @@
 #lyricWords{
     font-size: 24px;
     color: white;
+    width: 75%;
 }

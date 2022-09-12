@@ -39,6 +39,9 @@ import Lyrics from "./components/Lyrics";
 import { cookieProvider, CookiesProvider } from "react-cookie";
 import { updateIndex } from "./redux/currentIndex";
 import Modal from "./components/Modal";
+import Rythm from 'rythm.js'
+
+
 // const socket = io();
 
 // Set AssemblyAPI Axios Header
@@ -469,6 +472,7 @@ function App() {
 
   // console.log("^^^^^^^^^^mp3 arr^^^^", currentSongContent);
   const audioRef = useRef(new Audio(mp3Url[list_id]));
+  
   const progressBar = useRef();
   const volumeBar = useRef();
   const animationRef = useRef();
@@ -487,9 +491,7 @@ function App() {
     // progressBar.current = audioRef.current.currentTime
   }, [list_id]);
 
-  useEffect(()=> {
-    volumeBar.current = audioRef.current.volume
-  })
+ 
 
   useEffect(() => {
     const seconds = Math.floor(audioRef.current.duration);

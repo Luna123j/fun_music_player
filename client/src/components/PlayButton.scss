@@ -3,12 +3,13 @@
   background-color: white;
   background-image: url("https://www.transparenttextures.com/patterns/skulls.png");
 /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
- border-style:groove;
- border-width: 20px;
- border-radius: 3%;
- border-color: cornsilk;
+//  border-style:groove;
+//  border-width: 20px;
+//  border-radius: 3%;
+//  border-color: cornsilk;
 display: flex;
 direction: row;
+height: 20%;
 // justify-content: center;
   .playerButton {
     display: flex;
@@ -22,7 +23,6 @@ direction: row;
     border: 2px solid tan;
     margin-left:  20px;
     margin-right: 20px;
-    background: red;
     
   }
 
@@ -33,7 +33,6 @@ direction: row;
     border: 2px solid tan;
     margin-left:  20px;
     margin-right: 20px;
-    background: green;
     
   }
   

@@ -54,7 +54,7 @@ const History = () => {
   };
 
   return (
-    <div className="list-container">
+    <div id="history1">
       <h1>History</h1>
       {historyList.length === 0 && <div>There is no history record</div>}
       {historyList.length !== 0 && 

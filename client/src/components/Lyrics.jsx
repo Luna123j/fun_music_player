@@ -62,19 +62,22 @@ const Lyrics = () => {
 
   return (
     <div className="Lyrics">
-      <h1>Song Details</h1>
       {currentSongContent.length !== 0 &&
-        <article>
+        <article id="Lyrics1">
           <div className="song-title">
-          <p ><img src={currentSongContent[l].image} alt={currentSongContent[l].title} />{currentSongContent[l].title}</p>
-          <p>artist: {currentSongContent[l].artist}</p>
-          <button className={isFavourite ? "favor-button" : "unfavor-button"} onClick={clickFavouriteHandler} ><i className="fa-regular fa-heart"></i></button>
+          <div id="stitle">Title: {currentSongContent[l].title}</div>
+          <div id="sartist">Artist: {currentSongContent[l].artist}</div>
+          <div id="circles">
+
+          <img id="songpic"src={currentSongContent[l].image} alt={currentSongContent[l].title} />
+          <button id="favbutt"className="favor-button" onClick={clickFavouriteHandler} ><i id={isFavourite ? "favIcon" : "unfavIcon"}className="fa-regular fa-heart"></i></button>
           </div>
-          <div className="format-lyrics" >{currentSongContent[l].lyrics}</div>
+          </div>
+          <div id="lyricWords" className="format-lyrics" >{currentSongContent[l].lyrics}</div>
         </article>
       }
       {currentSongContent.length === 0 &&
-        <div>Welcome to Fun music player</div>
+        <div id="WELCOME">✨🥳Welcome to Fun music player🥳✨</div>
       }
 
     </div>

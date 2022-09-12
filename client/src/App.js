@@ -604,6 +604,10 @@ function App() {
               transcriptValues={transcriptValues}
             />
           </div>
+          {transcriptData.status === "processing" ? (
+        <img id="luigitwerk" src="https://www.icegif.com/wp-content/uploads/roblox-icegif-10.gif" alt="loading gif">{script}</img>
+      ) : (
+          
           <Routes>
             <Route path="/" element={<Lyrics />} />
             <Route path="/users/favourite" element={<Favourite />} />
@@ -612,6 +616,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/search" element={<MusicList />} />
           </Routes>
+            )}
         </div>
 
         <div id="footerEsque">

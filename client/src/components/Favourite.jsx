@@ -41,7 +41,7 @@ const Favourite = () => {
   };
 
   return (
-    <div>
+    <div id="favourite1">
       <h1 >Favourite list</h1>
       {favourite.length === 0 && <div>There is no favourite record</div>}
       {favourite.length !== 0 &&

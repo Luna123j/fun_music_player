@@ -10,21 +10,30 @@ body  {
     position: fixed;
     margin: 0px;
     padding: 0px;
+    // height: 20%;
   }
   
+ 
+
+  #luigitwerk{
+    
+    padding-left: 40vw;
+
+    }
+
   #sider{
     display: flex;
     flex-direction: column;
     background-color: white;
     background-image: url("https://www.transparenttextures.com/patterns/skulls.png");
-    width: 30%;
-    height:80%;
+    width: 20vw;
+    height:83vh;
     left: 0px;
     position: fixed;
-    border-style:groove;
-    border-width: 20px;
-    border-radius: 3%;
-    border-color: cornsilk; 
+    // border-style:groove;
+    // border-width: 20px;
+    // border-radius: 3%;
+    // border-color: cornsilk; 
     border-top: none;
     margin-top: 5%;
     

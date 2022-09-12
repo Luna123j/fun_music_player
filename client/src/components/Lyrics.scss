@@ -1,1 +1,71 @@
+#favbutt{
+    border-radius: 100%;
+    background-color:#008CBA;;
+    border-width: none;
+    height: 100px;
+    width: 100px;
+    border-color: #008CBA;
+}
 
+#stitle{
+    font-size: 36px;
+    color: white;
+}
+
+#sartist{
+    font-size: 36px;
+    color: white;
+}
+
+#favIcon{
+    font-size: 85px;
+    color: salmon;
+}
+#unfavIcon{
+    font-size: 85px;
+
+    color: white;
+}
+
+.Lyrics{
+    top:15vh;
+    display: flex;
+}
+
+#songpic{
+    border-radius: 100%;
+    width: 100px;
+    height:auto
+}
+
+#Lyrics1{
+    display: flex;
+    
+
+}
+
+#circles{
+    display: flex;
+    flex-direction: column;
+    padding-left: 5vw;
+    
+}
+
+.song-title{
+    position: fixed;
+}
+
+.format-lyrics{
+    padding-left: 20vw;
+}
+
+#WELCOME{
+    font-size: 60px;
+    color: white;
+    border-bottom: solid;
+}
+
+#lyricWords{
+    font-size: 24px;
+    color: white;
+}

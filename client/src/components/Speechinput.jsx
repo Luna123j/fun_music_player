@@ -20,21 +20,25 @@ export default function Speechinput(props) {
   const { submitTranscriptionHandler, transcriptData } = transcriptValues
   const { script } = useSelector(state => state.transcript )
 
-
+  
   
   return (
+    <div>
     <div className="record">
-    
-      {/* <audio ref={audioPlayer} src={blobURL} controls="controls" /> */}
+    <div>
+
       <button className="recordButton" onClick={() => dispatch(onrecord())}>
         {!record && (<i id="mIcon"className="fa-solid fa-microphone" onClick={() => startRecording()}></i>)}
         {record && (<i id="notmIcon"className="fa-solid fa-microphone-slash" onClick={() => stopRecording()}></i>)}
       </button>
       <button className="recordButton1" onClick={submitTranscriptionHandler}><i id="envelope"class="fa-solid fa-envelope"></i></button>
+    </div>
+     
+      {/* <audio ref={audioPlayer} src={blobURL} controls="controls" /> */}
       {/* <button disabled={isRecording} onClick={startRecording}>
           🎙️
-        </button>
-        <button disabled={!isRecording} onClick={stopRecording}>
+          </button>
+          <button disabled={!isRecording} onClick={stopRecording}>
           ✋
         </button> */}
       {/* <button onClick={checkStatusHandler}>CHECK STATUS</button> */}
@@ -46,11 +50,6 @@ export default function Speechinput(props) {
         value={transcript}
         onChange={(e) => setTranscript(e.target.value)}
       /> */}
-      {transcriptData.status === "processing" ? (
-        <img id="luigitwerk" src="https://www.icegif.com/wp-content/uploads/roblox-icegif-10.gif" alt="loading gif">{script}</img>
-        ) : (
-          <p></p>
-        )}
       {/* this input was used for TEXT TO SPEECH *** we can change it */}
       {/* <input
         type='text'
@@ -60,6 +59,8 @@ export default function Speechinput(props) {
       /> */}
       {/* <button onClick={() => speechHandler(msg)}>SPEAK</button> */}
       {/* ************************************************************ */}
+    
+    </div>
     </div>
   );
 }

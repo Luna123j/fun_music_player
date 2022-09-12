@@ -40,7 +40,7 @@ const Navbar = (props) => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <span className="navbar-brand">
-          <Link id="funplayer"style={{ textDecoration: 'none' }}to="/">FunPlayer</Link>
+          <Link id="funplayer"style={{ textDecoration: 'none' }}to="/">Fun Music Player</Link>
         </span>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
@@ -51,11 +51,11 @@ const Navbar = (props) => {
               <span className="nav-link">
                 <Link id="favourite"style={{ textDecoration: 'none' }}to="/users/favourite">| Favourite |</Link>
 
+                <Link id="history"style={{ textDecoration: 'none' }}to="/history" > History |</Link>
               </span>
             </li>
             <li className="nav-item">
               <span className="nav-link">
-                <Link id="history"style={{ textDecoration: 'none' }}to="/history" >History |</Link>
               </span>
             </li>
             <li className="nav-item">

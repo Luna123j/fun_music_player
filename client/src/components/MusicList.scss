@@ -1,11 +1,28 @@
-.musicList{
+.list-container{
     display: flex;
     flex-direction: column;
     // align-items: center;
-    justify-content: end;
-    height: 50vh;
-    width: 100vw;
-    padding-left: 50vw;
-    top: 5vw;
+    justify-content: start;
+    position: absolute;
+    right:20px;
+    height: 90vh;
+    top: 15vh;
+    width: 60vw;
+    color: white;
     font-family: "Montserrat";
+    bottom: 15vh;
+
+}
+
+#songList{
+  border-style: dotted;
+  display: flex;
+  direction: row;
+  align-items: center;
+  width: 20vw;
+  img {
+    width: 100px;
+    margin: 5px 20px 5px 5px;
+    border-radius: 100%;
+  }
 }

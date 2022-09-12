@@ -1,17 +1,26 @@
+#history1{
+  padding-top: 10vh;
+  padding-left: 40vw;
+  font-family: "Montserrat";
+  color: white;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  height: 60vh;
+}
+
 .item {
+
   display: flex;
   direction: row;
-  border: 2px solid black;
+  border-style: dotted;
+
   
-  width: 60vw;
-  // position: absolute;
-  margin-left: 30vw;
+  align-items: center;
   img {
     width: 150px;
     margin: 5px 20px 5px 5px;
+    border-radius: 100%;
   }
 }
 
-h1 {
-  margin-left: 30vw;
-}

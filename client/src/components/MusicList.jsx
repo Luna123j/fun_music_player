@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { next, playSelect, resetList_id } from "../redux/player"; 
 import { useEffect } from "react";
 import '../components/MusicList.scss';
-
+import { useCookies } from "react-cookie";
 
 const MusicList = () => {
   const dispatch = useDispatch();
@@ -15,6 +15,8 @@ const MusicList = () => {
   const { musicList } = useSelector(state => state.musicData);
   const {list_id} = useSelector(state => state.player)
   const navigate = useNavigate();
+  const [cookie] = useCookies();
+
  
   console.log("former", list_id)
   
@@ -39,6 +41,11 @@ const MusicList = () => {
             mp3Url: currentSong.preview,
             lyrics: res.data.lyrics
           }
+          axios
+          .post("/history", {
+            currentSong: songDetails,
+            username: cookie.username,
+          })
           dispatch({ type: "currentSongData/getCurrentSong", payload: songDetails })
           if (list_id === currentSongContent.length - 1) {
             dispatch(playSelect());
@@ -46,10 +53,10 @@ const MusicList = () => {
             const newId = currentSongContent.length
             dispatch({type: "player/setListID", payload: newId})
           } 
-          navigate("/")
+          // navigate("/")
         })
     }}, [currentSong])
-
+    console.log("from search", currentSongContent)
     // useEffect(() => {
     //   audioRef.current.pause();
     //   audioRef.current = new Audio(mp3Url[list_id]);

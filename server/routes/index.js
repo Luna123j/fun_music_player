@@ -168,8 +168,8 @@ router.post("/history", (req, res) => {
           `Select * from users 
           join histories on users.id = histories.user_id
           join songs on songs.history_id = histories.id
-          where username = $1 and title = $2`,
-          [username, songDetails.title]
+          where username = $1 and title = $2 and artist = $3`,
+          [username, songDetails.title, songDetails.artist]
         )
         .then((data) => {
           // console.log("***********this*********", data.rows);

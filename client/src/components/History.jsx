@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useSelector, useDispatch } from "react-redux";
-import { playSelect } from "../redux/player";
+import { playSelect,setListID } from "../redux/player";
 import "./History.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,7 @@ const History = () => {
   const { currentSongContent } = useSelector((state) => state.currentSongData);
   const [cookie] = useCookies();
   const navigate = useNavigate()
+  const {list_id} = useSelector(state=> state.player)
   
   console.log(historyList);
   useEffect(() => {
@@ -46,12 +47,16 @@ const History = () => {
       mp3Url: item.url,
       lyrics: item.lyric,
     };
+    
     dispatch({ type: "currentSongData/getCurrentSong", payload: songDetails });
-    dispatch(playSelect());
-    
-    
-    // navigate('/')
-  };
+    if (list_id === currentSongContent.length - 1) {
+      dispatch(playSelect());
+    } else {
+      const newId = currentSongContent.length
+      dispatch({type: "player/setListID", payload: newId})
+    }  
+      // navigate('/')
+    };
 
   return (
     <div id="history1">

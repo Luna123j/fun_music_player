@@ -29,12 +29,16 @@ export const playerSlice = createSlice({
     },
     loop: (state) => {
       state.list_id = -1
+    },
+    setListID: (state, action) => {
+      state.list_id = action.payload;
+      state.play = true
     }
    
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { onplay, next, prev, playSelect, resetList_id, loop} = playerSlice.actions
+export const { onplay, next, prev, playSelect, resetList_id, loop, setListID} = playerSlice.actions
 
 export default playerSlice.reducer

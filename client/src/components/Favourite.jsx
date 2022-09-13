@@ -12,6 +12,8 @@ const Favourite = () => {
   const { currentSongContent } = useSelector((state) => state.currentSongData);
   const [cookie] = useCookies();
   const navigate = useNavigate();
+  const {list_id} = useSelector(state=> state.player)
+  
   console.log(favourite);
   useEffect(() => {
     // console.log(currentSongContent[currentSongContent.length-1]);
@@ -36,8 +38,12 @@ const Favourite = () => {
       lyrics: item.lyric,
     };
     dispatch({ type: "currentSongData/getCurrentSong", payload: songDetails });
-    dispatch(playSelect());
-    navigate("/");
+    if (list_id === currentSongContent.length - 1) {
+      dispatch(playSelect());
+    } else {
+      const newId = currentSongContent.length
+      dispatch({type: "player/setListID", payload: newId})
+    } 
   };
 
   return (

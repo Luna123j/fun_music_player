@@ -51,7 +51,7 @@ export default function SearchMusic(props) {
   const searchHandler = (e) => {
     e.preventDefault();
     // dispatch({ type: "transcript/updateScript", payload: undefined });
-setTranscriptData('')
+    setTranscriptData('')
     setClickStatus(true);
     if (userInput.title) {
       axios

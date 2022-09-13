@@ -16,12 +16,14 @@ const History = () => {
   
   console.log(historyList);
   useEffect(() => {
+    console.log(" ^^^^^^^^^^^^^^^^^^^^^ here in history",currentSongContent)
     // console.log(currentSongContent[currentSongContent.length-1]);
     if (currentSongContent.length === 0) {
         axios.post("/history", { username: cookie.username }).then((res) => {
           setHistoryList(res.data.reverse());
         });  
     } else if (currentSongContent.length !== 0) {
+      console.log("!!!!!!!!!!insert history into database")
         axios
           .post("/history", {
             currentSong: currentSongContent[currentSongContent.length - 1],
@@ -37,6 +39,7 @@ const History = () => {
       // };
     
   }, [currentSongContent]);
+  
 
   const historyPlayHandler = (item) => {
     const songDetails = {

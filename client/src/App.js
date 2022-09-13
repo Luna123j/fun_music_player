@@ -39,7 +39,6 @@ import Lyrics from "./components/Lyrics";
 import { cookieProvider, CookiesProvider } from "react-cookie";
 import { updateIndex } from "./redux/currentIndex";
 import Modal from "./components/Modal";
-import Rythm from 'rythm.js'
 
 
 // const socket = io();
@@ -619,6 +618,7 @@ function App() {
             <Route path="/search" element={<MusicList />} />
           </Routes>
             )}
+         
         </div>
 
         <div id="footerEsque">

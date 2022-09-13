@@ -7,6 +7,7 @@ import { useCookies } from "react-cookie";
 import { useEffect } from "react";
 
 import { favor, unfavor } from "../redux/favouriteSong";
+import currentIndex from "../redux/currentIndex";
 
 const Lyrics = () => {
   const { currentSongContent } = useSelector((state) => state.currentSongData);
@@ -92,9 +93,12 @@ const Lyrics = () => {
       {currentSongContent.length === 0 && (
         <div>
         <div id="WELCOME">✨🥳Welcome to Fun music player🥳✨</div>
-        <div><img src="https://c.tenor.com/HJvqN2i4Zs4AAAAj/milk-and-mocha-cute.gif" alt="welcome" /></div>
+        <div id="partyGif"><img src="https://c.tenor.com/HJvqN2i4Zs4AAAAj/milk-and-mocha-cute.gif" alt="welcome" />
+        <img src="https://c.tenor.com/HJvqN2i4Zs4AAAAj/milk-and-mocha-cute.gif" alt="welcome" />
+        <img src="https://c.tenor.com/HJvqN2i4Zs4AAAAj/milk-and-mocha-cute.gif" alt="welcome" /></div>
         </div>
       )}
+  
     </div>
   );
 };

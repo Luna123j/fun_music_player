@@ -10,6 +10,7 @@ import '../components/MusicList.scss';
 
 const MusicList = () => {
   const dispatch = useDispatch();
+  const {currentSongContent} = useSelector(state=> state.currentSongData)
   const [currentSong, setCurrentSong] = useState({});
   const { musicList } = useSelector(state => state.musicData);
   const {list_id} = useSelector(state => state.player)
@@ -39,7 +40,12 @@ const MusicList = () => {
             lyrics: res.data.lyrics
           }
           dispatch({ type: "currentSongData/getCurrentSong", payload: songDetails })
-          dispatch(playSelect());
+          if (list_id === currentSongContent.length - 1) {
+            dispatch(playSelect());
+          } else {
+            const newId = currentSongContent.length
+            dispatch({type: "player/setListID", payload: newId})
+          } 
           navigate("/")
         })
     }}, [currentSong])

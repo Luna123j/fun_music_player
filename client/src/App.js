@@ -370,7 +370,11 @@ function App() {
    let dataText = transcriptData.text
    if (dataText){
 
-   dataText = dataText.replace('end.' || 'and.', '')
+   dataText = dataText.replace('end.', '')
+   dataText = dataText.replace('and.', '')
+   dataText = dataText.replace('End.', '')
+   dataText = dataText.replace('And.', '')
+
 
    }
 

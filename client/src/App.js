@@ -192,7 +192,7 @@ function App() {
   const listenOptions = {
     includeSpectrogram: true, // in case listen should return result.spectrogram
     probabilityThreshold: 0.65,
-    invokeCallbackOnNoiseAndUnknown: true,
+    invokeCallbackOnNoiseAndUnknown: false,
     overlapFactor: 0.5, // probably want between 0.5 and 0.75. More info in README
   };
 
@@ -374,6 +374,11 @@ function App() {
    dataText = dataText.replace('and.', '')
    dataText = dataText.replace('End.', '')
    dataText = dataText.replace('And.', '')
+   dataText = dataText.replace('And', '')
+   dataText = dataText.replace('End', '')
+
+
+
 
 
    }

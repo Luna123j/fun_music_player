@@ -18,7 +18,7 @@ export default function Speechlistener(props) {
   const coolLabels = [
     "🐸", 
     "👈", 
-    "🔚", "😍", "👋😁", "📰", 
+    "🔚", "😍", "😁", "📰", 
     "🏠", "👉", "🟢", "🎙️", "🔭", 
     "🟥", "✉️", "🎉" ];
   const dispatch = useDispatch();

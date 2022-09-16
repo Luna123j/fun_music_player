@@ -1,18 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const microphoneSlice = createSlice({
-  name: 'microphone',
+  name: "microphone",
   initialState: {
     record: false,
   },
   reducers: {
     onrecord: (state) => {
       state.record = !state.record;
-    } 
-  }
+    },
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const { onrecord } = microphoneSlice.actions
+export const { onrecord } = microphoneSlice.actions;
 
-export default microphoneSlice.reducer
+export default microphoneSlice.reducer;

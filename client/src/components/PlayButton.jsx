@@ -87,11 +87,6 @@ export default function PlayButton(props) {
     </button>
     <input type="range" className='volumeBar' min="0" max="100" onChange={volumeHandler}></input>
     </div>
-    
-      
   
-    
-    {/* <div className='playList' onClick={() => setIsOpen(true)}><button><i class="fa-solid fa-list-ul"></i></button></div> */}
-    
   </div>
 }

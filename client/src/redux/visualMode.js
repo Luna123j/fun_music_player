@@ -1,34 +1,34 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const visualModeSlice = createSlice({
-  name: 'userMode',
+  name: "userMode",
   initialState: {
-    mode: "login"
-    
+    mode: "login",
   },
   reducers: {
     login: (state) => {
       state.mode = "login";
     },
     signup: (state) => {
-      state.mode="signup";
+      state.mode = "signup";
     },
     favourite: (state) => {
-      state.mode='favourite';
+      state.mode = "favourite";
     },
     recent: (state) => {
-      state.mode = "recent"
+      state.mode = "recent";
     },
     musiclist: (state) => {
-      state.mode = "musiclist"
+      state.mode = "musiclist";
     },
     selectedSong: (state) => {
-      state.mode = "selectedSong"
-    }
-  }
+      state.mode = "selectedSong";
+    },
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const { login, signup, favourite, recent, musiclist, selectedSong} = visualModeSlice.actions
+export const { login, signup, favourite, recent, musiclist, selectedSong } =
+  visualModeSlice.actions;
 
-export default visualModeSlice.reducer
+export default visualModeSlice.reducer;

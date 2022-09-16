@@ -1,10 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const favouriteSongSlice = createSlice({
-  name: 'favouriteSong',
+  name: "favouriteSong",
   initialState: {
-    isFavourite: false
-    
+    isFavourite: false,
   },
   reducers: {
     favor: (state) => {
@@ -12,12 +11,11 @@ export const favouriteSongSlice = createSlice({
     },
     unfavor: (state) => {
       state.isFavourite = false;
-
-    }
-  }
+    },
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const { favor, unfavor} = favouriteSongSlice.actions
+export const { favor, unfavor } = favouriteSongSlice.actions;
 
-export default favouriteSongSlice.reducer
+export default favouriteSongSlice.reducer;

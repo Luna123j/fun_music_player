@@ -16,7 +16,6 @@ const Favourite = () => {
   
   console.log(favourite);
   useEffect(() => {
-    // console.log(currentSongContent[currentSongContent.length-1]);
       axios
         .post("/users/favourite", { username: cookie.username })
         .then((res) => {

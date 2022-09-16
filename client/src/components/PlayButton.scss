@@ -1,18 +1,14 @@
 .play {
   width: 100vw;
-  // background-color: white;
+
   background-image: url("https://www.transparenttextures.com/patterns/skulls.png");
   background-color: #6c584c;
-/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-//  border-style:groove;
-//  border-width: 20px;
-//  border-radius: 3%;
-//  border-color: cornsilk;
-display: flex;
-direction: row;
-height: 20%;
-padding:10px 0;
-// justify-content: center;
+
+  display: flex;
+  direction: row;
+  height: 20%;
+  padding: 10px 0;
+
   .playerButton {
     display: flex;
     justify-content: center;
@@ -22,37 +18,34 @@ padding:10px 0;
     width: 75px;
     height: 75px;
     border-radius: 50px;
-    margin-left:  20px;
+    margin-left: 20px;
     margin-right: 20px;
     font-size: 40px;
     background-color: transparent;
     background: none;
     border: none;
-    color:#99c1b9;
+    color: #99c1b9;
   }
   .playButton:hover {
-    color:#26c9c3;
+    color: #26c9c3;
   }
 
-     .playButton-play {
+  .playButton-play {
     width: 75px;
     height: 75px;
     border-radius: 50px;
-    margin-left:  20px;
+    margin-left: 20px;
     margin-right: 20px;
     font-size: 40px;
     background-color: transparent;
     background: none;
     border: none;
-    color:#d88c9a;
+    color: #d88c9a;
   }
 
   .playButton-play:hover {
     color: rgb(238, 69, 69);
   }
-
-
-  
 
   .previous {
     width: 50px;
@@ -63,13 +56,12 @@ padding:10px 0;
     background: none;
     border: none;
     color: #f2d0a9;
-
   }
 
   .previous:hover {
-    color:#e7a559;
+    color: #e7a559;
   }
-  
+
   .next {
     width: 50px;
     height: 50px;
@@ -79,13 +71,11 @@ padding:10px 0;
     background: none;
     border: none;
     color: #f2d0a9;
-
   }
   .next:hover {
-    color:#e7a559;
+    color: #e7a559;
   }
 
-  
   .progressBar-layout {
     width: 40vw;
     left: 50px;
@@ -102,7 +92,6 @@ padding:10px 0;
     --knobby: #3452a5;
     --selectedKnobby: #26c9c3;
 
-    
     background: var --bar-bg;
     border-radius: 10px;
     position: relative;
@@ -134,8 +123,7 @@ padding:10px 0;
     -webkit-appearance: none;
     height: 15px;
     width: 15px;
-    // border-radius: 50%;
-    // border: none;
+
     background-color: var(--knobby);
     cursor: pointer;
     position: relative;
@@ -143,7 +131,7 @@ padding:10px 0;
     z-index: 3;
     box-sizing: border-box;
   }
-  
+
   .progressBar:active::-webkit-slider-thumb {
     transform: scale(1.2);
     background: var(--selectedKnobby);
@@ -164,15 +152,12 @@ padding:10px 0;
     background: none;
     border: none;
     color: #8e7dbe;
-
   }
 
   .volume:hover {
-    color:rgb(229, 67, 234)
+    color: rgb(229, 67, 234);
   }
   .volumeBar {
     margin-left: 25px;
   }
-
-
 }

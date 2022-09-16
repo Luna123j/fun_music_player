@@ -1,19 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const musicDataSlice = createSlice({
-  name: 'musicData',
+  name: "musicData",
   initialState: {
-    musicList: []
+    musicList: [],
   },
   reducers: {
-    getList: (state,action) => {
+    getList: (state, action) => {
       state.musicList = action.payload;
-    }
-   
-  }
+    },
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const { getList} = musicDataSlice.actions
+export const { getList } = musicDataSlice.actions;
 
-export default musicDataSlice.reducer
+export default musicDataSlice.reducer;

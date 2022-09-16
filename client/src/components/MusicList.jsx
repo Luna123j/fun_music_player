@@ -22,9 +22,7 @@ const MusicList = () => {
   
   function songHandler(currentSong) {
     console.log("currentSong", currentSong)
-    // const prevCurrentSong = currentSong
-    // const messageinfo = { title: currentSong.title, artist: currentSong.artist.name }
-    // dispatch(resetList_id())
+    
     setCurrentSong(currentSong)
   }
 
@@ -53,21 +51,9 @@ const MusicList = () => {
             const newId = currentSongContent.length
             dispatch({type: "player/setListID", payload: newId})
           } 
-          // navigate("/")
         })
     }}, [currentSong])
-    console.log("from search", currentSongContent)
-    // useEffect(() => {
-    //   audioRef.current.pause();
-    //   audioRef.current = new Audio(mp3Url[list_id]);
-    //   console.log("list id app.js",list_id)
-    //   if (isReady.current) {
-    //     audioRef.current.play()
-    //   } else {
-    //     isReady.current = true;
-    //   }
-    //   // progressBar.current = audioRef.current.currentTime
-    // }, [list_id]);
+  
   
     
   return (

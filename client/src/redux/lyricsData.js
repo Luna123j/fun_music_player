@@ -1,19 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const lyricsDataSlice = createSlice({
-  name: 'lyricsData',
+  name: "lyricsData",
   initialState: {
-    lyricsContent: []
+    lyricsContent: [],
   },
   reducers: {
-    getContent: (state,action) => {
+    getContent: (state, action) => {
       state.lyricsContent = action.payload;
-    }
-   
-  }
+    },
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const { getContent} = lyricsDataSlice.actions
+export const { getContent } = lyricsDataSlice.actions;
 
-export default lyricsDataSlice.reducer
+export default lyricsDataSlice.reducer;

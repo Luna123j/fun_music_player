@@ -10,10 +10,8 @@ import { useCookies } from "react-cookie";
 
 const Navbar = (props) => {
   const { transcriptValues, searchHandler } = props;
-  // const { transcript} = transcriptValues
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { username } = useSelector((state) => state.user);
   const [cookie, removeCookie] = useCookies();
   const logouthandler = () => {
     if (cookie.username !== "") {
@@ -110,7 +108,6 @@ const Navbar = (props) => {
             </ul>
           )}
         </div>
-        {/* <SearchMusic /> */}
       </div>
     </nav>
   );

@@ -15,8 +15,6 @@ import { onrecord } from "./redux/microphone";
 import SearchMusic from "./components/SearchMusic";
 import Navbar from "./components/Navbar";
 import Userview from "./components";
-// import { getList } from './redux/musicData';
-// import { musiclist } from "./redux/visualMode";
 
 import {
   BrowserRouter,
@@ -40,13 +38,6 @@ import { cookieProvider, CookiesProvider } from "react-cookie";
 import { updateIndex } from "./redux/currentIndex";
 import Modal from "./components/Modal";
 
-
-
-// const socket = io();
-
-// Set AssemblyAPI Axios Header
-// const SPEECH_API_KEY = process.env.REACT_APP_API_KEY;
-// console.log(SPEECH_API_KEY)
 const assembly = axios.create({
   baseURL: "https://api.assemblyai.com/v2",
   headers: {
@@ -69,24 +60,6 @@ function App() {
 
   const { index } = useSelector((state) => state.currentIndex);
   const { script } = useSelector((state) => state.transcript);
-  //   const audioRef= useRef(new Audio(mp3Url[list_id]))
-  //   const animationRef = useRef()
-  //   const mp3Url={1: 'https://cdns-preview-d.dzcdn.net/stream/c-d8f5b81a6243ddfa4c97b9a4c86a82fa-6.mp3',
-  //   2: 'https://cdns-preview-e.dzcdn.net/stream/c-e4829488eb446f23487bbf60a6aa869d-3.mp3',
-  //   3: 'https://cdns-preview-3.dzcdn.net/stream/c-381eb6e90e561759fea2b229e9b844eb-3.mp3'
-  // }
-  //   useEffect(() => {
-  //     if (currentIndex === 2 || currentIndex === 4) {
-  //       dispatch(onplay());
-  //       if (!play) {
-  //         audioRef.current.play();
-  //         animationRef.current = requestAnimationFrame(whilePlaying);
-  //       } else {
-  //         audioRef.current.pause();
-  //         animationRef.current = cancelAnimationFrame(animationRef.current);
-  //       }
-  //     }
-  //   }, [currentIndex]);
 
   useEffect(() => {
     console.log(index);
@@ -117,8 +90,7 @@ function App() {
       if (!play) {
         audioRef.current.play();
         animationRef.current = requestAnimationFrame(whilePlaying);
-      } 
-      else {
+      } else {
         audioRef.current.pause();
         animationRef.current = cancelAnimationFrame(animationRef.current);
       }
@@ -131,8 +103,7 @@ function App() {
       if (!play) {
         audioRef.current.play();
         animationRef.current = requestAnimationFrame(whilePlaying);
-      } 
-      else {
+      } else {
         audioRef.current.pause();
         animationRef.current = cancelAnimationFrame(animationRef.current);
       }
@@ -158,7 +129,6 @@ function App() {
 
     const biggestValue = Math.max(...scores);
     const biggestValueIndex = scores.indexOf(biggestValue);
-    // console.log(labels[biggestValueIndex]);
   };
   const updateCurrentIndex = (results) => {
     const scores = Array.from(results.scores);
@@ -166,7 +136,6 @@ function App() {
 
     const biggestValue = Math.max(...scores);
     const biggestValueIndex = scores.indexOf(biggestValue);
-    // setCurrentindex(biggestValueIndex);
     dispatch({ type: "currentIndex/updateIndex", payload: biggestValueIndex });
   };
 
@@ -200,11 +169,6 @@ function App() {
     const recognizer = await createModel();
     setRecognizer(recognizer);
     const classLabels = recognizer.wordLabels(); // get class labels
-    // console.log(classLabels);
-
-    // listen() takes two arguments:
-    // 1. A callback function that is invoked anytime a word is recognized.
-    // 2. A configuration object with adjustable fields
     recognizer.listen(listenCallback, options);
   }
 
@@ -221,20 +185,6 @@ function App() {
   // //////Speechinput Globalized Logic
   // ////////////////////////////////////////////
   const { record } = useSelector((state) => state.microphone);
-
-  // This code is for TEXT TO SPEECH*****************************
-  // const [ourText, setOurText] = useState("")
-  // const msg = new SpeechSynthesisUtterance()
-  // msg.text = "Don't be afraid, this is your computer speaking. I am alive now and i will never leave you."
-  // const speechHandler = (msg) => {
-  //   msg.text = ourText
-  //   window.speechSynthesis.speak(msg)
-  // }
-  // useEffect(() => {
-  //   window.speechSynthesis.speak(msg)
-  // }, [msg])
-  // *******************************************************************
-
   // Mic-Recorder-To-MP3
   const recorder = useRef(null); //Recorder
   const audioPlayer = useRef(null); //Ref for the HTML Audio Tag
@@ -309,7 +259,6 @@ function App() {
       })
       .catch((err) => console.error(err));
   };
-  // console.log(transcriptID)
 
   // Check the status of the Transcript and retrieve the Transcript Data
   const checkStatusHandler = async (transcriptID) => {
@@ -317,98 +266,30 @@ function App() {
     try {
       await assembly.get(`/transcript/${transcriptID}`).then((res) => {
         setTranscriptData(res.data);
-        // console.log("!!!!!!this is from app check status script!!!!", script)
-        // console.log("!!!!!!this is from app check status data!!!!", transcriptData.text)
-
-        // dispatch({
-        //   type: "transcript/updateScript",
-        //   payload: transcriptData.text,
-        // });
-        // setSearchText(transcriData.text)
-        // if (script) {
-        //   for (let s of script)  {
-        //     if (s == "and." || s == "end") {
-        //       console.log("THIS IS THE CONDITIONAL SCRIPT")
-        //      return script.replace('and.','')
-        //     }
-        //   }
-
-        // }
       });
     } catch (err) {
       console.error(err);
     }
   };
-  // console.log("statusHandler transcript", script);
-  // console.log("this is transcript data", transcriptData);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (transcriptData.status !== "completed" && isLoading) {
-  //       checkStatusHandler(transcriptID);
-  //     } else {
-  //       setIsLoading(false);
-
-  //       dispatch({
-  //         type: "transcript/updateScript",
-  //         payload: transcriptData.text,
-  //       });
-
-  //       clearInterval(interval);
-  //     }
-  //   }, 3000);
-  //   return () => clearInterval(interval);
-  // });
 
   useEffect(() => {
-  if (transcriptData.status !== "completed" && isLoading) {
-    checkStatusHandler(transcriptID)
-  } else {
-    setIsLoading(false)
-    // console.log("!!!!!!this is from app script!!!!", script)
-    // console.log("!!!!!!this is from app check status data!!!!", transcriptData.text)
-   let dataText = transcriptData.text
-   if (dataText){
+    if (transcriptData.status !== "completed" && isLoading) {
+      checkStatusHandler(transcriptID);
+    } else {
+      setIsLoading(false);
+      let dataText = transcriptData.text;
+      if (dataText) {
+        dataText = dataText.replace("end.", "");
+        dataText = dataText.replace("and.", "");
+        dataText = dataText.replace("End.", "");
+        dataText = dataText.replace("And.", "");
+        dataText = dataText.replace("And", "");
+        dataText = dataText.replace("End", "");
+      }
 
-   dataText = dataText.replace('end.', '')
-   dataText = dataText.replace('and.', '')
-   dataText = dataText.replace('End.', '')
-   dataText = dataText.replace('And.', '')
-   dataText = dataText.replace('And', '')
-   dataText = dataText.replace('End', '')
-
-
-
-
-
-   }
-
-     dispatch({ type: "transcript/updateScript", payload: dataText })
-
-  }
-
-  })
-
-  // const scriptMaker = function () {
-  //   if (transcriptData.status !== "completed" && isLoading) {
-  //     checkStatusHandler(transcriptID);
-  //   } else {
-  //     setIsLoading(false);
-  //     console.log("!!!!!!this is from app script!!!!", script);
-  //     console.log(
-  //       "!!!!!!this is from app check status data!!!!",
-  //       transcriptData.text
-  //     );
-  //     let dataText = transcriptData.text;
-  //     if (dataText) {
-  //       dataText = dataText.replace("end.", "");
-  //     }
-
-  //     dispatch({ type: "transcript/updateScript", payload: dataText });
-  //   }
-  // };
-
-  // scriptMaker()
+      dispatch({ type: "transcript/updateScript", payload: dataText });
+    }
+  });
 
   // console.log(transcript)
   const recordValues = { record, startRecording, stopRecording };
@@ -417,7 +298,7 @@ function App() {
     // setTranscript,
     submitTranscriptionHandler,
     transcriptData,
-    setTranscriptData
+    setTranscriptData,
   };
   // //////////////////////////////////////////
   // SearchMusic Globalized logic
@@ -439,24 +320,6 @@ function App() {
         console.log(err);
       });
   };
-
-  // const searchHandler = (e) => {
-  //   e.preventDefault();
-  //   console.log("COMES UP?????");
-  //   console.log(userInput, e.target[0].value)
-  //   userInput.title = e.target[0].value
-  //   axios
-  //     .post("/music", userInput)
-  //     .then((res) => {
-  //       dispatch({ type: "musicData/getList", payload: [...res.data.data] });
-  //       navigate("/search");
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // dispatch({ type: "transcript/updateScript", payload: "" });
 
   useEffect(() => {
     if (index === 10) {
@@ -481,7 +344,7 @@ function App() {
 
   // console.log("^^^^^^^^^^mp3 arr^^^^", currentSongContent);
   const audioRef = useRef(new Audio(mp3Url[list_id]));
-  
+
   const progressBar = useRef();
   const volumeBar = useRef();
   const animationRef = useRef();
@@ -497,10 +360,7 @@ function App() {
     } else {
       isReady.current = true;
     }
-    // progressBar.current = audioRef.current.currentTime
   }, [list_id]);
-
- 
 
   useEffect(() => {
     const seconds = Math.floor(audioRef.current.duration);
@@ -517,10 +377,10 @@ function App() {
   };
 
   const clickPlayHandler = () => {
-    dispatch(onplay())
-  }
+    dispatch(onplay());
+  };
 
-  useEffect(()=> {
+  useEffect(() => {
     if (play) {
       audioRef.current.play();
       animationRef.current = requestAnimationFrame(whilePlaying);
@@ -528,25 +388,24 @@ function App() {
       audioRef.current.pause();
       animationRef.current = cancelAnimationFrame(animationRef.current);
     }
-    
-  }, [play])
+  }, [play]);
 
   const whilePlaying = () => {
     progressBar.current.value = audioRef.current.currentTime;
-    
+
     changePlayerCurrentTime();
     animationRef.current = requestAnimationFrame(whilePlaying);
     if (audioRef.current.ended) {
       if (list_id < musicUrl.length - 1) {
         dispatch(next());
       }
-    if (list_id === musicUrl.length - 1) {
-      dispatch(loop())
-      dispatch(next())
-    }
+      if (list_id === musicUrl.length - 1) {
+        dispatch(loop());
+        dispatch(next());
+      }
     }
   };
-  console.log("*************", audioRef.current.ended)
+  console.log("*************", audioRef.current.ended);
 
   const changePlayerCurrentTime = () => {
     progressBar.current.style.setProperty(
@@ -557,26 +416,23 @@ function App() {
   };
 
   const clickNext = () => {
-    console.log("list length", musicUrl.length)
+    console.log("list length", musicUrl.length);
     if (list_id < musicUrl.length - 1) {
-        dispatch(next());
-      }
-    if (list_id === musicUrl.length - 1) {
-      dispatch(loop())
-      dispatch(next())
-     
+      dispatch(next());
     }
-    console.log(list_id)
-      
-    };
-    console.log("click next after", list_id)
-    console.log("**************", audioRef.current.volume)
+    if (list_id === musicUrl.length - 1) {
+      dispatch(loop());
+      dispatch(next());
+    }
+    console.log(list_id);
+  };
+  console.log("click next after", list_id);
+  console.log("**************", audioRef.current.volume);
   const clickPrev = () => {
     if (list_id > 0) {
       dispatch(prev());
     }
     if (list_id === 0) {
-
     }
   };
 
@@ -585,24 +441,30 @@ function App() {
     changePlayerCurrentTime();
   };
 
-  const playValues = { audioRef, clickPrev, clickPlayHandler, play, clickNext, volumeBar };
+  const playValues = {
+    audioRef,
+    clickPrev,
+    clickPlayHandler,
+    play,
+    clickNext,
+    volumeBar,
+  };
   const timeValues = {
     calculateTime,
     currentTime,
     progressBar,
     handleChange,
     duration,
-    volumeBar
+    volumeBar,
   };
 
   // //////////////////////////////////////////
-  console.log(currentSongContent, list_id)
+  console.log(currentSongContent, list_id);
   return (
     <CookiesProvider>
       <div className="App">
         <div>
-          <Navbar transcriptValues={transcriptValues}
-/>
+          <Navbar transcriptValues={transcriptValues} />
         </div>
         <div id="appContainer">
           <div id="sider">
@@ -616,25 +478,27 @@ function App() {
             />
           </div>
           {transcriptData.status === "processing" ? (
-        <img id="luigitwerk" src="https://www.icegif.com/wp-content/uploads/roblox-icegif-10.gif" alt="loading gif">{script}</img>
-      ) : (
-          
-          <Routes>
-            <Route path="/" element={<Lyrics />} />
-            <Route path="/users/favourite" element={<Favourite />} />
-            <Route path="/history" element={<History />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/search" element={<MusicList />} />
-          </Routes>
-            )}
-         
+            <img
+              id="luigitwerk"
+              src="https://www.icegif.com/wp-content/uploads/roblox-icegif-10.gif"
+              alt="loading gif"
+            >
+              {script}
+            </img>
+          ) : (
+            <Routes>
+              <Route path="/" element={<Lyrics />} />
+              <Route path="/users/favourite" element={<Favourite />} />
+              <Route path="/history" element={<History />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/search" element={<MusicList />} />
+            </Routes>
+          )}
         </div>
 
         <div id="footerEsque">
           <PlayButton playValues={playValues} timeValues={timeValues} />
-       
-
         </div>
       </div>
     </CookiesProvider>
